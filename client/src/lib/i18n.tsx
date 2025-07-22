@@ -1,0 +1,275 @@
+import React, { createContext, useContext, useState, useEffect, ReactNode } from "react";
+
+export const languages = {
+  en: "English",
+  ku: "Kurdî", // Kurdish in Latin letters as requested
+  fr: "Français",
+  es: "Español",
+  de: "Deutsch",
+  tr: "Türkçe",
+};
+
+// Removed flags as requested by user
+
+export type Language = keyof typeof languages;
+
+const translations = {
+  en: {
+    "chess.groq.coach": "Chess Groq Coach",
+    "ai.powered.training": "AI-Powered Training",
+    "game.mode": "Game Mode",
+    "classic.vs": "Classic VS",
+    "feedback": "Feedback",
+    "scoring": "Scoring",
+    "coach.mode": "Coach Mode",
+    "game.active": "Game Active",
+    "move": "Move",
+    "reset.game": "Reset Game",
+    "download.pgn": "Download PGN",
+    "you": "You",
+    "groq.ai": "Groq AI",
+    "white": "White",
+    "black": "Black",
+    "ai.analysis": "AI Analysis",
+    "chess.coach": "Chess Coach",
+    "move.history": "Move History",
+    "games.played": "Games Played",
+    "win.rate": "Win Rate",
+    "average.rating": "Average Rating",
+    "last.move.analysis": "Last Move Analysis",
+    "move.score": "Move Score",
+    "ask.coach": "Ask your coach...",
+    "ai.thinking": "AI is thinking...",
+    "settings.title": "Settings",
+    "settings.aiModel": "AI Model",
+    "settings.selectModel": "Select AI Model",
+    "settings.currentModel": "Current Model",
+    "settings.difficulty": "Difficulty",
+    "settings.difficultyLevel": "Difficulty Level",
+    "settings.currentDifficulty": "Current Difficulty",
+    "settings.beginner": "Beginner",
+    "settings.easy": "Easy",
+    "settings.medium": "Medium", 
+    "settings.hard": "Hard",
+    "settings.expert": "Expert",
+    "settings.beginnerDesc": "Perfect for learning chess basics and piece movement",
+    "settings.mediumDesc": "Balanced gameplay with moderate tactical challenges",
+    "settings.expertDesc": "Advanced strategic play with deep position analysis",
+    "settings.recommendations": "Model Recommendations",
+    "settings.recommendedFor": "Levels",
+    "settings.recommended": "Recommended",
+    "common.white": "White",
+    "common.black": "Black",
+    "game.wins": "Wins",
+    "game.draw": "Draw",
+    "game.gameOver": "Game Over",
+    "game.check": "Check",
+    "game.aiThinking": "AI is thinking",
+    "game.reset": "Reset Game",
+    "game.flipBoard": "Flip Board",
+    "game.exportPGN": "Export PGN",
+    "game.turn": "Turn",
+    "game.difficulty": "Difficulty",
+  },
+  ku: {
+    "chess.groq.coach": "Mamostay Shetrencî Groq",
+    "ai.powered.training": "Rahenani bi Hoshi Destkird",
+    "game.mode": "Shewazi Yari",
+    "classic.vs": "Klasiki",
+    "feedback": "Rexne",
+    "scoring": "Xal",
+    "coach.mode": "Shewazi Mamosta",
+    "game.active": "Yari Chalak",
+    "move": "Jule",
+    "reset.game": "Dubare Destpekirdnewe",
+    "download.pgn": "Dagirtini PGN",
+    "you": "To",
+    "groq.ai": "Groq AI",
+    "white": "Spi",
+    "black": "Resh",
+    "ai.analysis": "Shikirdnewey AI",
+    "chess.coach": "Mamostay Shetrenc",
+    "move.history": "Mejuy Julekan",
+    "games.played": "Yarikirawekan",
+    "win.rate": "Rejey Birdnewe",
+    "average.rating": "Nirxandini Nawend",
+    "last.move.analysis": "Shikirdnewey Dwayin Jule",
+    "move.score": "Xali Jule",
+    "ask.coach": "Pirsiyar le mamostaket bike...",
+    "ai.thinking": "AI birdekatewe...",
+    "settings.title": "Mihengkirin",
+    "settings.aiModel": "Modela AI",
+    "settings.selectModel": "Modela AI Hilbijere",
+    "settings.currentModel": "Modela Niha",
+    "settings.difficulty": "Aste Dijwari",
+    "settings.difficultyLevel": "Asta Dijwari",
+    "settings.currentDifficulty": "Dijwariya Niha",
+    "settings.beginner": "Destpeker",
+    "settings.easy": "Hesan",
+    "settings.medium": "Nawin",
+    "settings.hard": "Dijwar",
+    "settings.expert": "Pispor",
+    "settings.beginnerDesc": "Ji bo ferbuна bingehin a shetrencê û tevgeren perçeyan",
+    "settings.mediumDesc": "Yariya hevseng bi dijwariyen taktikal en nawin",
+    "settings.expertDesc": "Yariya stratejikal a peshketi bi analiza kur a pozisyone",
+    "settings.recommendations": "Peshniyaren Model",
+    "settings.recommendedFor": "Ast",
+    "settings.recommended": "Peshniyarkirin",
+    "common.white": "Spi",
+    "common.black": "Resh",
+    "game.wins": "Berdewam",
+    "game.draw": "Beraber",
+    "game.gameOver": "Yari Temam",
+    "game.check": "Shah",
+    "game.aiThinking": "AI birdekatewe",
+    "game.reset": "Dubare Destpekirdnewe",
+    "game.flipBoard": "Daxe Zirav bike",
+    "game.exportPGN": "PGN Derxe",
+    "game.turn": "Nobe",
+    "game.difficulty": "Dijwari",
+  },
+  fr: {
+    "chess.groq.coach": "Entraîneur d'Échecs Groq",
+    "ai.powered.training": "Formation Alimentée par l'IA",
+    "game.mode": "Mode de Jeu",
+    "classic.vs": "Classique VS",
+    "feedback": "Commentaires",
+    "scoring": "Notation",
+    "coach.mode": "Mode Entraîneur",
+    "game.active": "Jeu Actif",
+    "move": "Coup",
+    "reset.game": "Réinitialiser le Jeu",
+    "download.pgn": "Télécharger PGN",
+    "you": "Vous",
+    "groq.ai": "Groq IA",
+    "white": "Blanc",
+    "black": "Noir",
+    "ai.analysis": "Analyse IA",
+    "chess.coach": "Entraîneur d'Échecs",
+    "move.history": "Historique des Coups",
+    "games.played": "Parties Jouées",
+    "win.rate": "Taux de Victoire",
+    "average.rating": "Classement Moyen",
+    "last.move.analysis": "Analyse du Dernier Coup",
+    "move.score": "Score du Coup",
+    "ask.coach": "Demandez à votre entraîneur...",
+    "ai.thinking": "L'IA réfléchit...",
+  },
+  es: {
+    "chess.groq.coach": "Entrenador de Ajedrez Groq",
+    "ai.powered.training": "Entrenamiento Impulsado por IA",
+    "game.mode": "Modo de Juego",
+    "classic.vs": "Clásico VS",
+    "feedback": "Comentarios",
+    "scoring": "Puntuación",
+    "coach.mode": "Modo Entrenador",
+    "game.active": "Juego Activo",
+    "move": "Movimiento",
+    "reset.game": "Reiniciar Juego",
+    "download.pgn": "Descargar PGN",
+    "you": "Tú",
+    "groq.ai": "Groq IA",
+    "white": "Blanco",
+    "black": "Negro",
+    "ai.analysis": "Análisis IA",
+    "chess.coach": "Entrenador de Ajedrez",
+    "move.history": "Historial de Movimientos",
+    "games.played": "Partidas Jugadas",
+    "win.rate": "Tasa de Victoria",
+    "average.rating": "Puntuación Promedio",
+    "last.move.analysis": "Análisis del Último Movimiento",
+    "move.score": "Puntuación del Movimiento",
+    "ask.coach": "Pregunta a tu entrenador...",
+    "ai.thinking": "La IA está pensando...",
+  },
+  de: {
+    "chess.groq.coach": "Schach Groq Trainer",
+    "ai.powered.training": "KI-gestütztes Training",
+    "game.mode": "Spielmodus",
+    "classic.vs": "Klassisch VS",
+    "feedback": "Rückmeldung",
+    "scoring": "Bewertung",
+    "coach.mode": "Trainer-Modus",
+    "game.active": "Spiel Aktiv",
+    "move": "Zug",
+    "reset.game": "Spiel Zurücksetzen",
+    "download.pgn": "PGN Herunterladen",
+    "you": "Sie",
+    "groq.ai": "Groq KI",
+    "white": "Weiß",
+    "black": "Schwarz",
+    "ai.analysis": "KI-Analyse",
+    "chess.coach": "Schachtrainer",
+    "move.history": "Zughistorie",
+    "games.played": "Gespielte Partien",
+    "win.rate": "Gewinnrate",
+    "average.rating": "Durchschnittliche Bewertung",
+    "last.move.analysis": "Analyse des Letzten Zugs",
+    "move.score": "Zug-Bewertung",
+    "ask.coach": "Fragen Sie Ihren Trainer...",
+    "ai.thinking": "KI denkt nach...",
+  },
+  tr: {
+    "chess.groq.coach": "Satranç Groq Antrenörü",
+    "ai.powered.training": "Yapay Zeka Destekli Eğitim",
+    "game.mode": "Oyun Modu",
+    "classic.vs": "Klasik VS",
+    "feedback": "Geri Bildirim",
+    "scoring": "Puanlama",
+    "coach.mode": "Antrenör Modu",
+    "game.active": "Oyun Aktif",
+    "move": "Hamle",
+    "reset.game": "Oyunu Sıfırla",
+    "download.pgn": "PGN İndir",
+    "you": "Sen",
+    "groq.ai": "Groq Yapay Zeka",
+    "white": "Beyaz",
+    "black": "Siyah",
+    "ai.analysis": "Yapay Zeka Analizi",
+    "chess.coach": "Satranç Antrenörü",
+    "move.history": "Hamle Geçmişi",
+    "games.played": "Oynanan Oyunlar",
+    "win.rate": "Kazanma Oranı",
+    "average.rating": "Ortalama Puan",
+    "last.move.analysis": "Son Hamle Analizi",
+    "move.score": "Hamle Puanı",
+    "ask.coach": "Antrenörünüze sorun...",
+    "ai.thinking": "Yapay zeka düşünüyor...",
+  },
+};
+
+interface I18nContextType {
+  language: Language;
+  setLanguage: (lang: Language) => void;
+  t: (key: string) => string;
+}
+
+const I18nContext = createContext<I18nContextType | undefined>(undefined);
+
+export const I18nProvider: React.FC<{ children: ReactNode }> = ({ children }) => {
+  const [language, setLanguage] = useState<Language>(() => {
+    return (localStorage.getItem("language") as Language) || "en";
+  });
+
+  useEffect(() => {
+    localStorage.setItem("language", language);
+  }, [language]);
+
+  const t = (key: string): string => {
+    return translations[language]?.[key as keyof typeof translations.en] || key;
+  };
+
+  return (
+    <I18nContext.Provider value={{ language, setLanguage, t }}>
+      {children}
+    </I18nContext.Provider>
+  );
+};
+
+export function useI18n() {
+  const context = useContext(I18nContext);
+  if (!context) {
+    throw new Error("useI18n must be used within an I18nProvider");
+  }
+  return context;
+}

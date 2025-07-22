@@ -1,0 +1,108 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+7:09:52 PM [express] serving on port 5000
+WebSocket client connected
+WebSocket client disconnected
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+7:10:01 PM [express] GET /api/users/1/stats 304 in 2ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+7:10:01 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+WebSocket client connected
+Attempting Groq AI move generation for FEN: rnbqkbnr/pppppppp/8/8/7P/8/PPPPPPP1/RNBQKBNR b KQkq - 0 1
+Groq AI move response: {
+  move: { from: 'e7', to: 'e5', promotion: undefined },
+  reasoning: "This fights for the center and opens paths for my bishop and queen. It's a solid opening move that challenges White's space advantage.",
+  analysis: 'e5 - opening phase play at difficulty 3/5',
+  score: '0.0'
+}
+7:10:17 PM [express] POST /api/chess/ai-move 200 in 849ms :: {"move":{"from":"e7","to":"e5"},"reason…
+7:10:27 PM [express] POST /api/chess/analyze-move 200 in 2ms :: {"score":60,"quality":"neutral","exp…
+Attempting Groq AI move generation for FEN: rnbqkbnr/pppp1ppp/8/4p3/4P2P/8/PPPP1PP1/RNBQKBNR b KQkq - 0 2
+Groq AI move response: {
+  move: { from: 'g8', to: 'f6', promotion: undefined },
+  reasoning: 'Developing my knight to f6 attacks the e4 pawn and prepares to castle kingside. This is a natural developing move that fights for the center.',
+  analysis: 'Nf6 - opening phase play at difficulty 3/5',
+  score: '0.0'
+}
+7:10:33 PM [express] POST /api/chess/ai-move 200 in 5522ms :: {"move":{"from":"g8","to":"f6"},"reaso…
+7:10:34 PM [express] POST /api/chess/feedback 200 in 2ms :: {"feedback":"Current position evaluation…
+7:10:38 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":60,"quality":"neutral","exp…
+Attempting Groq AI move generation for FEN: rnbqkb1r/pppp1ppp/5n2/4p3/3PP2P/8/PPP2PP1/RNBQKBNR b KQkq - 0 3
+Groq AI move response: {
+  move: { from: 'd7', to: 'd5', promotion: undefined },
+  reasoning: 'I see White has pushed their h-pawn early, which seems unusual. I want to strike in the center with d5, challenging their e4 pawn and opening lines for my pieces. This is a principled response in the opening - fight for the center. If White takes exd5, I can recapture with my knight and develop with tempo.',
+  analysis: 'd5 - opening phase play at difficulty 3/5',
+  score: '0.0'
+}
+7:10:40 PM [express] POST /api/chess/ai-move 200 in 592ms :: {"move":{"from":"d7","to":"d5"},"reason…
+7:10:40 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+7:10:42 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":60,"quality":"neutral","exp…
+Attempting Groq AI move generation for FEN: rnbqkb1r/ppp2ppp/5n2/3pp3/3PP2P/2P5/PP3PP1/RNBQKBNR b KQkq - 0 4
+Groq AI move response: {
+  move: { from: 'd5', to: 'e4', promotion: undefined },
+  reasoning: 'Taking the pawn on e4 is a free capture and opens the center. After White recaptures with dxe5, I can play dxe5 and develop my pieces naturally.',
+  analysis: 'dxe4 - opening phase play at difficulty 3/5',
+  score: '0.0'
+}
+7:10:45 PM [express] POST /api/chess/ai-move 200 in 2071ms :: {"move":{"from":"d5","to":"e4"},"reaso…
+7:10:46 PM [express] POST /api/chess/feedback 200 in 2ms :: {"feedback":"Current position evaluation…
+7:10:58 PM [express] POST /api/chess/coach-response 200 in 2246ms :: {"response":"Merhaba! 😊  \nGre…
+Attempting Groq AI move generation for FEN: rnbqkb1r/ppp2ppp/5n2/4p3/1P1Pp2P/2P5/P4PP1/RNBQKBNR b KQkq - 0 5
+Groq API error: Error: Invalid move: {"from":"g8","to":"f6"}
+    at Chess.move (/home/runner/workspace/node_modules/src/chess.ts:1699:15)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:271:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Invalid move: {"from":"g8","to":"f6"}
+7:11:04 PM [express] POST /api/chess/ai-move 200 in 1380ms :: {"move":{"from":"b8","to":"d7"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkb1r/pppn1ppp/5n2/4p3/1P1Pp2P/2P5/P3QPP1/RNB1KBNR b KQkq - 2 6
+Groq API error: Error: Invalid move: {"from":"d7","to":"d5"}
+    at Chess.move (/home/runner/workspace/node_modules/src/chess.ts:1699:15)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:271:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Invalid move: {"from":"d7","to":"d5"}
+7:11:13 PM [express] POST /api/chess/ai-move 200 in 2368ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+7:11:16 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":80,"quality":"good","explan…
+Attempting Groq AI move generation for FEN: 1rbqkb1r/pppn1ppp/5n2/4p3/1P1PQ2P/2P5/P4PP1/RNB1KBNR b KQk - 0 7
+Groq API error: Error: Invalid move: {"from":"e7","to":"e5"}
+    at Chess.move (/home/runner/workspace/node_modules/src/chess.ts:1699:15)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:271:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Invalid move: {"from":"e7","to":"e5"}
+7:11:17 PM [express] POST /api/chess/ai-move 200 in 516ms :: {"move":{"from":"b8","to":"a8"},"reason…
+7:11:18 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+7:11:19 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":80,"quality":"good","explan…
+Attempting Groq AI move generation for FEN: r1bqkb1r/pppn1ppp/5n2/4Q3/1P1P3P/2P5/P4PP1/RNB1KBNR b KQk - 0 8
+Groq API error: SyntaxError: Unexpected non-whitespace character after JSON at position 289
+    at JSON.parse (<anonymous>)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:237:27)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Unexpected non-whitespace character after JSON at position 289
+7:11:21 PM [express] POST /api/chess/ai-move 200 in 1250ms :: {"move":{"from":"d8","to":"e7"},"reaso…
+7:11:21 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…
+7:11:23 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":95,"quality":"excellent","e…
+Attempting Groq AI move generation for FEN: r1b1kb1r/pppnQppp/5n2/8/1P1P3P/2P5/P4PP1/RNB1KBNR b KQk - 0 9
+Groq API error: Error: Invalid move: {"from":"e7","to":"e7"}
+    at Chess.move (/home/runner/workspace/node_modules/src/chess.ts:1699:15)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:271:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Invalid move: {"from":"e7","to":"e7"}
+7:11:25 PM [express] POST /api/chess/ai-move 200 in 361ms :: {"move":{"from":"e8","to":"e7"},"reason…
+7:11:25 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…
+7:11:29 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":60,"quality":"neutral","exp…
+Attempting Groq AI move generation for FEN: r1b2b1r/pppnkppp/5n2/6B1/1P1P3P/2P5/P4PP1/RN2KBNR b KQ - 1 10
+Groq API error: Error: Invalid move: {"from":"f6","to":"e4"}
+    at Chess.move (/home/runner/workspace/node_modules/src/chess.ts:1699:15)
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:271:26)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: Invalid move: {"from":"f6","to":"e4"}
+7:11:35 PM [express] POST /api/chess/ai-move 200 in 4499ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+7:11:35 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…

@@ -1,0 +1,104 @@
+You are “Claude-Chess-Architect”. Your task is to build the full backend and frontend scaffold of a modern web-based chess game powered by Groq AI and Stockfish.
+
+📌 General Description:
+We are building a web chess app that stands out by combining Groq LLM + Stockfish with 4 unique game modes. It will be played via a responsive web interface (not terminal). The frontend will be built with modern HTML, JS, and CSS; no React or frameworks.
+
+♟️ Game Modes (All should be switchable via UI):
+1. **Classic VS Mode**: Play against Groq, which simulates a 1600-ELO chess player. Simple back-and-forth gameplay.
+2. **Feedback Mode**: After each move, Groq gives short feedback on the quality of the move and reasoning (≤80 words).
+3. **Scoring Mode**: After each move, Groq evaluates it and returns a score + reason in JSON format like: `{"score": +0.8, "reason": "Captures a free pawn but weakens king safety"}`.
+4. **Coach Mode (Training + Chat)**: Stockfish returns best 3 moves for a given position; Groq chooses one and explains it as a friendly coach. Users can also chat with the AI coach (text-based assistant for learning).
+
+🎯 Architecture & Stack:
+- **Backend**: FastAPI + Uvicorn
+- **Frontend**: Single-page app (HTML + Vanilla JS + Bootstrap)
+- **Chess Engine**: python-chess + Stockfish binary
+- **LLM**: Groq AI (LLaMA 3 70B via API)
+- **Real-time**: FastAPI WebSocket for move flow and chat with coach
+- **Testing**: pytest + httpx
+- **Security**: Validate FENs, sanitize inputs, limit message sizes
+
+📁 Folder/File Structure (Generate files with this layout and full contents):
+chess-groq-coach/
+│
+├─ app.py
+├─ requirements.txt
+├─ .env.example
+├─ config.py
+│
+├─ frontend/
+│ ├─ index.html
+│ ├─ static/
+│ │ ├─ css/styles.css
+│ │ ├─ js/main.js
+│ │ └─ img/
+│
+├─ backend/
+│ ├─ api/
+│ │ ├─ routes.py
+│ │ └─ websocket.py
+│ ├─ chess_engine/
+│ │ ├─ stockfish.py
+│ │ └─ groq_client.py
+│ ├─ models/
+│ │ ├─ game.py
+│ │ └─ chat.py
+│ └─ utils/
+│ ├─ fen_utils.py
+│ └─ prompts.py
+│
+└─ tests/
+└─ test_routes.py
+
+markdown
+Kopyala
+Düzenle
+
+⚙️ Coding Guidelines:
+- Use Python ≥3.10
+- All functions must have docstrings and type hints.
+- Use `httpx.AsyncClient` for Groq API calls with exponential backoff on 429.
+- Log instead of printing (`logging.INFO`)
+- Use streaming (`stream=True`) for WebSocket responses.
+- For frontend: responsive UI, semantic HTML, chessboard using Chessboard.js (CDN).
+
+🧠 Prompt Templates (to store in `prompts.py`):
+- **Mode 1**: `"You are a 1600-ELO player. Respond with best UCI move."`
+- **Mode 2**: `"Explain this move in ≤80 words. Was it good or bad?"`
+- **Mode 3**: `"Evaluate this move. Return JSON: {'score': float, 'reason': str}"`
+- **Mode 4**: `"Act like a chess coach. Stockfish gives top 3 moves. Pick one, explain it kindly."`
+
+📲 Frontend Requirements:
+- Tabs or dropdown for switching between 4 modes
+- Chessboard UI with move input
+- Move history + PGN download
+- Real-time feedback & scoring for moves
+- Chat interface for talking with the coach (Mode 4)
+- Mobile-friendly layout (auto-resizing board)
+
+🚨 Security:
+- Sanitize all inputs, especially user chat
+- Validate FEN strings via regex
+- Limit WebSocket message size to 4KB
+
+🧪 Testing:
+- Unit tests for stockfish evaluation, Groq prompt handling, API endpoints
+- Use `pytest-asyncio` for async tests
+
+📄 README (not needed now):
+- Later, add usage guide, install steps, and a demo GIF.
+
+Now scaffold all files listed above. Return only code, structured like:
+
+file:app.py
+```python
+# full content here
+file:backend/chess_engine/stockfish.py
+
+python
+Kopyala
+Düzenle
+# full content here
+...and so on.
+
+This is only the scaffold — no full logic yet for PGN parsing or AI conversations. After this, we will build real-time play, chat, scoring, and training logic step by step.

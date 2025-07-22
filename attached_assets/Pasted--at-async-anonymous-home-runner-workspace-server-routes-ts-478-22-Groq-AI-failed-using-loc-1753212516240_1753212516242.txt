@@ -1,0 +1,138 @@
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:16:25 PM [express] POST /api/chess/ai-move 200 in 2016ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+7:16:26 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+7:16:30 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":95,"quality":"excellent","e…
+Attempting Groq AI move generation for FEN: r1Rn1k1r/1p1p1ppp/8/P7/2P4P/8/P2PP1P1/RNBQKBN1 b Q - 0 14
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:16:33 PM [express] POST /api/chess/ai-move 200 in 1151ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+7:16:33 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+7:16:36 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":95,"quality":"excellent","e…
+Attempting Groq AI move generation for FEN: 1R1n1k1r/1p1p1ppp/8/P7/2P4P/8/P2PP1P1/RNBQKBN1 b Q - 0 15
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:16:40 PM [express] POST /api/chess/ai-move 200 in 3259ms :: {"move":{"from":"f8","to":"g8"},"reaso…
+7:16:40 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+7:16:42 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":95,"quality":"excellent","e…
+WebSocket client disconnected
+7:23:45 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+7:23:45 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+WebSocket client connected
+Attempting Groq AI move generation for FEN: rnbqkbnr/pppppppp/8/8/7P/8/PPPPPPP1/RNBQKBNR b KQkq - 0 1
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:24:07 PM [express] POST /api/chess/ai-move 200 in 5158ms :: {"move":{"from":"b8","to":"c6"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/5P1P/8/PPPPP1P1/RNBQKBNR b KQkq - 0 2
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:24:36 PM [express] POST /api/chess/ai-move 200 in 8301ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/8/3P1P1P/8/PPP1P1P1/RNBQKBNR b KQk - 0 3
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:24:59 PM [express] POST /api/chess/ai-move 200 in 9306ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/1P1P1P1P/8/P1P1P1P1/RNBQKBNR b KQk - 0 4
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:25:19 PM [express] POST /api/chess/ai-move 200 in 16312ms :: {"move":{"from":"a8","to":"b8"},"reas…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/8/1P1P1P1P/P7/2P1P1P1/RNBQKBNR b KQk - 0 5
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:25:34 PM [express] POST /api/chess/ai-move 200 in 9816ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/1P1P1P1P/P1P5/4P1P1/RNBQKBNR b KQk - 0 6
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:25:53 PM [express] POST /api/chess/ai-move 200 in 16055ms :: {"move":{"from":"a8","to":"b8"},"reas…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/8/1P1P1P1P/P1P1P3/6P1/RNBQKBNR b KQk - 0 7
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:26:07 PM [express] POST /api/chess/ai-move 200 in 9263ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/1P1P1P1P/P1P1P1P1/8/RNBQKBNR b KQk - 0 8
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:26:22 PM [express] POST /api/chess/ai-move 200 in 10993ms :: {"move":{"from":"a8","to":"b8"},"reas…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/8/PP1P1P1P/2P1P1P1/8/RNBQKBNR b KQk - 0 9
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:26:42 PM [express] POST /api/chess/ai-move 200 in 8485ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/PPPP1P1P/4P1P1/8/RNBQKBNR b KQk - 0 10
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:26:52 PM [express] POST /api/chess/ai-move 200 in 8156ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/8/PPPPPP1P/6P1/8/RNBQKBNR b KQk - 0 11
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:27:03 PM [express] POST /api/chess/ai-move 200 in 8009ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/8/PPPPPPPP/8/8/RNBQKBNR b KQk - 0 12
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:27:14 PM [express] POST /api/chess/ai-move 200 in 7381ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/P7/1PPPPPPP/8/8/RNBQKBNR b KQk - 0 13
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:27:26 PM [express] POST /api/chess/ai-move 200 in 8557ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2n5/P2P4/1PP1PPPP/8/8/RNBQKBNR b KQk - 0 14
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:27:37 PM [express] POST /api/chess/ai-move 200 in 8864ms :: {"move":{"from":"a8","to":"b8"},"reaso…
+Attempting Groq AI move generation for FEN: 1rbqkbnr/pppppppp/2n5/P2P2P1/1PP1PP1P/8/8/RNBQKBNR b KQk - 0 15
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
+7:27:49 PM [express] POST /api/chess/ai-move 200 in 8739ms :: {"move":{"from":"b8","to":"a8"},"reaso…
+Attempting Groq AI move generation for FEN: r1bqkbnr/pppppppp/2P5/P5P1/1PP1PP1P/8/8/RNBQKBNR b KQk - 0 16
+Groq API error: Error: No valid JSON response found
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:258:19)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:478:22)
+Groq AI failed, using local engine: No valid JSON response found
