@@ -197,6 +197,28 @@ RESPONSE FORMAT (JSON ONLY):
             };
           }
           return null;
+        },
+        
+        // Extract move from natural language patterns
+        () => {
+          // Look for common move patterns in natural language
+          const patterns = [
+            /\b([a-h][1-8])\s*(?:to|->)\s*([a-h][1-8])\b/i,
+            /\bmove\s+([a-h][1-8])\s+to\s+([a-h][1-8])\b/i,
+            /\b([a-h][1-8])-([a-h][1-8])\b/,
+            /\bfrom\s+([a-h][1-8])\s+to\s+([a-h][1-8])\b/i
+          ];
+          
+          for (const pattern of patterns) {
+            const match = cleaned.match(pattern);
+            if (match && match[1] && match[2]) {
+              return {
+                move: { from: match[1], to: match[2] },
+                reasoning: "Extracted from natural language response"
+              };
+            }
+          }
+          return null;
         }
       ];
 
@@ -306,6 +328,33 @@ RESPONSE FORMAT (JSON ONLY):
 
       const parsedResponse = this.extractValidJSON(content);
       if (!parsedResponse || !parsedResponse.move) {
+        console.log("Failed to extract move from JSON, trying smart fallback...");
+        
+        // Try to extract move from chess notation in the response
+        const chess = new Chess(fen);
+        const legalMoves = chess.moves({ verbose: true });
+        
+        // Look for algebraic notation moves
+        const sanPattern = /\b([NBRQK]?[a-h]?[1-8]?x?[a-h][1-8](?:=[NBRQ])?[+#]?)\b/g;
+        const sanMatches = content.match(sanPattern) || [];
+        
+        for (const sanMove of sanMatches) {
+          try {
+            const testChess = new Chess(fen);
+            const move = testChess.move(sanMove);
+            if (move) {
+              return {
+                move: { from: move.from, to: move.to, promotion: move.promotion },
+                reasoning: `Extracted from SAN notation: ${sanMove}`,
+                analysis: "Smart fallback extraction",
+                score: "0.0"
+              };
+            }
+          } catch (e) {
+            continue;
+          }
+        }
+        
         throw new Error("Failed to extract valid move from response");
       }
 
