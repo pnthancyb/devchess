@@ -58,10 +58,11 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
   
   const { makeAIMove, isAIThinking } = useAIChess();
   
-  // Temporarily disable WebSocket to fix connection issues
+  // Disable WebSocket completely to fix connection issues and black screen
   const connectionState = "disconnected" as const;
   const sendMessage = useCallback((message: any) => {
-    console.log("WebSocket message (disabled):", message);
+    // WebSocket disabled - all functionality is local
+    return;
   }, []);
 
   const isValidMove = useCallback((from: Square, to: Square): boolean => {
@@ -196,7 +197,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
         ...prev,
         chess: new Chess(gameState.chess.fen()),
         isPlayerTurn: gameMode === "opening" ? 
-          (learningState.currentMoveIndex >= learningState.selectedOpening?.moves.length! ? true : false) : 
+          (openingLearningState.currentMoveIndex >= openingLearningState.selectedOpening?.moves.length! ? true : false) : 
           false, // In opening mode, alternate turns until opening is complete
         status: gameState.chess.isGameOver() ? "ended" : "playing",
       }));

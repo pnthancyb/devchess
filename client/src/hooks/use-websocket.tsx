@@ -41,10 +41,10 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
 
     const connect = () => {
       if (connectingRef.current) return;
-      
+
       connectingRef.current = true;
       setConnectionState("connecting");
-      
+
       try {
         const ws = new WebSocket(wsUrl);
 
@@ -55,7 +55,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
           reconnectAttempts.current = 0;
           connectingRef.current = false;
           onConnect?.();
-          
+
           // Join game session immediately after connection
           ws.send(JSON.stringify({
             type: "join_game",
@@ -83,7 +83,7 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
           setSocket(null);
           connectingRef.current = false;
           onDisconnect?.();
-          
+
           // Only reconnect if it was an unexpected disconnection
           if (autoReconnect && reconnectAttempts.current < 3 && event.code !== 1000) {
             const delay = reconnectDelay * Math.pow(2, reconnectAttempts.current);
