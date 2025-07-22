@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { BookOpen, ArrowRight, RotateCcw, CheckCircle } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import type { ChessOpening, OpeningLearningState } from "@/types/chess";
+import { useEffect, useRef } from "react";
 
 interface OpeningFeedbackProps {
   opening: ChessOpening;
@@ -14,11 +15,21 @@ interface OpeningFeedbackProps {
 
 export function OpeningFeedback({ opening, learningState, onReset }: OpeningFeedbackProps) {
   const { t } = useI18n();
-  
+  const progressRef = useRef<HTMLDivElement>(null);
+
   const progress = (learningState.currentMoveIndex / opening.moves.length) * 100;
   const isComplete = learningState.currentMoveIndex >= opening.moves.length;
   const currentMove = opening.moves[learningState.currentMoveIndex];
   const nextMove = opening.moves[learningState.currentMoveIndex + 1];
+
+  useEffect(() => {
+    if (progressRef.current && learningState.currentMoveIndex > 0) {
+      progressRef.current.scrollIntoView({
+        behavior: 'smooth',
+        block: 'nearest'
+      });
+    }
+  }, [learningState.currentMoveIndex, learningState.completedMoves.length]);
 
   return (
     <Card>
@@ -30,7 +41,7 @@ export function OpeningFeedback({ opening, learningState, onReset }: OpeningFeed
       </CardHeader>
       <CardContent className="space-y-4">
         {/* Progress */}
-        <div className="space-y-2">
+        <div className="space-y-2" ref={progressRef}>
           <div className="flex justify-between items-center">
             <span className="text-sm font-medium">Progress</span>
             <span className="text-sm text-muted-foreground">
