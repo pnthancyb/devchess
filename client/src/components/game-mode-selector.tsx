@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { CheckCircle, MessageSquare, BarChart3, BookOpen } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import type { GameMode } from "@/hooks/use-chess-game";
+import type { GameMode } from "@/types/chess";
 
 interface GameModeSelectorProps {
   selectedMode: GameMode;
@@ -30,6 +30,11 @@ const modes = [
     icon: BookOpen,
     titleKey: "coach.mode",
   },
+  {
+    id: "opening" as const,
+    icon: BookOpen,
+    titleKey: "opening.learning",
+  },
 ];
 
 export function GameModeSelector({ selectedMode, onModeChange }: GameModeSelectorProps) {
@@ -39,7 +44,7 @@ export function GameModeSelector({ selectedMode, onModeChange }: GameModeSelecto
     <Card className="mb-6 shadow-md">
       <CardContent className="p-6">
         <h2 className="text-xl font-bold mb-6 text-center text-primary">{t("game.mode")}</h2>
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-5 gap-4">
           {modes.map((mode) => {
             const Icon = mode.icon;
             const isActive = selectedMode === mode.id;

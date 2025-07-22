@@ -8,6 +8,8 @@ import { ChessBoard } from "@/components/chess-board";
 import { MoveHistory } from "@/components/move-history";
 import { AIFeedback } from "@/components/ai-feedback";
 import { CoachChat } from "@/components/coach-chat";
+import { OpeningSelector } from "@/components/opening-selector";
+import { OpeningFeedback } from "@/components/opening-feedback";
 import { UserStats } from "@/components/user-stats";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -29,6 +31,9 @@ export default function ChessGame() {
     setGameMode,
     resetGame,
     updateAISettings,
+    openingLearningState,
+    setSelectedOpening,
+    chatMessages,
   } = useChessGame(gameId);
 
   const [selectedMove, setSelectedMove] = useState<number>();
@@ -47,6 +52,7 @@ export default function ChessGame() {
   };
 
   const isCoachMode = gameState.gameMode === "coach";
+  const isOpeningMode = gameState.gameMode === "opening";
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
@@ -99,6 +105,16 @@ export default function ChessGame() {
           </div>
         </div>
 
+        {/* Opening Learning Mode Interface */}
+        {isOpeningMode && !openingLearningState.selectedOpening && (
+          <div className="mb-6">
+            <OpeningSelector
+              onSelectOpening={setSelectedOpening}
+              selectedOpening={openingLearningState.selectedOpening}
+            />
+          </div>
+        )}
+
         {/* Game Layout */}
         <div className="flex flex-col xl:grid xl:grid-cols-4 gap-6">
           {/* Chessboard Section */}
@@ -127,20 +143,28 @@ export default function ChessGame() {
               <UserStats userId={1} />
             </div>
 
-            {/* AI Feedback Panel */}
-            <AIFeedback
-              mode={gameState.gameMode}
-              feedback={gameState.lastAIFeedback?.feedback}
-              score={gameState.lastAIFeedback?.score?.toString()}
-              evaluation={gameState.lastAIFeedback?.evaluation}
-              quality={gameState.lastAIFeedback?.quality === "excellent" ? "good" : 
-                       gameState.lastAIFeedback?.quality === "inaccuracy" || gameState.lastAIFeedback?.quality === "mistake" || gameState.lastAIFeedback?.quality === "blunder" ? "bad" : "neutral"}
-            />
+            {/* Opening Learning Feedback */}
+            {isOpeningMode && openingLearningState.selectedOpening ? (
+              <OpeningFeedback
+                opening={openingLearningState.selectedOpening}
+                learningState={openingLearningState}
+              />
+            ) : (
+              /* AI Feedback Panel */
+              <AIFeedback
+                mode={gameState.gameMode}
+                feedback={gameState.lastAIFeedback?.feedback}
+                score={gameState.lastAIFeedback?.score?.toString()}
+                evaluation={gameState.lastAIFeedback?.evaluation}
+                quality={gameState.lastAIFeedback?.quality === "excellent" ? "good" : 
+                         gameState.lastAIFeedback?.quality === "inaccuracy" || gameState.lastAIFeedback?.quality === "mistake" || gameState.lastAIFeedback?.quality === "blunder" ? "bad" : "neutral"}
+              />
+            )}
 
             {/* Coach Chat Panel */}
             {isCoachMode && (
               <CoachChat
-                messages={[]}
+                messages={chatMessages}
                 onSendMessage={sendChatMessage}
                 isVisible={isCoachMode}
                 currentFen={gameState.currentFen}

@@ -17,7 +17,7 @@ export const users = pgTable("users", {
 export const games = pgTable("games", {
   id: serial("id").primaryKey(),
   userId: integer("user_id").references(() => users.id),
-  mode: text("mode").notNull(), // classic, feedback, scoring, coach
+  mode: text("mode").notNull(), // classic, feedback, scoring, coach, opening
   fen: text("fen").notNull(),
   pgn: text("pgn").notNull().default(""),
   status: text("status").notNull().default("active"), // active, completed, abandoned

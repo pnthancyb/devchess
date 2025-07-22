@@ -6,18 +6,17 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { MessageSquare, Send } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { apiRequest } from "@/lib/queryClient";
-import type { ChatMessage } from "@shared/schema";
+import type { ChatMessage } from "@/types/chess";
 
 interface CoachChatProps {
   messages: ChatMessage[];
   onSendMessage: (message: string) => void;
-  onReceiveMessage?: (message: string) => void;
   isVisible: boolean;
   currentFen?: string;
   aiModel?: string;
 }
 
-export function CoachChat({ messages, onSendMessage, onReceiveMessage, isVisible, currentFen, aiModel = "llama3-70b-8192" }: CoachChatProps) {
+export function CoachChat({ messages, onSendMessage, isVisible, currentFen, aiModel = "llama3-70b-8192" }: CoachChatProps) {
   const { t } = useI18n();
   const [inputValue, setInputValue] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -29,36 +28,9 @@ export function CoachChat({ messages, onSendMessage, onReceiveMessage, isVisible
       setIsLoading(true);
 
       try {
-        console.log("Sending coach message:", userMessage);
-        const response = await apiRequest("/api/chess/coach-response", "POST", {
-          message: userMessage,
-          fen: currentFen || "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-          model: aiModel,
-          gameId: Date.now().toString()
-        });
-
-        console.log("Coach response received:", response);
-
-        if (response && response.response) {
-          // Add user message first
-          if (onSendMessage) {
-            onSendMessage(userMessage);
-          }
-          // Then add AI response  
-          if (onReceiveMessage) {
-            onReceiveMessage(response.response);
-          }
-        } else {
-          console.error("Invalid coach response:", response);
-          if (onReceiveMessage) {
-            onReceiveMessage("Sorry, I didn't receive a proper response. Please try again!");
-          }
-        }
+        await onSendMessage(userMessage);
       } catch (error) {
-        console.error("Failed to get coach response:", error);
-        if (onReceiveMessage) {
-          onReceiveMessage("Sorry, I'm having trouble responding right now. Please try again!");
-        }
+        console.error("Failed to send message:", error);
       } finally {
         setIsLoading(false);
       }
@@ -114,7 +86,7 @@ export function CoachChat({ messages, onSendMessage, onReceiveMessage, isVisible
                 >
                   <p className="text-sm">{message.message}</p>
                   <span className="text-xs opacity-70 mt-1 block">
-                    {new Date(message.createdAt).toLocaleTimeString([], {
+                    {new Date(message.timestamp).toLocaleTimeString([], {
                       hour: "2-digit",
                       minute: "2-digit",
                     })}

@@ -1,7 +1,8 @@
 
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Chess, type Move as ChessJSMove, type Square } from "chess.js";
-import type { ChessMove, GameMode, GameState, AIFeedback } from "@/types/chess";
+import type { ChessMove, GameMode, GameState, AIFeedback, OpeningLearningState, ChessOpening, ChatMessage } from "@/types/chess";
+import { getOpeningMoves } from "@/data/openings";
 import { useAIChess } from "./use-ai-chess";
 import { useWebSocket } from "./use-websocket";
 import { downloadPGN } from "@/lib/chess-utils";
@@ -26,10 +27,20 @@ export interface UseChessGameReturn {
   downloadGamePGN: () => void;
   isValidMove: (from: Square, to: Square) => boolean;
   getValidMoves: (square: Square) => Square[];
+  openingLearningState: OpeningLearningState;
+  setSelectedOpening: (opening: ChessOpening) => void;
+  chatMessages: ChatMessage[];
 }
 
 export function useChessGame(gameId?: number): UseChessGameReturn {
   const [gameMode, setGameMode] = useState<GameMode>("classic");
+  const [openingLearningState, setOpeningLearningState] = useState<OpeningLearningState>({
+    selectedOpening: null,
+    currentMoveIndex: 0,
+    playerColor: "white",
+    completedMoves: [],
+    nextMove: null,
+  });
   const [aiModel, setAIModel] = useState("llama3-70b-8192");
   const [aiDifficulty, setAIDifficulty] = useState(3);
   const [gameState, setGameState] = useState<GameState>(() => ({
@@ -73,6 +84,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const [moves, setMoves] = useState<ChessMove[]>([]);
   const [lastAIFeedback, setLastAIFeedback] = useState<AIFeedback>();
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const analyzeMove = useCallback(async (move: ChessMove): Promise<any> => {
     try {
@@ -213,9 +225,9 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
                   status: gameState.chess.isGameOver() ? "ended" : "playing",
                 }));
 
-                // Request feedback for coach mode
-                if (gameMode === "coach") {
-                  await requestAIFeedback(gameState.chess.fen());
+                // Request feedback for appropriate modes
+                if (gameMode === "feedback" || gameMode === "scoring" || gameMode === "coach") {
+                  await requestAIFeedback(aiChessMove);
                 }
               }
             }
@@ -244,12 +256,58 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     setAIDifficulty(difficulty);
   }, []);
 
-  const sendChatMessage = useCallback((message: string) => {
-    sendMessage({
-      type: 'chat_message',
-      data: { message },
-    });
-  }, [sendMessage]);
+  const sendChatMessage = useCallback(async (message: string) => {
+    if (!message.trim()) return;
+
+    // Add user message
+    const userMessage: ChatMessage = {
+      id: Date.now().toString(),
+      sender: "user",
+      message: message.trim(),
+      timestamp: new Date(),
+      language: "en",
+    };
+    
+    setChatMessages(prev => [...prev, userMessage]);
+
+    try {
+      const response = await fetch("/api/chess/coach-response", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          message: message.trim(),
+          fen: gameState.chess.fen(),
+          model: aiModel,
+          gameId: gameIdRef.current?.toString() || "1",
+        }),
+      });
+
+      const data = await response.json();
+      
+      if (data.response) {
+        const aiMessage: ChatMessage = {
+          id: (Date.now() + 1).toString(),
+          sender: "ai",
+          message: data.response,
+          timestamp: new Date(),
+          language: "en",
+        };
+        
+        setChatMessages(prev => [...prev, aiMessage]);
+      }
+    } catch (error) {
+      console.error("Coach chat error:", error);
+      const errorMessage: ChatMessage = {
+        id: (Date.now() + 1).toString(),
+        sender: "ai",
+        message: "Sorry, I'm having trouble responding right now. Please try again!",
+        timestamp: new Date(),
+        language: "en",
+      };
+      
+      setChatMessages(prev => [...prev, errorMessage]);
+    }
+  }, [gameState.chess, aiModel]);
 
   const resetGame = useCallback(() => {
     const newChess = new Chess();
@@ -287,6 +345,35 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     });
   }, [moves, gameMode, aiModel, aiDifficulty, gameState.chess]);
 
+  const setSelectedOpening = useCallback((opening: ChessOpening) => {
+    setOpeningLearningState(prev => ({
+      ...prev,
+      selectedOpening: opening,
+      currentMoveIndex: 0,
+      completedMoves: [],
+      nextMove: opening.moves[0] || null,
+    }));
+    
+    // Reset the chess board for the opening
+    resetGame();
+    setGameMode("opening");
+  }, [resetGame]);
+
+  // Handle opening learning logic
+  useEffect(() => {
+    if (gameMode === "opening" && openingLearningState.selectedOpening) {
+      const { nextMove, isComplete, playerMove } = getOpeningMoves(
+        openingLearningState.selectedOpening,
+        openingLearningState.currentMoveIndex
+      );
+      
+      setOpeningLearningState(prev => ({
+        ...prev,
+        nextMove,
+      }));
+    }
+  }, [gameMode, openingLearningState.selectedOpening, openingLearningState.currentMoveIndex]);
+
   // Initialize game
   useEffect(() => {
     if (!gameIdRef.current) {
@@ -316,5 +403,8 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     downloadGamePGN,
     isValidMove,
     getValidMoves,
+    openingLearningState,
+    setSelectedOpening,
+    chatMessages,
   };
 }

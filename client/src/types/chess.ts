@@ -1,6 +1,6 @@
 import type { Chess, Move as ChessJSMove, Square } from "chess.js";
 
-export type GameMode = "classic" | "feedback" | "scoring" | "coach";
+export type GameMode = "classic" | "feedback" | "scoring" | "coach" | "opening";
 
 export interface ChessMove {
   from: Square;
@@ -57,4 +57,20 @@ export interface GameSession {
   mode: GameMode;
   difficulty: number;
   aiModel: string;
+}
+
+export interface ChessOpening {
+  id: string;
+  name: string;
+  moves: string[];
+  description: string;
+  fen?: string;
+}
+
+export interface OpeningLearningState {
+  selectedOpening: ChessOpening | null;
+  currentMoveIndex: number;
+  playerColor: "white" | "black";
+  completedMoves: string[];
+  nextMove: string | null;
 }
