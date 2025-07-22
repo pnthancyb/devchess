@@ -23,23 +23,25 @@ export function OpeningFeedback({ opening, learningState, onReset }: OpeningFeed
   const nextMove = opening.moves[learningState.currentMoveIndex + 1];
 
   useEffect(() => {
-    if (progressRef.current && learningState.currentMoveIndex > 0) {
+    if (progressRef.current) {
+      // Always scroll to ensure the progress section is visible when there's activity
       progressRef.current.scrollIntoView({
         behavior: 'smooth',
-        block: 'nearest'
+        block: 'start',
+        inline: 'nearest'
       });
     }
-  }, [learningState.currentMoveIndex, learningState.completedMoves.length]);
+  }, [learningState.currentMoveIndex, learningState.completedMoves.length, isComplete]);
 
   return (
-    <Card>
-      <CardHeader>
+    <Card className="max-h-[70vh] flex flex-col">
+      <CardHeader className="flex-shrink-0">
         <CardTitle className="flex items-center text-lg">
           <BookOpen className="w-5 h-5 mr-2 text-chess-gold" />
           Learning: {opening.name}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
+      <CardContent className="space-y-4 overflow-y-auto flex-1">
         {/* Progress */}
         <div className="space-y-2" ref={progressRef}>
           <div className="flex justify-between items-center">
