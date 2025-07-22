@@ -195,14 +195,16 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       setGameState(prev => ({
         ...prev,
         chess: new Chess(gameState.chess.fen()),
-        isPlayerTurn: gameMode === "opening" ? true : false, // In opening mode, player continues until opening is complete
+        isPlayerTurn: gameMode === "opening" ? 
+          (learningState.currentMoveIndex >= learningState.selectedOpening?.moves.length! ? true : false) : 
+          false, // In opening mode, alternate turns until opening is complete
         status: gameState.chess.isGameOver() ? "ended" : "playing",
       }));
 
       console.log("Player move complete, AI should move next for FEN:", gameState.chess.fen());
 
-      // Check if AI should move (skip in opening learning mode)
-      if (gameMode !== "opening" && !gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
+      // Check if AI should move 
+      if (!gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
         console.log("AI should make move - Black turn detected, position:", gameState.chess.fen());
         
         // Request AI move
