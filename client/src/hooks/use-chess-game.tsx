@@ -163,25 +163,46 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
         moveNumber: Math.ceil(moveCountRef.current / 2) + 1
       };
 
+      // Handle opening learning mode
+      if (gameMode === "opening" && openingLearningState.selectedOpening) {
+        const expectedMove = openingLearningState.selectedOpening.moves[openingLearningState.currentMoveIndex];
+        if (moveResult.san === expectedMove) {
+          // Correct move made
+          setOpeningLearningState(prev => ({
+            ...prev,
+            currentMoveIndex: prev.currentMoveIndex + 1,
+            completedMoves: [...prev.completedMoves, moveResult.san],
+            nextMove: prev.selectedOpening?.moves[prev.currentMoveIndex + 1] || null,
+          }));
+        } else {
+          // Incorrect move - revert it
+          gameState.chess.undo();
+          console.log("Incorrect move in opening learning mode. Expected:", expectedMove, "Got:", moveResult.san);
+          return false;
+        }
+      }
+
       moveCountRef.current += 1;
       const newMoves = [...moves, newMove];
       setMoves(newMoves);
 
-      // Analyze the move
-      const analysis = await analyzeMove(newMove);
-      console.log("Player move analysis:", analysis);
+      // Analyze the move (skip for opening mode)
+      if (gameMode !== "opening") {
+        const analysis = await analyzeMove(newMove);
+        console.log("Player move analysis:", analysis);
+      }
 
       setGameState(prev => ({
         ...prev,
         chess: new Chess(gameState.chess.fen()),
-        isPlayerTurn: false,
+        isPlayerTurn: gameMode === "opening" ? true : false, // In opening mode, player continues until opening is complete
         status: gameState.chess.isGameOver() ? "ended" : "playing",
       }));
 
       console.log("Player move complete, AI should move next for FEN:", gameState.chess.fen());
 
-      // Check if AI should move
-      if (!gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
+      // Check if AI should move (skip in opening learning mode)
+      if (gameMode !== "opening" && !gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
         console.log("AI should make move - Black turn detected, position:", gameState.chess.fen());
         
         // Request AI move
