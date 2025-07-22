@@ -1,0 +1,61 @@
+client:536 WebSocket connection to 'wss://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/?token=icK_9aBR3ONy' failed: 
+setupWebSocket @ client:536
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=icK_9aBR3ONy' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+use-chess-game.tsx:145 Player making move from e2 to e4 
+use-chess-game.tsx:204 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:208 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:199 Uncaught ReferenceError: learningState is not defined
+    at use-chess-game.tsx:199:12
+    at basicStateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=2297b0a7:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=2297b0a7:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=2297b0a7:1066:29)
+    at useChessGame (use-chess-game.tsx:46:37)
+    at ChessGame (chess-game.tsx:37:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=2297b0a7:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=2297b0a7:14582:28)
+use-chess-game.tsx:199 Uncaught ReferenceError: learningState is not defined
+    at use-chess-game.tsx:199:12
+    at basicStateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=2297b0a7:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=2297b0a7:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=2297b0a7:1066:29)
+    at useChessGame (use-chess-game.tsx:46:37)
+    at ChessGame (chess-game.tsx:37:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=2297b0a7:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=2297b0a7:14582:28)
+hook.js:608 The above error occurred in the <ChessGame> component:
+
+    at ChessGame (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/src/pages/chess-game.tsx:39:18)
+    at Route (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=2297b0a7:323:16)
+    at Switch (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=2297b0a7:379:17)
+    at Router
+    at Provider (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=2297b0a7:38:15)
+    at TooltipProvider (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=2297b0a7:65:5)
+    at I18nProvider (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/src/lib/i18n.tsx:255:32)
+    at ThemeProvider (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/src/hooks/use-theme.tsx:20:33)
+    at QueryClientProvider (https://f67ebeaa-0959-4296-aa5c-1d69a6101093-00-qd34if3e2sq5.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=2297b0a7:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+chunk-RPCDYKBN.js?v=2297b0a7:9129 Uncaught ReferenceError: learningState is not defined
+    at use-chess-game.tsx:199:12
+    at basicStateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=2297b0a7:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=2297b0a7:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=2297b0a7:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=2297b0a7:1066:29)
+    at useChessGame (use-chess-game.tsx:46:37)
+    at ChessGame (chess-game.tsx:37:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=2297b0a7:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=2297b0a7:14582:28)
+use-chess-game.tsx:212 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:214 Requesting AI move for black pieces
+use-chess-game.tsx:222 AI move successful: Object
