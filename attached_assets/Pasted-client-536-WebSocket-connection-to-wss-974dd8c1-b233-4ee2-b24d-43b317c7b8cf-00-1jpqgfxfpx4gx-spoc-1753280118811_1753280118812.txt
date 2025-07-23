@@ -1,0 +1,234 @@
+client:536 WebSocket connection to 'wss://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/?token=DyVMECXtXY9s' failed: 
+setupWebSocket @ client:536
+(anonymous) @ client:531
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=DyVMECXtXY9s' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+setupWebSocket @ client:536
+fallback @ client:509
+(anonymous) @ client:555
+use-chess-game.tsx:147 Player making move from e2 to e4 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:214 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'b8', to: 'c6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from g1 to f3 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkbnr/pppppppp/2n5/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 2 2
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkbnr/pppppppp/2n5/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 2 2
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkbnr/pppppppp/2n5/8/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 2 2
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'c6', to: 'd4', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from f3 to d4 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkbnr/pppppppp/8/8/3NP3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkbnr/pppppppp/8/8/3NP3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkbnr/pppppppp/8/8/3NP3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'g8', to: 'h6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from d4 to f5 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkb1r/pppppppp/7n/5N2/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 2 4
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkb1r/pppppppp/7n/5N2/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 2 4
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkb1r/pppppppp/7n/5N2/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 2 4
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'h6', to: 'g8', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from d1 to h5 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkbnr/pppppppp/8/5N1Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 4 5
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkbnr/pppppppp/8/5N1Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 4 5
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkbnr/pppppppp/8/5N1Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 4 5
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'g8', to: 'h6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from f5 to h6 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkb1r/pppppppp/7N/7Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 6
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkb1r/pppppppp/7N/7Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 6
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkb1r/pppppppp/7N/7Q/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 6
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'g7', to: 'h6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from h5 to h6 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: r1bqkb1r/pppppp1p/7Q/8/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 7
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: r1bqkb1r/pppppp1p/7Q/8/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 7
+use-chess-game.tsx:214 AI (black) making move for position: r1bqkb1r/pppppp1p/7Q/8/4P3/8/PPPP1PPP/RNB1KB1R b KQkq - 0 7
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'f8', to: 'h6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:147 Player making move from g2 to g4 
+use-chess-game.tsx:112 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:194 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:214 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/6P1/8/PPPPPP1P/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'b8', to: 'c6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
+use-chess-game.tsx:124  POST https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/api/chess/feedback 400 (Bad Request)
+(anonymous) @ use-chess-game.tsx:124
+(anonymous) @ use-chess-game.tsx:255
+setTimeout
+(anonymous) @ use-chess-game.tsx:213
+await in (anonymous)
+(anonymous) @ use-chess-game.tsx:276
+handleSquareClick @ chess-board.tsx:90
+onClick @ chess-board.tsx:146
+callCallback2 @ chunk-RPCDYKBN.js?v=7afb24b5:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=7afb24b5:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=7afb24b5:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=7afb24b5:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=7afb24b5:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=7afb24b5:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=7afb24b5:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=7afb24b5:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=7afb24b5:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=7afb24b5:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=7afb24b5:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=7afb24b5:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=7afb24b5:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=7afb24b5:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=7afb24b5:5449
+use-chess-game.tsx:147 Player making move from d2 to d4 
+use-chess-game.tsx:206 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:210 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+chunk-RPCDYKBN.js?v=7afb24b5:9934 Uncaught Error: Objects are not valid as a React child (found: object with keys {from, to, piece, san, fen, moveNumber}). If you meant to render a collection of children, use an array instead.
+    at throwOnInvalidObjectType (chunk-RPCDYKBN.js?v=7afb24b5:9934:17)
+    at updateSlot (chunk-RPCDYKBN.js?v=7afb24b5:10155:15)
+    at reconcileChildrenArray (chunk-RPCDYKBN.js?v=7afb24b5:10251:30)
+    at reconcileChildFibers2 (chunk-RPCDYKBN.js?v=7afb24b5:10559:24)
+    at reconcileChildren (chunk-RPCDYKBN.js?v=7afb24b5:14292:37)
+    at updateHostComponent (chunk-RPCDYKBN.js?v=7afb24b5:14807:11)
+    at beginWork (chunk-RPCDYKBN.js?v=7afb24b5:15935:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=7afb24b5:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=7afb24b5:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=7afb24b5:3733:39)
+throwOnInvalidObjectType @ chunk-RPCDYKBN.js?v=7afb24b5:9934
+updateSlot @ chunk-RPCDYKBN.js?v=7afb24b5:10155
+reconcileChildrenArray @ chunk-RPCDYKBN.js?v=7afb24b5:10251
+reconcileChildFibers2 @ chunk-RPCDYKBN.js?v=7afb24b5:10559
+reconcileChildren @ chunk-RPCDYKBN.js?v=7afb24b5:14292
+updateHostComponent @ chunk-RPCDYKBN.js?v=7afb24b5:14807
+beginWork @ chunk-RPCDYKBN.js?v=7afb24b5:15935
+callCallback2 @ chunk-RPCDYKBN.js?v=7afb24b5:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=7afb24b5:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=7afb24b5:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=7afb24b5:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=7afb24b5:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=7afb24b5:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=7afb24b5:19116
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=7afb24b5:18678
+workLoop @ chunk-RPCDYKBN.js?v=7afb24b5:197
+flushWork @ chunk-RPCDYKBN.js?v=7afb24b5:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=7afb24b5:384
+chunk-RPCDYKBN.js?v=7afb24b5:9934 Uncaught Error: Objects are not valid as a React child (found: object with keys {from, to, piece, san, fen, moveNumber}). If you meant to render a collection of children, use an array instead.
+    at throwOnInvalidObjectType (chunk-RPCDYKBN.js?v=7afb24b5:9934:17)
+    at updateSlot (chunk-RPCDYKBN.js?v=7afb24b5:10155:15)
+    at reconcileChildrenArray (chunk-RPCDYKBN.js?v=7afb24b5:10251:30)
+    at reconcileChildFibers2 (chunk-RPCDYKBN.js?v=7afb24b5:10559:24)
+    at reconcileChildren (chunk-RPCDYKBN.js?v=7afb24b5:14292:37)
+    at updateHostComponent (chunk-RPCDYKBN.js?v=7afb24b5:14807:11)
+    at beginWork (chunk-RPCDYKBN.js?v=7afb24b5:15935:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=7afb24b5:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=7afb24b5:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=7afb24b5:3733:39)
+throwOnInvalidObjectType @ chunk-RPCDYKBN.js?v=7afb24b5:9934
+updateSlot @ chunk-RPCDYKBN.js?v=7afb24b5:10155
+reconcileChildrenArray @ chunk-RPCDYKBN.js?v=7afb24b5:10251
+reconcileChildFibers2 @ chunk-RPCDYKBN.js?v=7afb24b5:10559
+reconcileChildren @ chunk-RPCDYKBN.js?v=7afb24b5:14292
+updateHostComponent @ chunk-RPCDYKBN.js?v=7afb24b5:14807
+beginWork @ chunk-RPCDYKBN.js?v=7afb24b5:15935
+callCallback2 @ chunk-RPCDYKBN.js?v=7afb24b5:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=7afb24b5:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=7afb24b5:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=7afb24b5:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=7afb24b5:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=7afb24b5:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=7afb24b5:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=7afb24b5:18736
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=7afb24b5:18684
+workLoop @ chunk-RPCDYKBN.js?v=7afb24b5:197
+flushWork @ chunk-RPCDYKBN.js?v=7afb24b5:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=7afb24b5:384
+hook.js:608 The above error occurred in the <div> component:
+
+    at div
+    at Badge (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/components/ui/badge.tsx:35:18)
+    at div
+    at div
+    at div
+    at _c9 (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/components/ui/card.tsx:114:12)
+    at div
+    at _c (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/components/ui/card.tsx:20:11)
+    at OpeningFeedback (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/components/opening-feedback.tsx:25:35)
+    at div
+    at div
+    at main
+    at div
+    at ChessGame (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/pages/chess-game.tsx:38:18)
+    at Route (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=7afb24b5:323:16)
+    at Switch (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=7afb24b5:379:17)
+    at Router
+    at Provider (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-UBQ2LXDH.js?v=7afb24b5:22:15)
+    at TooltipProvider (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=7afb24b5:58:5)
+    at I18nProvider (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/lib/i18n.tsx:438:32)
+    at ThemeProvider (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/src/hooks/use-theme.tsx:20:33)
+    at QueryClientProvider (https://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=7afb24b5:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+logCapturedError @ chunk-RPCDYKBN.js?v=7afb24b5:14032
+update.callback @ chunk-RPCDYKBN.js?v=7afb24b5:14052
+callCallback @ chunk-RPCDYKBN.js?v=7afb24b5:11248
+commitUpdateQueue @ chunk-RPCDYKBN.js?v=7afb24b5:11265
+commitLayoutEffectOnFiber @ chunk-RPCDYKBN.js?v=7afb24b5:17093
+commitLayoutMountEffects_complete @ chunk-RPCDYKBN.js?v=7afb24b5:17980
+commitLayoutEffects_begin @ chunk-RPCDYKBN.js?v=7afb24b5:17969
+commitLayoutEffects @ chunk-RPCDYKBN.js?v=7afb24b5:17920
+commitRootImpl @ chunk-RPCDYKBN.js?v=7afb24b5:19353
+commitRoot @ chunk-RPCDYKBN.js?v=7afb24b5:19277
+finishConcurrentRender @ chunk-RPCDYKBN.js?v=7afb24b5:18760
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=7afb24b5:18718
+workLoop @ chunk-RPCDYKBN.js?v=7afb24b5:197
+flushWork @ chunk-RPCDYKBN.js?v=7afb24b5:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=7afb24b5:384
+chunk-RPCDYKBN.js?v=7afb24b5:9934 Uncaught Error: Objects are not valid as a React child (found: object with keys {from, to, piece, san, fen, moveNumber}). If you meant to render a collection of children, use an array instead.
+    at throwOnInvalidObjectType (chunk-RPCDYKBN.js?v=7afb24b5:9934:17)
+    at updateSlot (chunk-RPCDYKBN.js?v=7afb24b5:10155:15)
+    at reconcileChildrenArray (chunk-RPCDYKBN.js?v=7afb24b5:10251:30)
+    at reconcileChildFibers2 (chunk-RPCDYKBN.js?v=7afb24b5:10559:24)
+    at reconcileChildren (chunk-RPCDYKBN.js?v=7afb24b5:14292:37)
+    at updateHostComponent (chunk-RPCDYKBN.js?v=7afb24b5:14807:11)
+    at beginWork (chunk-RPCDYKBN.js?v=7afb24b5:15935:22)
+    at beginWork$1 (chunk-RPCDYKBN.js?v=7afb24b5:19753:22)
+    at performUnitOfWork (chunk-RPCDYKBN.js?v=7afb24b5:19198:20)
+    at workLoopSync (chunk-RPCDYKBN.js?v=7afb24b5:19137:13)
+throwOnInvalidObjectType @ chunk-RPCDYKBN.js?v=7afb24b5:9934
+updateSlot @ chunk-RPCDYKBN.js?v=7afb24b5:10155
+reconcileChildrenArray @ chunk-RPCDYKBN.js?v=7afb24b5:10251
+reconcileChildFibers2 @ chunk-RPCDYKBN.js?v=7afb24b5:10559
+reconcileChildren @ chunk-RPCDYKBN.js?v=7afb24b5:14292
+updateHostComponent @ chunk-RPCDYKBN.js?v=7afb24b5:14807
+beginWork @ chunk-RPCDYKBN.js?v=7afb24b5:15935
+beginWork$1 @ chunk-RPCDYKBN.js?v=7afb24b5:19753
+performUnitOfWork @ chunk-RPCDYKBN.js?v=7afb24b5:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=7afb24b5:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=7afb24b5:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=7afb24b5:18736
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=7afb24b5:18684
+workLoop @ chunk-RPCDYKBN.js?v=7afb24b5:197
+flushWork @ chunk-RPCDYKBN.js?v=7afb24b5:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=7afb24b5:384
+use-chess-game.tsx:214 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:216 Requesting AI move for black pieces
+use-chess-game.tsx:224 AI move successful: {from: 'b8', to: 'c6', promotion: undefined, evaluation: '0.0', analysis: 'Stockfish-16 analysis at level 3'}
