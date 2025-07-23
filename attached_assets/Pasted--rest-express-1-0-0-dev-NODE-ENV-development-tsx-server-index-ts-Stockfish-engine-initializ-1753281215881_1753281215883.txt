@@ -1,0 +1,673 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+Stockfish engine initialized (simulation mode)
+2:19:27 PM [express] serving on port 5000
+2:19:29 PM [express] POST /api/chess/analyze-move 200 in 4ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "e5"},
+  "reasoning": "Playing d5 would be a more aggressive move, but it would also weaken the kingside pawn structure. Instead, I'm opting for e5, which challenges W...
+AI move successful: { from: 'e7', to: 'e5', promotion: undefined }
+2:19:33 PM [express] POST /api/chess/ai-move 200 in 3416ms :: {"move":{"from":"e7","to":"e5"},"reaso…
+2:19:35 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:19:35 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:19:45 PM [express] POST /api/chess/analyze-move 200 in 2ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "d8", "to": "e7"},
+  "reasoning": "Developing the queen, controlling the center, and preparing to develop other pieces. This move also eyes the pawn on e4, potentially creating a ...
+AI move successful: { from: 'd8', to: 'e7', promotion: undefined }
+2:19:47 PM [express] POST /api/chess/ai-move 200 in 938ms :: {"move":{"from":"d8","to":"e7"},"reason…
+2:19:47 PM [express] POST /api/chess/feedback 200 in 2ms :: {"feedback":"Current position evaluation…
+2:19:51 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "e5"},
+  "reasoning": "Capturing the pawn on e4, opening up the center, and preparing to develop other pieces. This move also puts pressure on White's pawn structure a...
+AI move successful: { from: 'e7', to: 'e5', promotion: undefined }
+2:19:53 PM [express] POST /api/chess/ai-move 200 in 792ms :: {"move":{"from":"e7","to":"e5"},"reason…
+2:19:53 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:01 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "f8", "to": "e7"},
+  "reasoning": "Developing the bishop to a good square, controlling the d5 square, and preparing to develop other pieces. This move also eyes the queen on e5, p...
+AI move successful: { from: 'f8', to: 'e7', promotion: undefined }
+2:20:03 PM [express] POST /api/chess/ai-move 200 in 872ms :: {"move":{"from":"f8","to":"e7"},"reason…
+2:20:03 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:07 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "f6"},
+  "reasoning": "Developing the knight to a strong central square, preparing to control the d5 square and potentially creating a pawn chain on the queenside. Thi...
+AI move successful: { from: 'e7', to: 'f6', promotion: undefined }
+2:20:09 PM [express] POST /api/chess/ai-move 200 in 770ms :: {"move":{"from":"e7","to":"f6"},"reason…
+2:20:09 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:25 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "b8", "to": "c6"},
+  "reasoning": "Developing the knight to a strong central square, preparing to control the d4 square and potentially create a pawn chain. This move also helps t...
+AI move successful: { from: 'b8', to: 'c6', promotion: undefined }
+2:20:27 PM [express] POST /api/chess/ai-move 200 in 926ms :: {"move":{"from":"b8","to":"c6"},"reason…
+2:20:27 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:33 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e8", "to": "e7"},
+  "reasoning": "Developing the king to a safer square, preparing to develop other pieces, and controlling the e5 square which can be a strong pawn center. This ...
+AI move successful: { from: 'e8', to: 'e7', promotion: undefined }
+2:20:35 PM [express] POST /api/chess/ai-move 200 in 879ms :: {"move":{"from":"e8","to":"e7"},"reason…
+2:20:35 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:38 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "f6"},
+  "reasoning": "Capturing the queen with Kxf6, which develops the king and prepares to develop other pieces. This move also puts pressure on the queenside and o...
+AI move successful: { from: 'e7', to: 'f6', promotion: undefined }
+2:20:39 PM [express] POST /api/chess/ai-move 200 in 496ms :: {"move":{"from":"e7","to":"f6"},"reason…
+2:20:40 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:46 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "c6", "to": "b4"},
+  "reasoning": "Developing the knight to a strong central square, preparing to control the d5 square and potentially creating a pawn chain on the queenside. Thi...
+AI move successful: { from: 'c6', to: 'b4', promotion: undefined }
+2:20:48 PM [express] POST /api/chess/ai-move 200 in 1073ms :: {"move":{"from":"c6","to":"b4"},"reaso…
+2:20:48 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:20:55 PM [express] POST /api/chess/coach-response 200 in 966ms :: {"response":"💡 TIP: Consider pl…
+2:21:04 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "g8", "to": "h6"},
+  "reasoning": "Developing the knight to a good square, controlling the f4 square and preparing to develop other pieces. This move also eyes the bishop on b3, p...
+AI move successful: { from: 'g8', to: 'h6', promotion: undefined }
+2:21:06 PM [express] POST /api/chess/ai-move 200 in 976ms :: {"move":{"from":"g8","to":"h6"},"reason…
+2:21:06 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:26:26 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:26:26 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:26:40 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:26:40 PM [express] POST /api/chess/ai-move 200 in 15ms :: {"move":{"from":"b8","to":"c6"},"reasoni…
+2:26:43 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:26:44 PM [express] POST /api/chess/ai-move 200 in 12ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:26:55 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:26:56 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:27:11 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:12 PM [express] POST /api/chess/ai-move 200 in 14ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:27:15 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:16 PM [express] POST /api/chess/ai-move 200 in 12ms :: {"move":{"from":"c6","to":"b4"},"reasoni…
+2:27:20 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:20 PM [express] POST /api/chess/ai-move 200 in 15ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:27:22 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:22 PM [express] POST /api/chess/ai-move 200 in 11ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:27:26 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:27 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:27:31 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:32 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+2:27:33 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:34 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:27:35 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:36 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+2:27:38 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:27:38 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:27:42 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:27:42 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:27:54 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:27:55 PM [express] POST /api/chess/ai-move 200 in 22ms :: {"move":{"from":"b8","to":"c6"},"reasoni…
+2:27:57 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:27:58 PM [express] POST /api/chess/ai-move 200 in 18ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:28:01 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:02 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:28:04 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:05 PM [express] POST /api/chess/ai-move 200 in 13ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:28:06 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:07 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:28:09 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:09 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:28:11 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:11 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:28:16 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:17 PM [express] POST /api/chess/ai-move 200 in 14ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:28:18 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:19 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:28:21 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:21 PM [express] POST /api/chess/ai-move 200 in 12ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:28:23 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for moonshotai/kimi-k2-instruct at difficulty 5
+AI generation error: Error: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+    at GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:320:15)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:730:44)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+Groq AI failed, using local engine: Model moonshotai/kimi-k2-instruct does not exist or is not supported
+2:28:23 PM [express] POST /api/chess/ai-move 200 in 7ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:28:26 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+2:28:35 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:28:35 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:28:44 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:28:45 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"b8","to":"c6"},"reasonin…
+2:28:46 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:28:47 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"c6","to":"e5"},"reasonin…
+2:28:50 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:28:51 PM [express] POST /api/chess/ai-move 200 in 6ms :: {"move":{"from":"g8","to":"f6"},"reasonin…
+2:29:02 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:29:02 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:29:16 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:17 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"g8","to":"f6"},"reasonin…
+2:29:23 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:24 PM [express] POST /api/chess/ai-move 200 in 15ms :: {"move":{"from":"f6","to":"d5"},"reasoni…
+2:29:31 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:32 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"h8","to":"g8"},"reasoni…
+2:29:32 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:29:36 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:36 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"b8","to":"c6"},"reasoni…
+2:29:37 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:29:41 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:42 PM [express] POST /api/chess/ai-move 200 in 12ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+2:29:42 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:29:48 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:49 PM [express] POST /api/chess/ai-move 200 in 11ms :: {"move":{"from":"g8","to":"h8"},"reasoni…
+2:29:49 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:29:51 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:52 PM [express] POST /api/chess/ai-move 200 in 11ms :: {"move":{"from":"h8","to":"g8"},"reasoni…
+2:29:52 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:29:53 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:29:54 PM [express] POST /api/chess/ai-move 200 in 7ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:29:54 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:01 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:01 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+2:30:01 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:05 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:05 PM [express] POST /api/chess/ai-move 200 in 11ms :: {"move":{"from":"g8","to":"h8"},"reasoni…
+2:30:06 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:07 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:08 PM [express] POST /api/chess/ai-move 200 in 12ms :: {"move":{"from":"h8","to":"f8"},"reasoni…
+2:30:08 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:15 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:15 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"d8","to":"e7"},"reasonin…
+2:30:16 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:22 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:22 PM [express] POST /api/chess/ai-move 200 in 14ms :: {"move":{"from":"e7","to":"e3"},"reasoni…
+2:30:23 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…
+2:30:27 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:28 PM [express] POST /api/chess/ai-move 200 in 28ms :: {"move":{"from":"e3","to":"c1"},"reasoni…
+2:30:28 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:31 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:32 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:30:32 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:34 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:34 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"f8","to":"g8"},"reasonin…
+2:30:35 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:37 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:37 PM [express] POST /api/chess/ai-move 200 in 1ms :: {"move":{"from":"e8","to":"d8"},"reasonin…
+2:30:38 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:40 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:41 PM [express] POST /api/chess/ai-move 200 in 4ms :: {"move":{"from":"d8","to":"e7"},"reasonin…
+2:30:41 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:42 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:43 PM [express] POST /api/chess/ai-move 200 in 2ms :: {"move":{"from":"e7","to":"d6"},"reasonin…
+2:30:43 PM [express] POST /api/chess/feedback 200 in 5ms :: {"feedback":"Current position evaluation…
+2:30:49 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:50 PM [express] POST /api/chess/ai-move 200 in 2ms :: {"move":{"from":"d6","to":"e7"},"reasonin…
+2:30:50 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:53 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:30:54 PM [express] POST /api/chess/ai-move 200 in 3ms :: {"move":{"from":"e7","to":"d7"},"reasonin…
+2:30:54 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:30:59 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:00 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"c6","to":"d4"},"reasonin…
+2:31:00 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:06 PM [express] POST /api/chess/analyze-move 200 in 3ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:07 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+2:31:07 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:09 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:09 PM [express] POST /api/chess/ai-move 200 in 16ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+2:31:09 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…
+2:31:20 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:20 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"d4","to":"e6"},"reasonin…
+2:31:21 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:22 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:22 PM [express] POST /api/chess/ai-move 200 in 3ms :: {"move":{"from":"d7","to":"d8"},"reasonin…
+2:31:22 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:29 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:29 PM [express] POST /api/chess/ai-move 200 in 7ms :: {"move":{"from":"c8","to":"e6"},"reasonin…
+2:31:30 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:33 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:34 PM [express] POST /api/chess/ai-move 200 in 6ms :: {"move":{"from":"a8","to":"c8"},"reasonin…
+2:31:34 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:35 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:36 PM [express] POST /api/chess/ai-move 200 in 4ms :: {"move":{"from":"c8","to":"b8"},"reasonin…
+2:31:36 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:40 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:41 PM [express] POST /api/chess/ai-move 200 in 5ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+2:31:41 PM [express] POST /api/chess/feedback 200 in 0ms :: {"feedback":"Current position evaluation…
+2:31:43 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:44 PM [express] POST /api/chess/ai-move 200 in 6ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+2:31:44 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:45 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:46 PM [express] POST /api/chess/ai-move 200 in 5ms :: {"move":{"from":"b8","to":"c8"},"reasonin…
+2:31:46 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:47 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:48 PM [express] POST /api/chess/ai-move 200 in 6ms :: {"move":{"from":"c8","to":"b8"},"reasonin…
+2:31:48 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:51 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:51 PM [express] POST /api/chess/ai-move 200 in 29ms :: {"move":{"from":"b8","to":"c8"},"reasoni…
+2:31:52 PM [express] POST /api/chess/feedback 200 in 6ms :: {"feedback":"Current position evaluation…
+2:31:53 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:31:54 PM [express] POST /api/chess/ai-move 200 in 10ms :: {"move":{"from":"c8","to":"a8"},"reasoni…
+2:31:54 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:31:59 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:32:00 PM [express] POST /api/chess/ai-move 200 in 7ms :: {"move":{"from":"a8","to":"c8"},"reasonin…
+2:32:00 PM [express] POST /api/chess/feedback 200 in 1ms :: {"feedback":"Current position evaluation…
+2:32:01 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 4
+2:32:14 PM [express] POST /api/chess/ai-move 200 in 17ms :: {"move":{"from":"g8","to":"f6"},"reasoni…
+2:32:22 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:32:23 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
