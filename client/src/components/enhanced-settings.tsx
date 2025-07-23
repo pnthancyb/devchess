@@ -5,7 +5,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Label } from "@/components/ui/label";
 import { Slider } from "@/components/ui/slider";
 import { Switch } from "@/components/ui/switch";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Settings, Bot, Zap, Palette, Globe, Volume2 } from "lucide-react";
@@ -144,12 +144,15 @@ export function EnhancedSettings({
           Settings
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-4xl max-h-[90vh] overflow-y-auto" aria-describedby="settings-description">
         <DialogHeader>
           <DialogTitle className="flex items-center">
             <Settings className="w-5 h-5 mr-2" />
             Chess Settings & Configuration
           </DialogTitle>
+          <DialogDescription id="settings-description">
+            Configure AI settings, difficulty levels, and game preferences
+          </DialogDescription>
         </DialogHeader>
         
         <Tabs defaultValue="ai" className="w-full">
