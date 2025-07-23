@@ -308,9 +308,9 @@ export class StockfishEngine {
       for (const move of moves) {
         const testChess = new Chess(chess.fen());
         testChess.move(move);
-        const eval = this.minimax(testChess, depth - 1, alpha, beta, false);
-        maxEval = Math.max(maxEval, eval);
-        alpha = Math.max(alpha, eval);
+        const evaluation = this.minimax(testChess, depth - 1, alpha, beta, false);
+        maxEval = Math.max(maxEval, evaluation);
+        alpha = Math.max(alpha, evaluation);
         if (beta <= alpha) break; // Alpha-beta pruning
       }
       return maxEval;
@@ -319,9 +319,9 @@ export class StockfishEngine {
       for (const move of moves) {
         const testChess = new Chess(chess.fen());
         testChess.move(move);
-        const eval = this.minimax(testChess, depth - 1, alpha, beta, true);
-        minEval = Math.min(minEval, eval);
-        beta = Math.min(beta, eval);
+        const evaluation = this.minimax(testChess, depth - 1, alpha, beta, true);
+        minEval = Math.min(minEval, evaluation);
+        beta = Math.min(beta, evaluation);
         if (beta <= alpha) break; // Alpha-beta pruning
       }
       return minEval;
