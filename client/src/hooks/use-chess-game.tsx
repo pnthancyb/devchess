@@ -202,6 +202,23 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       if (gameMode !== "opening") {
         const analysis = await analyzeMove(newMove);
         console.log("Player move analysis:", analysis);
+        
+        // Update the move with analysis data
+        if (analysis) {
+          newMove.analysis = {
+            score: analysis.score,
+            quality: analysis.quality,
+            feedback: analysis.explanation,
+            evaluation: analysis.evaluation
+          };
+          
+          // Update the moves array with the analyzed move
+          setMoves(prevMoves => {
+            const updatedMoves = [...prevMoves];
+            updatedMoves[updatedMoves.length - 1] = newMove;
+            return updatedMoves;
+          });
+        }
       }
 
       setGameState(prev => ({

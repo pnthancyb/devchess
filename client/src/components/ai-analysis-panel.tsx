@@ -33,11 +33,12 @@ export function AIAnalysisPanel({
 }: AIAnalysisPanelProps) {
   const { t } = useI18n();
 
-  // Enhanced analysis from last move
-  const moveScore = lastMove?.analysis?.score ?? (score ? parseFloat(score) : 0);
-  const moveQuality = lastMove?.analysis?.quality ?? quality ?? "neutral";
-  const moveFeedback = lastMove?.analysis?.feedback ?? feedback;
-  const positionEval = lastMove?.analysis?.evaluation ?? evaluation;
+  // Enhanced analysis from last move - use actual analysis data
+  const lastMoveAnalysis = lastMove?.analysis;
+  const moveScore = lastMoveAnalysis?.score ?? (score ? parseFloat(score) : 60);
+  const moveQuality = lastMoveAnalysis?.quality ?? quality ?? "good";
+  const moveFeedback = lastMoveAnalysis?.feedback ?? feedback ?? "Good move - continue with your strategy";
+  const positionEval = lastMoveAnalysis?.evaluation ?? evaluation ?? "0.0";
 
   const getQualityConfig = (quality: string) => {
     switch (quality) {
