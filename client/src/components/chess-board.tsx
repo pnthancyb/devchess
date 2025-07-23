@@ -1,7 +1,6 @@
-
 import { useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
-import { RotateCcw, Download, RotateCw } from "lucide-react";
+import { RotateCcw, Download } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 import { useTheme } from "@/hooks/use-theme";
 import type { ChessMove } from "@/types/chess";
@@ -11,45 +10,35 @@ interface ChessBoardProps {
   position: string;
   onMove: (from: Square, to: Square, promotion?: string) => Promise<boolean>;
   isPlayerTurn: boolean;
-  isAIThinking?: boolean;
-  onReset?: () => void;
-  onDownloadPGN?: () => void;
-  moves?: ChessMove[];
-  aiModel?: string;
-  difficulty?: number;
-  isValidMove?: (from: Square, to: Square) => boolean;
-  getValidMoves?: (square: Square) => Square[];
-  orientation?: 'white' | 'black';
-  lastMove?: ChessMove;
-  isCheck?: boolean;
-  isGameOver?: boolean;
+  isAIThinking: boolean;
+  onReset: () => void;
+  onDownloadPGN: () => void;
+  moves: any[];
+  aiModel: string;
+  difficulty: number;
+  onAIModelChange?: (model: string) => void;
+  onDifficultyChange?: (level: number) => void;
 }
 
 export function ChessBoard({
   position,
   onMove,
   isPlayerTurn,
-  isAIThinking = false,
+  isAIThinking,
   onReset,
   onDownloadPGN,
-  moves = [],
-  aiModel = "AI",
-  difficulty = 3,
-  isValidMove,
-  getValidMoves,
-  orientation = 'white',
-  lastMove,
-  isCheck = false,
-  isGameOver = false,
+  moves,
+  aiModel,
+  difficulty,
 }: ChessBoardProps) {
   const { t } = useI18n();
   const { actualTheme } = useTheme();
   const [game, setGame] = useState(() => new Chess());
   const [selectedSquare, setSelectedSquare] = useState<string | null>(null);
   const [legalMoves, setLegalMoves] = useState<string[]>([]);
-  const [boardOrientation, setBoardOrientation] = useState<'white' | 'black'>(orientation);
+  const [boardOrientation, setBoardOrientation] = useState<'white' | 'black'>('white');
 
-  // Chess piece Unicode symbols
+  // Chess piece Unicode symbols with better styling
   const pieceSymbols = {
     'wK': '♔', 'wQ': '♕', 'wR': '♖', 'wB': '♗', 'wN': '♘', 'wP': '♙',
     'bK': '♚', 'bQ': '♛', 'bR': '♜', 'bB': '♝', 'bN': '♞', 'bP': '♟'
@@ -68,24 +57,16 @@ export function ChessBoard({
   useEffect(() => {
     if (position && position !== game.fen()) {
       try {
-        const newGame = new Chess(position);
-        setGame(newGame);
+        game.load(position);
+        setGame(new Chess(position));
       } catch (error) {
         console.error('Invalid FEN position:', error);
-        // Fallback to starting position
-        const newGame = new Chess();
-        setGame(newGame);
       }
     }
   }, [position]);
 
-  // Update board orientation when prop changes
-  useEffect(() => {
-    setBoardOrientation(orientation);
-  }, [orientation]);
-
   // Handle square click
-  const handleSquareClick = async (square: string) => {
+  const handleSquareClick = (square: string) => {
     if (!isPlayerTurn || isAIThinking) return;
 
     if (selectedSquare === square) {
@@ -97,16 +78,21 @@ export function ChessBoard({
     if (selectedSquare) {
       // Try to make move
       try {
-        const success = await onMove(selectedSquare as Square, square as Square, 'q');
-        if (success) {
+        const move = game.move({
+          from: selectedSquare,
+          to: square,
+          promotion: 'q' // Always promote to queen for simplicity
+        });
+
+        if (move) {
+          const newGame = new Chess(game.fen());
+          setGame(newGame);
+          onMove(selectedSquare as Square, square as Square, move.promotion);
           setSelectedSquare(null);
           setLegalMoves([]);
-        } else {
-          // Invalid move, select new square if it has a piece
-          selectSquare(square);
         }
       } catch (error) {
-        console.error("Move error:", error);
+        // Invalid move, select new square
         selectSquare(square);
       }
     } else {
@@ -115,31 +101,16 @@ export function ChessBoard({
   };
 
   const selectSquare = (square: string) => {
-    const piece = game.get(square as Square);
+    const piece = game.get(square as any);
     if (piece && piece.color === game.turn()) {
       setSelectedSquare(square);
-      
-      // Use provided getValidMoves function if available, otherwise calculate locally
-      if (getValidMoves) {
-        setLegalMoves(getValidMoves(square as Square));
-      } else {
-        try {
-          const moves = game.moves({ square: square as Square, verbose: true });
-          setLegalMoves(moves.map((move: any) => move.to));
-        } catch {
-          setLegalMoves([]);
-        }
-      }
+      const moves = game.moves({ square: square as any, verbose: true });
+      setLegalMoves(moves.map((move: any) => move.to));
     }
   };
 
   // Generate board squares
   const generateBoard = () => {
-    // Ensure we have a valid game state
-    if (!game || !position) {
-      return [];
-    }
-
     const squares = [];
     const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const ranks = boardOrientation === 'white' ? [8, 7, 6, 5, 4, 3, 2, 1] : [1, 2, 3, 4, 5, 6, 7, 8];
@@ -147,15 +118,15 @@ export function ChessBoard({
     for (const rank of ranks) {
       const row = [];
       const fileOrder = boardOrientation === 'white' ? files : files.slice().reverse();
-
+      
       for (const file of fileOrder) {
         const square = `${file}${rank}`;
-        const piece = game.get(square as Square);
+        const piece = game.get(square as any);
         const isLight = (files.indexOf(file) + rank) % 2 === 0;
         const isSelected = selectedSquare === square;
         const isLegalMove = legalMoves.includes(square);
-        const isLastMove = lastMove && 
-          (lastMove.from === square || lastMove.to === square);
+        const isLastMove = moves.length > 0 && 
+          (moves[moves.length - 1]?.from === square || moves[moves.length - 1]?.to === square);
 
         row.push(
           <div
@@ -175,18 +146,16 @@ export function ChessBoard({
             onClick={() => handleSquareClick(square)}
           >
             {piece && (
-              <span 
-                className={getPieceStyle(piece)} 
-                style={{
-                  textShadow: piece.color === 'w' 
-                    ? '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000'
-                    : '2px 2px 0px #ffffff, -1px -1px 0px #ffffff, 1px -1px 0px #ffffff, -1px 1px 0px #ffffff'
-                }}
-              >
+              <span className={getPieceStyle(piece)} 
+                    style={{
+                      textShadow: piece.color === 'w' 
+                        ? '2px 2px 0px #000000, -1px -1px 0px #000000, 1px -1px 0px #000000, -1px 1px 0px #000000'
+                        : '2px 2px 0px #ffffff, -1px -1px 0px #ffffff, 1px -1px 0px #ffffff, -1px 1px 0px #ffffff'
+                    }}>
                 {pieceSymbols[`${piece.color}${piece.type.toUpperCase()}` as keyof typeof pieceSymbols]}
               </span>
             )}
-
+            
             {isLegalMove && (
               <div className={`
                 absolute inset-0 flex items-center justify-center
@@ -224,7 +193,7 @@ export function ChessBoard({
     setGame(newGame);
     setSelectedSquare(null);
     setLegalMoves([]);
-    onReset?.();
+    onReset();
   };
 
   // Flip board
@@ -236,7 +205,7 @@ export function ChessBoard({
     <div className="flex flex-col items-center space-y-6 p-4">
       {/* Game Status */}
       <div className="flex flex-wrap items-center justify-center gap-4 min-h-[2rem]">
-        {isGameOver && (
+        {game.isGameOver() && (
           <div className="text-center px-4 py-2 bg-primary/10 rounded-lg border-2 border-primary/20">
             <div className="text-lg font-semibold text-primary">
               {game.isCheckmate() 
@@ -248,7 +217,7 @@ export function ChessBoard({
             </div>
           </div>
         )}
-        {isCheck && !isGameOver && (
+        {game.isCheck() && !game.isGameOver() && (
           <div className="px-3 py-1 bg-red-100 text-red-700 rounded-full border border-red-200 font-semibold">
             {t('game.check')}
           </div>
@@ -275,39 +244,33 @@ export function ChessBoard({
 
       {/* Controls */}
       <div className="flex flex-wrap gap-2 justify-center">
-        {onReset && (
-          <Button 
-            onClick={handleReset}
-            variant="outline" 
-            size="sm"
-            className="flex items-center gap-2"
-          >
-            <RotateCcw className="w-4 h-4" />
-            {t('game.reset')}
-          </Button>
-        )}
-
         <Button 
-          onClick={flipBoard}
+          onClick={handleReset}
           variant="outline" 
           size="sm"
           className="flex items-center gap-2"
         >
-          <RotateCw className="w-4 h-4" />
+          <RotateCcw className="w-4 h-4" />
+          {t('game.reset')}
+        </Button>
+        
+        <Button 
+          onClick={flipBoard}
+          variant="outline" 
+          size="sm"
+        >
           {t('game.flipBoard')}
         </Button>
 
-        {onDownloadPGN && (
-          <Button 
-            onClick={onDownloadPGN}
-            variant="outline" 
-            size="sm"
-            className="flex items-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            {t('game.exportPGN')}
-          </Button>
-        )}
+        <Button 
+          onClick={onDownloadPGN}
+          variant="outline" 
+          size="sm"
+          className="flex items-center gap-2"
+        >
+          <Download className="w-4 h-4" />
+          {t('game.exportPGN')}
+        </Button>
       </div>
 
       {/* Current Position Info */}

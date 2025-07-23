@@ -58,10 +58,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const { makeAIMove, isAIThinking } = useAIChess();
 
-  // Simplified connection state - no WebSocket needed for local gameplay
-  const connectionState = "connected" as const;
+  // Disable WebSocket completely to fix connection issues and black screen
+  const connectionState = "disconnected" as const;
   const sendMessage = useCallback((message: any) => {
-    // Local gameplay - no WebSocket needed
+    // WebSocket disabled - all functionality is local
     return;
   }, []);
 
@@ -88,11 +88,6 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const analyzeMove = useCallback(async (move: ChessMove): Promise<any> => {
-    // Skip analysis for opening mode to prevent errors
-    if (gameMode === "opening") {
-      return { score: 0, quality: "opening", explanation: "Opening move" };
-    }
-
     try {
       const currentFen = gameState.chess.fen();
       const response = await fetch('/api/chess/analyze-move', {
@@ -183,7 +178,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
             nextMove: prev.selectedOpening?.moves[prev.currentMoveIndex + 1] || null,
           }));
         } else {
-          // Incorrect move - revert it and show error
+          // Incorrect move - revert it
           gameState.chess.undo();
           console.log("Incorrect move in opening learning mode. Expected:", expectedMove, "Got:", moveResult.san);
           return false;
@@ -226,26 +221,15 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
               aiDifficulty
             );
 
-            console.log("AI move result:", aiMoveResult);
-
-            if (aiMoveResult && aiMoveResult.from && aiMoveResult.to) {
+            if (aiMoveResult) {
               console.log("AI move successful:", aiMoveResult);
 
-              // Validate AI move before applying
-              const testMove = gameState.chess.move({
+              // Apply AI move
+              const aiMove = gameState.chess.move({
                 from: aiMoveResult.from,
                 to: aiMoveResult.to,
                 promotion: aiMoveResult.promotion
               });
-
-              if (!testMove) {
-                console.error("Invalid AI move:", aiMoveResult);
-                setGameState(prev => ({ ...prev, isPlayerTurn: true }));
-                return;
-              }
-
-              // Apply AI move
-              const aiMove = testMove;
 
               if (aiMove) {
                 const aiChessMove: ChessMove = {
@@ -275,9 +259,6 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
                   }
                 }
               }
-            } else {
-              console.log("Invalid AI move response:", aiMoveResult);
-              setGameState(prev => ({ ...prev, isPlayerTurn: true }));
             }
           } catch (error) {
             console.error("AI move error:", error);

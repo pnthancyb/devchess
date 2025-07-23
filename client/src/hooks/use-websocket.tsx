@@ -16,46 +16,120 @@ interface UseWebSocketReturn {
   connectionState: "connecting" | "connected" | "disconnected";
 }
 
-export function useWebSocket(url?: string) {
-  const [isConnected, setIsConnected] = useState(true); // Always show as connected for local mode
-  const [error, setError] = useState<string | null>(null);
-  const wsRef = useRef<WebSocket | null>(null);
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout | null>(null);
-  const [reconnectCount, setReconnectCount] = useState(0);
+export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketReturn {
+  const {
+    onMessage,
+    onConnect,
+    onDisconnect,
+    autoReconnect = false,
+    reconnectDelay = 5000,
+  } = options;
 
-  const connect = useCallback(() => {
-    // Disable WebSocket connections - use local mode only
-    console.log("WebSocket disabled - using local mode");
-    setIsConnected(true);
-    return;
-  }, []);
-
-  const sendMessage = useCallback((message: any) => {
-    // Local mode - no WebSocket sending needed
-    console.log("Local mode - message not sent:", message);
-    return true;
-  }, []);
-
-  const disconnect = useCallback(() => {
-    // Local mode - no disconnection needed
-    console.log("Local mode - disconnect called");
-    return;
-  }, []);
+  const [socket, setSocket] = useState<WebSocket | null>(null);
+  const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
+  const [connectionState, setConnectionState] = useState<"connecting" | "connected" | "disconnected">("disconnected");
+  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
+  const reconnectAttempts = useRef(0);
+  const connectingRef = useRef(false);
+  const token = "your_default_token"; // Added a placeholder for token
 
   useEffect(() => {
-    // Local mode - no WebSocket connections
-    setIsConnected(true);
+    if (connectingRef.current) return;
+
+    const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    const host = window.location.host;
+    const wsUrl = `${protocol}//${host}/ws?token=${token}`; // Modified to include token
+
+    const connect = () => {
+      if (connectingRef.current) return;
+
+      connectingRef.current = true;
+      setConnectionState("connecting");
+
+      try {
+        const ws = new WebSocket(wsUrl);
+
+        ws.onopen = () => {
+          console.log("WebSocket connected");
+          setConnectionState("connected");
+          setSocket(ws);
+          reconnectAttempts.current = 0;
+          connectingRef.current = false;
+          onConnect?.();
+
+          ws.send(JSON.stringify({
+            type: "join_game",
+            data: {
+              userId: 1,
+              language: "en",
+              gameMode: "classic"
+            }
+          }));
+        };
+
+        ws.onmessage = (event) => {
+          try {
+            const message = JSON.parse(event.data);
+            setLastMessage(message);
+            onMessage?.(message);
+          } catch (error) {
+            console.error("Failed to parse WebSocket message:", error);
+          }
+        };
+
+        ws.onclose = (event) => {
+          console.log("WebSocket disconnected", event.code, event.reason);
+          setConnectionState("disconnected");
+          setSocket(null);
+          connectingRef.current = false;
+          onDisconnect?.();
+
+          if (autoReconnect && reconnectAttempts.current < 3 && event.code !== 1000) {
+            const delay = reconnectDelay * Math.pow(2, reconnectAttempts.current);
+            reconnectTimeoutRef.current = setTimeout(() => {
+              reconnectAttempts.current++;
+              connect();
+            }, delay);
+          }
+        };
+
+        ws.onerror = (error) => {
+          console.error("WebSocket error:", error);
+          setConnectionState("disconnected");
+          connectingRef.current = false;
+        };
+      } catch (error) {
+        console.error("Failed to create WebSocket:", error);
+        setConnectionState("disconnected");
+        connectingRef.current = false;
+      }
+    };
+
+    connect();
 
     return () => {
-      // Cleanup if needed
+      connectingRef.current = false;
+      if (reconnectTimeoutRef.current) {
+        clearTimeout(reconnectTimeoutRef.current);
+      }
+      if (socket && socket.readyState === WebSocket.OPEN) {
+        socket.close(1000, "Component unmounting");
+      }
     };
-  }, [url]);
+  }, [autoReconnect, reconnectDelay, onMessage, onConnect, onDisconnect]);
+
+  const sendMessage = useCallback((message: WebSocketMessage) => {
+    if (socket && socket.readyState === WebSocket.OPEN) {
+      socket.send(JSON.stringify(message));
+    } else {
+      console.warn("WebSocket is not connected");
+    }
+  }, [socket]);
 
   return {
-    isConnected: true, // Always connected in local mode
-    error: null,
+    socket,
     sendMessage,
-    reconnect: () => console.log("Local mode - reconnect called"),
-    disconnect: () => console.log("Local mode - disconnect called"),
+    lastMessage,
+    connectionState,
   };
 }
