@@ -46,28 +46,23 @@ class StockfishEngine {
       const moves = chess.moves({ verbose: true });
 
       if (moves.length === 0) {
-        console.log("No legal moves available for position:", fen);
         return null;
       }
 
-      console.log(`Stockfish engine generating move at level ${level} for position with ${moves.length} legal moves`);
-
-      // Check transposition table first
+      // Check transposition table first for instant response
       const tableKey = `${fen}-${level}`;
       if (this.transpositionTable.has(tableKey)) {
         const cached = this.transpositionTable.get(tableKey);
-        if (Date.now() - cached.timestamp < 30000) { // 30 second cache
-          console.log("Using cached move:", cached.move);
+        if (Date.now() - cached.timestamp < 60000) { // 1 minute cache
           return cached.move;
         }
       }
 
-      // Get the best move using enhanced simulation
-      const selectedMove = this.getEnhancedMove(chess, moves, level);
+      // Fast move selection based on level
+      const selectedMove = this.getFastMove(chess, moves, level);
 
       if (!selectedMove) {
-        console.log("Enhanced move selection failed, using smart fallback");
-        return this.getSmartFallbackMove(chess, moves);
+        return this.getInstantMove(moves);
       }
 
       const result = {
@@ -77,13 +72,12 @@ class StockfishEngine {
         san: selectedMove.san
       };
 
-      // Validate the move is actually legal
+      // Quick validation
       const testChess = new Chess(fen);
       const validatedMove = testChess.move(result);
       
       if (!validatedMove) {
-        console.log("Generated move was invalid, using smart fallback");
-        return this.getSmartFallbackMove(chess, moves);
+        return this.getInstantMove(moves);
       }
 
       // Cache the result
@@ -92,42 +86,175 @@ class StockfishEngine {
         timestamp: Date.now()
       });
 
-      console.log(`Stockfish (level ${level}) selected move: ${result.san} (${result.from}-${result.to})`);
       return result;
     } catch (error) {
       console.error("Error in getBestMove:", error);
-      return this.getFallbackMove(fen);
+      return this.getInstantMove(chess.moves({ verbose: true }));
     }
   }
 
-  private getEnhancedMove(chess: Chess, moves: any[], level: number): any {
-    const depth = Math.min(level + 2, 8);
-
+  private getFastMove(chess: Chess, moves: any[], level: number): any {
     try {
       switch (level) {
         case 1:
           return this.getRandomMove(moves);
         case 2:
-          return this.getDecentMove(chess, moves);
+          return this.getBasicTacticalMove(chess, moves);
         case 3:
-          return this.getGoodMove(chess, moves, depth);
+          return this.getQuickGoodMove(chess, moves);
         case 4:
         case 5:
-          return this.getStrongMove(chess, moves, depth);
+          return this.getQuickStrongMove(chess, moves);
         case 6:
         case 7:
-          return this.getExpertMove(chess, moves, depth);
         case 8:
         case 9:
         case 10:
-          return this.getMasterMove(chess, moves, depth);
+          return this.getQuickBestMove(chess, moves);
         default:
-          return this.getStrongMove(chess, moves, depth);
+          return this.getQuickGoodMove(chess, moves);
       }
     } catch (error) {
-      console.error("Error in enhanced move selection:", error);
       return this.getRandomMove(moves);
     }
+  }
+
+  private getInstantMove(moves: any[]): StockfishMove | null {
+    if (moves.length === 0) return null;
+    const move = moves[Math.floor(Math.random() * moves.length)];
+    return {
+      from: move.from,
+      to: move.to,
+      promotion: move.promotion,
+      san: move.san
+    };
+  }
+
+  private getBasicTacticalMove(chess: Chess, moves: any[]): any {
+    // Quick check for captures and checks only
+    const captures = moves.filter(move => move.captured);
+    if (captures.length > 0 && Math.random() > 0.3) {
+      return captures[Math.floor(Math.random() * captures.length)];
+    }
+    return this.getRandomMove(moves);
+  }
+
+  private getQuickGoodMove(chess: Chess, moves: any[]): any {
+    // Fast heuristic evaluation - no deep calculation
+    const scoredMoves = moves.map(move => {
+      let score = Math.random() * 10; // Base randomness
+      
+      // Quick bonuses
+      if (move.captured) score += 30;
+      if (['d4', 'e4', 'd5', 'e5'].includes(move.to)) score += 10;
+      if (move.piece === 'n' || move.piece === 'b') score += 5;
+      
+      return { move, score };
+    });
+
+    scoredMoves.sort((a, b) => b.score - a.score);
+    
+    // Pick from top 3 moves with some randomness
+    const topMoves = scoredMoves.slice(0, 3);
+    return topMoves[Math.floor(Math.random() * topMoves.length)].move;
+  }
+
+  private getQuickStrongMove(chess: Chess, moves: any[]): any {
+    // Slightly better evaluation but still fast
+    const scoredMoves = moves.map(move => {
+      let score = 0;
+      
+      // Material gain
+      if (move.captured) {
+        const pieceValues = { p: 1, n: 3, b: 3, r: 5, q: 9 };
+        score += (pieceValues[move.captured] || 0) * 10;
+      }
+      
+      // Central control
+      if (['d4', 'e4', 'd5', 'e5', 'c4', 'f4', 'c5', 'f5'].includes(move.to)) {
+        score += 8;
+      }
+      
+      // Development
+      if ((move.piece === 'n' || move.piece === 'b') && 
+          ['b1', 'g1', 'b8', 'g8', 'c1', 'f1', 'c8', 'f8'].includes(move.from)) {
+        score += 6;
+      }
+      
+      // Quick check evaluation
+      chess.move(move);
+      if (chess.isCheck()) score += 5;
+      chess.undo();
+      
+      return { move, score: score + Math.random() * 2 };
+    });
+
+    scoredMoves.sort((a, b) => b.score - a.score);
+    
+    // Pick from top 5 moves with weighted randomness
+    const weights = [0.5, 0.25, 0.15, 0.06, 0.04];
+    const rand = Math.random();
+    let cumulative = 0;
+    
+    for (let i = 0; i < Math.min(5, scoredMoves.length); i++) {
+      cumulative += weights[i];
+      if (rand < cumulative) {
+        return scoredMoves[i].move;
+      }
+    }
+    
+    return scoredMoves[0].move;
+  }
+
+  private getQuickBestMove(chess: Chess, moves: any[]): any {
+    // Best move with minimal calculation time
+    return this.getBestMoveByQuickEvaluation(chess, moves);
+  }
+
+  private getBestMoveByQuickEvaluation(chess: Chess, moves: any[]): any {
+    const evaluatedMoves = moves.map(move => {
+      try {
+        chess.move(move);
+        const evaluation = this.quickEvaluatePosition(chess);
+        chess.undo();
+        
+        return {
+          move,
+          evaluation: chess.turn() === 'w' ? -evaluation : evaluation
+        };
+      } catch (error) {
+        chess.undo();
+        return { move, evaluation: -1000 };
+      }
+    });
+
+    evaluatedMoves.sort((a, b) => b.evaluation - a.evaluation);
+    
+    // Add some randomness to top moves to avoid predictability
+    const topCount = Math.min(3, evaluatedMoves.length);
+    const selectedIndex = Math.floor(Math.random() * topCount);
+    
+    return evaluatedMoves[selectedIndex].move;
+  }
+
+  private quickEvaluatePosition(chess: Chess): number {
+    // Ultra-fast position evaluation
+    const pieceValues = { p: 100, n: 320, b: 330, r: 500, q: 900, k: 0 };
+    let evaluation = 0;
+    const board = chess.board();
+
+    // Material count only - no complex positional evaluation
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        const piece = board[i][j];
+        if (piece) {
+          const value = pieceValues[piece.type] || 0;
+          evaluation += piece.color === 'w' ? value : -value;
+        }
+      }
+    }
+
+    return evaluation;
   }
 
   private getRandomMove(moves: any[]): any {
@@ -198,112 +325,9 @@ class StockfishEngine {
     }
   }
 
-  private getDecentMove(chess: Chess, moves: any[]): any {
-    try {
-      // Prioritize captures and checks
-      const tacticalMoves = moves.filter(move => {
-        chess.move(move);
-        const isCheck = chess.isCheck();
-        const hasCapture = move.captured;
-        chess.undo();
-        return isCheck || hasCapture;
-      });
+  
 
-      if (tacticalMoves.length > 0) {
-        return tacticalMoves[Math.floor(Math.random() * tacticalMoves.length)];
-      }
-
-      // Otherwise random move
-      return this.getRandomMove(moves);
-    } catch (error) {
-      console.error("Error in decent move:", error);
-      return this.getRandomMove(moves);
-    }
-  }
-
-  private getGoodMove(chess: Chess, moves: any[], depth: number): any {
-    return this.getBestMoveByEvaluation(chess, moves, depth, 0.7);
-  }
-
-  private getStrongMove(chess: Chess, moves: any[], depth: number): any {
-    return this.getBestMoveByEvaluation(chess, moves, depth, 0.85);
-  }
-
-  private getExpertMove(chess: Chess, moves: any[], depth: number): any {
-    return this.getBestMoveByEvaluation(chess, moves, depth + 1, 0.95);
-  }
-
-  private getMasterMove(chess: Chess, moves: any[], depth: number): any {
-    return this.getBestMoveByEvaluation(chess, moves, depth + 2, 0.98);
-  }
-
-  private getBestMoveByEvaluation(chess: Chess, moves: any[], depth: number, accuracy: number): any {
-    try {
-      const evaluatedMoves = moves.map(move => {
-        try {
-          chess.move(move);
-          const evaluation = this.evaluatePosition(chess, Math.min(depth, 4));
-          chess.undo();
-
-          return {
-            move,
-            evaluation: chess.turn() === 'w' ? -evaluation : evaluation
-          };
-        } catch (error) {
-          chess.undo();
-          return {
-            move,
-            evaluation: -1000
-          };
-        }
-      });
-
-      evaluatedMoves.sort((a, b) => b.evaluation - a.evaluation);
-
-      if (Math.random() > accuracy && evaluatedMoves.length > 1) {
-        const randomIndex = Math.floor(Math.random() * Math.min(3, evaluatedMoves.length));
-        return evaluatedMoves[randomIndex].move;
-      }
-
-      return evaluatedMoves[0].move;
-    } catch (error) {
-      console.error("Error in move evaluation:", error);
-      return this.getRandomMove(moves);
-    }
-  }
-
-  private evaluatePosition(chess: Chess, depth: number = 3): number {
-    try {
-      if (depth === 0 || chess.isGameOver()) {
-        return this.staticEvaluation(chess);
-      }
-
-      const moves = chess.moves({ verbose: true });
-      let bestEval = chess.turn() === 'w' ? -Infinity : Infinity;
-
-      for (const move of moves.slice(0, 10)) { // Limit search width
-        try {
-          chess.move(move);
-          const evaluation = this.evaluatePosition(chess, depth - 1);
-          chess.undo();
-
-          if (chess.turn() === 'w') {
-            bestEval = Math.max(bestEval, evaluation);
-          } else {
-            bestEval = Math.min(bestEval, evaluation);
-          }
-        } catch (error) {
-          chess.undo();
-          continue;
-        }
-      }
-
-      return bestEval;
-    } catch (error) {
-      console.error("Error in position evaluation:", error);
-      return 0;
-    }
-  }
+  
 
   private staticEvaluation(chess: Chess): number {
     try {
@@ -381,7 +405,7 @@ class StockfishEngine {
         const score = chess.isCheckmate() ? -10000 : 0;
         return {
           score,
-          depth,
+          depth: 1,
           bestMove: '',
           pv: [],
           evaluation: chess.isCheckmate() ? 'checkmate' : 'stalemate',
@@ -389,19 +413,9 @@ class StockfishEngine {
         };
       }
 
-      let bestMove = moves[0];
-      let bestEval = -Infinity;
-
-      for (const move of moves) {
-        chess.move(move);
-        const evaluation = this.evaluatePosition(chess, Math.min(depth - 1, 4));
-        chess.undo();
-
-        if (evaluation > bestEval) {
-          bestEval = evaluation;
-          bestMove = move;
-        }
-      }
+      // Quick evaluation - just pick a reasonable move
+      const bestMove = this.getQuickBestMove(chess, moves);
+      const bestEval = this.quickEvaluatePosition(chess);
 
       let quality: "excellent" | "good" | "inaccuracy" | "mistake" | "blunder";
       if (bestEval > 200) quality = 'excellent';
@@ -412,7 +426,7 @@ class StockfishEngine {
 
       return {
         score: bestEval,
-        depth,
+        depth: 1,
         bestMove: bestMove.san,
         pv: [bestMove.san],
         evaluation: `${bestEval > 0 ? '+' : ''}${(bestEval / 100).toFixed(2)}`,
@@ -423,7 +437,7 @@ class StockfishEngine {
       console.error("Error evaluating position:", error);
       return {
         score: 0,
-        depth: 0,
+        depth: 1,
         bestMove: '',
         pv: [],
         evaluation: '0.00',
