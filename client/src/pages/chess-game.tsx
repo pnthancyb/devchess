@@ -109,6 +109,12 @@ export default function ChessGamePage() {
               position={gameState.currentFen}
               onMove={makeMove}
               isPlayerTurn={gameState.isPlayerTurn}
+              isAIThinking={gameState.isAIThinking}
+              onReset={resetGame}
+              onDownloadPGN={downloadGamePGN}
+              moves={gameState.moves}
+              aiModel={gameState.aiModel}
+              difficulty={gameState.difficulty}
               isValidMove={isValidMove}
               getValidMoves={getValidMoves}
               orientation={gameState.boardOrientation}
