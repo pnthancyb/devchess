@@ -219,11 +219,13 @@ export default function ChessGame() {
             {/* Coach Chat Panel */}
             {isCoachMode && (
               <CoachChat
+                currentPosition={gameState.currentFen}
+                currentFen={gameState.currentFen}
+                gameMode={gameState.gameMode}
+                aiModel={gameState.aiModel}
                 messages={chatMessages}
                 onSendMessage={sendChatMessage}
                 isVisible={true}
-                currentFen={gameState.currentFen}
-                aiModel={gameState.aiModel}
               />
             )}
 
