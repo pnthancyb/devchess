@@ -83,9 +83,9 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     }
   }, [gameState.chess]);
 
-  const [moves, setMoves] = useState<ChessMove[]>(() => []);
-  const [lastAIFeedback, setLastAIFeedback] = useState<AIFeedback | undefined>();
-  const [chatMessages, setChatMessages] = useState<ChatMessage[]>(() => []);
+  const [moves, setMoves] = useState<ChessMove[]>([]);
+  const [lastAIFeedback, setLastAIFeedback] = useState<AIFeedback>();
+  const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const analyzeMove = useCallback(async (move: ChessMove): Promise<any> => {
     try {
@@ -404,8 +404,8 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       setOpeningLearningState(prev => ({
         ...prev,
         nextMove,
-        currentMoveIndex: currentMoveCount,
-        completedMoves: moves ? moves.slice(0, currentMoveCount) : []
+        currentMoveIndex: currentMoveCount, // Update move index to match actual moves
+        completedMoves: moves.slice(0, currentMoveCount)
       }));
 
       // After opponent move, check if we need to continue with next player move

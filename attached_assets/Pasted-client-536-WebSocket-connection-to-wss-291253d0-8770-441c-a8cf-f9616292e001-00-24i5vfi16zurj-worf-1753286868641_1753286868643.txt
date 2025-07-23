@@ -1,0 +1,46 @@
+client:536 WebSocket connection to 'wss://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/?token=ZUhtjyUKPKI3' failed: 
+setupWebSocket @ client:536
+(anonymous) @ client:531
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=ZUhtjyUKPKI3' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+setupWebSocket @ client:536
+fallback @ client:509
+(anonymous) @ client:555
+use-chess-game.tsx:148 Player making move from e2 to e4 
+use-chess-game.tsx:183 Incorrect move in opening learning mode. Expected: f4 Got: e4
+use-chess-game.tsx:148 Player making move from e2 to e4 
+use-chess-game.tsx:113 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:195 Player move analysis: {score: 0, quality: 'illegal', explanation: 'Illegal move attempted'}
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: {from: undefined, to: undefined, promotion: undefined, evaluation: '0.0', analysis: 'AI move'}
+use-chess-game.tsx:264 AI move error: Error: Invalid move: {}
+    at Chess.move (chess__js.js?v=9d49a770:2842:15)
+    at use-chess-game.tsx:228:46
+overrideMethod @ hook.js:608
+(anonymous) @ use-chess-game.tsx:264
+setTimeout
+(anonymous) @ use-chess-game.tsx:214
+await in (anonymous)
+(anonymous) @ use-chess-game.tsx:280
+handleSquareClick @ chess-board.tsx:90
+onClick @ chess-board.tsx:146
+callCallback2 @ chunk-RPCDYKBN.js?v=9d49a770:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=9d49a770:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=9d49a770:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=9d49a770:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=9d49a770:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=9d49a770:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=9d49a770:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=9d49a770:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=9d49a770:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=9d49a770:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=9d49a770:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=9d49a770:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=9d49a770:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=9d49a770:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=9d49a770:5449

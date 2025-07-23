@@ -5,14 +5,14 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/hooks/use-theme";
 import { I18nProvider } from "@/lib/i18n";
-import { SimpleChess } from "@/pages/simple-chess";
+import ChessGame from "@/pages/chess-game";
 import NotFound from "@/pages/not-found";
 
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={SimpleChess} />
-      <Route path="/game/:id" component={SimpleChess} />
+      <Route path="/" component={ChessGame} />
+      <Route path="/game/:id" component={ChessGame} />
       <Route component={NotFound} />
     </Switch>
   );

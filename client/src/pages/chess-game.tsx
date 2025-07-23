@@ -3,13 +3,13 @@ import { useParams } from "wouter";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
 import { EnhancedSettings } from "@/components/enhanced-settings";
-import { GameModeSelector } from "@/components/game-mode-selector";
+import { GameModeSelectorEnhanced } from "@/components/game-mode-selector-enhanced";
 import { ChessBoard } from "@/components/chess-board";
 import { MoveHistory } from "@/components/move-history";
-import { AIFeedback } from "@/components/ai-feedback";
+import { AIAnalysisPanel } from "@/components/ai-analysis-panel";
 import { CoachChat } from "@/components/coach-chat";
 import { OpeningSelector } from "@/components/opening-selector";
-import { OpeningLearning } from "@/components/opening-learning";
+import { OpeningLearningEnhanced } from "@/components/opening-learning-enhanced";
 import { UserStats } from "@/components/user-stats";
 import { PerfectChessInterface } from "@/components/perfect-chess-interface";
 import { Card, CardContent } from "@/components/ui/card";
@@ -100,7 +100,7 @@ export default function ChessGame() {
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         {/* Game Mode Selector */}
         <div className="mb-6">
-          <GameModeSelector
+          <GameModeSelectorEnhanced
             selectedMode={gameState.gameMode}
             onModeChange={setGameMode}
           />
@@ -205,14 +205,39 @@ export default function ChessGame() {
               <UserStats />
             </div>
 
-            {/* AI Analysis Panel */}
-            <AIFeedback
-              mode={gameState.gameMode}
-              feedback={gameState.lastAIFeedback?.feedback}
-              score={gameState.lastAIFeedback?.score?.toString()}
-              evaluation={gameState.lastAIFeedback?.evaluation}
-              quality={gameState.lastAIFeedback?.quality}
-            />
+            {/* Opening Learning Enhanced */}
+            {isOpeningMode && openingLearningState.selectedOpening ? (
+              <OpeningLearningEnhanced
+                opening={openingLearningState.selectedOpening}
+                learningState={openingLearningState}
+                onMoveAttempt={(move: string) => {
+                  // Handle move attempt in opening learning
+                  console.log("Opening move attempt:", move);
+                  return false; // TODO: Implement proper move validation
+                }}
+                onReset={() => {
+                  setSelectedOpening(null);
+                  resetGame();
+                }}
+                currentFen={gameState.currentFen}
+                aiModel={gameState.aiModel}
+                aiDifficulty={gameState.difficulty}
+                onAIMove={() => {
+                  // TODO: Implement AI move in opening learning
+                  console.log("AI move in opening learning");
+                }}
+              />
+            ) : (
+              /* AI Analysis Panel */
+              <AIAnalysisPanel
+                mode={gameState.gameMode}
+                feedback={gameState.lastAIFeedback?.feedback}
+                score={gameState.lastAIFeedback?.score?.toString()}
+                evaluation={gameState.lastAIFeedback?.evaluation}
+                quality={gameState.lastAIFeedback?.quality === "excellent" ? "good" : gameState.lastAIFeedback?.quality === "blunder" ? "bad" : "neutral"}
+                lastMove={gameState.moves[gameState.moves.length - 1]}
+              />
+            )}
 
             {/* Coach Chat Panel */}
             {isCoachMode && (
