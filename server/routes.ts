@@ -484,6 +484,32 @@ export async function registerRoutes(app: Express): Promise<Server> {
             };
           }
         }
+        
+        // If Stockfish fails, fall back to random move
+        console.log('Stockfish failed, using fallback random move');
+        const chess = new Chess(move.fen);
+        const legalMoves = chess.moves({ verbose: true });
+        
+        if (legalMoves.length > 0) {
+          const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
+          const validatedMove = chess.move(randomMove);
+          
+          if (validatedMove) {
+            return {
+              aiMove: {
+                from: validatedMove.from,
+                to: validatedMove.to,
+                piece: validatedMove.piece,
+                captured: validatedMove.captured,
+                promotion: validatedMove.promotion,
+                san: validatedMove.san,
+                fen: chess.fen(),
+                moveNumber: move.moveNumber + 1
+              },
+              reasoning: "Stockfish fallback move",
+            };
+          }
+        }
       } else {
         // Use Groq LLM models for human-like play
         try {
@@ -518,6 +544,38 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         } catch (groqError) {
           console.log('Groq AI failed, falling back to Stockfish:', groqError instanceof Error ? groqError.message : String(groqError));
+          
+          // Fall back to Stockfish when Groq fails
+          try {
+            const stockfishMove = await stockfishEngine.getBestMove(move.fen, difficulty, 1000);
+            
+            if (stockfishMove) {
+              const chess = new Chess(move.fen);
+              const validatedMove = chess.move({
+                from: stockfishMove.from,
+                to: stockfishMove.to,
+                promotion: stockfishMove.promotion
+              });
+              
+              if (validatedMove) {
+                return {
+                  aiMove: {
+                    from: validatedMove.from,
+                    to: validatedMove.to,
+                    piece: validatedMove.piece,
+                    captured: validatedMove.captured,
+                    promotion: validatedMove.promotion,
+                    san: validatedMove.san,
+                    fen: chess.fen(),
+                    moveNumber: move.moveNumber + 1
+                  },
+                  reasoning: `Stockfish fallback (Groq failed)`,
+                };
+              }
+            }
+          } catch (stockfishError) {
+            console.log('Stockfish fallback also failed');
+          }
         }
       }
       
@@ -588,40 +646,120 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Invalid FEN position' });
       }
 
-      // Build game memory context
-      let gameMemory;
-      if (gameId) {
-        gameMemory = groqAIService.getGameMemory(gameId) || {
-          gameId,
-          gamePhase: 'opening' as const,
-          keyMoments: [],
-          playerStrengths: [],
-          playerWeaknesses: [],
-          commonMistakes: []
-        };
+      let aiResponse;
+
+      // Check if it's Stockfish model
+      if (model === 'stockfish-16') {
+        try {
+          console.log(`Using Stockfish-16 at difficulty ${difficulty}`);
+          const stockfishMove = await stockfishEngine.getBestMove(fen, difficulty, 1000);
+          
+          if (stockfishMove) {
+            const chess = new Chess(fen);
+            const validatedMove = chess.move({
+              from: stockfishMove.from,
+              to: stockfishMove.to,
+              promotion: stockfishMove.promotion
+            });
+            
+            if (validatedMove) {
+              aiResponse = {
+                move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
+                reasoning: `Stockfish-16 analysis at level ${difficulty}`,
+                analysis: `${validatedMove.san} - Strategic Stockfish play`,
+                score: "0.0"
+              };
+            }
+          }
+          
+          if (!aiResponse) {
+            throw new Error('Stockfish failed to generate move');
+          }
+        } catch (stockfishError) {
+          console.log('Stockfish failed, using fallback:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
+          // Use fallback random move for Stockfish
+          const chess = new Chess(fen);
+          const legalMoves = chess.moves({ verbose: true });
+          
+          if (legalMoves.length > 0) {
+            const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
+            const validatedMove = chess.move(randomMove);
+            
+            if (validatedMove) {
+              aiResponse = {
+                move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
+                reasoning: "Stockfish fallback move",
+                analysis: `${validatedMove.san} - Random fallback`,
+                score: "0.0"
+              };
+            }
+          }
+        }
+      } else {
+        // Build game memory context for Groq models
+        let gameMemory;
+        if (gameId) {
+          gameMemory = groqAIService.getGameMemory(gameId) || {
+            gameId,
+            gamePhase: 'opening' as const,
+            keyMoments: [],
+            playerStrengths: [],
+            playerWeaknesses: [],
+            commonMistakes: []
+          };
+        }
+
+        // Use Groq AI for LLM models
+        try {
+          console.log(`Optimized AI move generation for ${model} at difficulty ${difficulty}`);
+          aiResponse = await groqAIService.generateMove({ 
+            fen, 
+            model, 
+            difficulty, 
+            gameMode,
+            recentMoves,
+            gameMemory
+          });
+          console.log('AI move successful:', aiResponse.move);
+        } catch (groqError) {
+          console.log('Groq AI failed, using local engine:', groqError instanceof Error ? groqError.message : String(groqError));
+          
+          // Fallback to Stockfish when Groq fails
+          try {
+            const stockfishMove = await stockfishEngine.getBestMove(fen, difficulty, 1000);
+            
+            if (stockfishMove) {
+              const chess = new Chess(fen);
+              const validatedMove = chess.move({
+                from: stockfishMove.from,
+                to: stockfishMove.to,
+                promotion: stockfishMove.promotion
+              });
+              
+              if (validatedMove) {
+                aiResponse = {
+                  move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
+                  reasoning: `Stockfish fallback (${model} failed)`,
+                  analysis: `${validatedMove.san} - Fallback analysis`,
+                  score: "0.0"
+                };
+              }
+            }
+          } catch (stockfishError) {
+            console.log('Stockfish fallback also failed');
+            // Final fallback: local AI engine
+            try {
+              aiResponse = aiChessEngine.generateMove({ fen, model, difficulty });
+            } catch (localError) {
+              console.error('All engines failed:', localError);
+              return res.status(500).json({ error: 'All AI engines failed to generate move' });
+            }
+          }
+        }
       }
 
-      // Try Groq AI first, fallback to local engine
-      let aiResponse;
-      try {
-        console.log(`Optimized AI move generation for ${model} at difficulty ${difficulty}`);
-        aiResponse = await groqAIService.generateMove({ 
-          fen, 
-          model, 
-          difficulty, 
-          gameMode,
-          recentMoves,
-          gameMemory
-        });
-        console.log('AI move successful:', aiResponse.move);
-      } catch (groqError) {
-        console.log('Groq AI failed, using local engine:', groqError instanceof Error ? groqError.message : String(groqError));
-        try {
-          aiResponse = aiChessEngine.generateMove({ fen, model, difficulty });
-        } catch (localError) {
-          console.error('Local engine also failed:', localError);
-          return res.status(500).json({ error: 'Both AI engines failed to generate move' });
-        }
+      if (!aiResponse) {
+        return res.status(500).json({ error: 'Failed to generate AI move' });
       }
 
       res.json(aiResponse);
