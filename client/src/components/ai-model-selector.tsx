@@ -17,7 +17,7 @@ export interface AIModel {
 const AI_MODELS: AIModel[] = [
   {
     id: "stockfish-16",
-    name: "Stockfish 16",
+    name: "Stockfish Engine",
     description: "World's strongest chess engine",
     strength: 10,
     speed: "medium",
@@ -26,25 +26,25 @@ const AI_MODELS: AIModel[] = [
   {
     id: "llama3-70b-8192",
     name: "Llama 3 70B",
-    description: "Strategic gameplay with human-like reasoning",
+    description: "Large language model for human-like play",
     strength: 7,
     speed: "fast",
     type: "groq"
   },
   {
-    id: "deepseek-r1-distill-llama-70b",
-    name: "DeepSeek R1",
-    description: "Analytical play with deep calculation",
-    strength: 8,
-    speed: "medium",
+    id: "llama3-8b-8192",
+    name: "Llama 3 8B",
+    description: "Faster, more creative play style",
+    strength: 6,
+    speed: "fast",
     type: "groq"
   },
   {
-    id: "moonshotai/kimi-k2-instruct",
-    name: "Kimi K2",
-    description: "Educational coaching and feedback",
-    strength: 6,
-    speed: "fast",
+    id: "mixtral-8x7b-32768",
+    name: "Mixtral 8x7B",
+    description: "Balanced strategic play",
+    strength: 7,
+    speed: "medium",
     type: "groq"
   }
 ];
@@ -65,9 +65,9 @@ export function AIModelSelector({
   className = "" 
 }: AIModelSelectorProps) {
   const { t } = useI18n();
-  
+
   const currentModel = AI_MODELS.find(m => m.id === selectedModel) || AI_MODELS[0];
-  
+
   const getSpeedIcon = (speed: string) => {
     switch (speed) {
       case "fast": return <Zap className="w-3 h-3 text-green-500" />;

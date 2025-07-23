@@ -314,6 +314,12 @@ RESPONSE FORMAT (JSON ONLY):
         throw new Error("Groq API key not configured");
       }
 
+      // Validate model exists in Groq
+      const validGroqModels = ['llama3-70b-8192', 'llama3-8b-8192', 'mixtral-8x7b-32768', 'deepseek-r1-distill-llama-70b'];
+      if (!validGroqModels.includes(model)) {
+        throw new Error(`Model ${model} does not exist or is not supported`);
+      }
+
       const config = this.getModelSpecificSettings(model, difficulty);
       const prompt = this.buildOptimizedPrompt(request);
 

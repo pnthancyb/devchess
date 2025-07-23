@@ -46,6 +46,10 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
       setConnectionState("connecting");
 
       try {
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host;
+        // Ensure we have a valid host and port
+        const wsUrl = host ? `${protocol}//${host}/ws` : `ws://localhost:5000/ws`;
         const ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
