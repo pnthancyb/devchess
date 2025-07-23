@@ -23,6 +23,7 @@ export interface UseChessGameReturn {
   resetGame: () => void;
   setGameMode: (mode: GameMode) => void;
   updateAISettings: (model: string, difficulty: number) => void;
+  updateAIModel: (model: string) => void;
   sendChatMessage: (message: string) => void;
   downloadGamePGN: () => void;
   isValidMove: (from: Square, to: Square) => boolean;
@@ -280,6 +281,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     setAIDifficulty(difficulty);
   }, []);
 
+  const updateAIModel = useCallback((model: string) => {
+    setAIModel(model);
+  }, []);
+
   const sendChatMessage = useCallback(async (message: string) => {
     if (!message.trim()) return;
 
@@ -383,20 +388,37 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     setGameMode("opening");
   }, [resetGame]);
 
-  // Handle opening learning logic
+  // Handle opening learning logic - fixed to detect opponent moves
   useEffect(() => {
     if (gameMode === "opening" && openingLearningState.selectedOpening) {
+      const currentMoveCount = moves.length;
       const { nextMove, isComplete, playerMove } = getOpeningMoves(
         openingLearningState.selectedOpening,
-        openingLearningState.currentMoveIndex
+        currentMoveCount // Use actual move count instead of currentMoveIndex
       );
       
       setOpeningLearningState(prev => ({
         ...prev,
         nextMove,
+        currentMoveIndex: currentMoveCount, // Update move index to match actual moves
+        completedMoves: moves.slice(0, currentMoveCount)
       }));
+
+      // After opponent move, check if we need to continue with next player move
+      if (currentMoveCount > 0 && currentMoveCount % 2 === 0 && !isComplete) {
+        // It's white's turn after black's move - show next expected move
+        const { nextMove: nextPlayerMove } = getOpeningMoves(
+          openingLearningState.selectedOpening,
+          currentMoveCount
+        );
+        
+        setOpeningLearningState(prev => ({
+          ...prev,
+          nextMove: nextPlayerMove
+        }));
+      }
     }
-  }, [gameMode, openingLearningState.selectedOpening, openingLearningState.currentMoveIndex]);
+  }, [gameMode, openingLearningState.selectedOpening, moves.length]);
 
   // Initialize game
   useEffect(() => {
@@ -423,6 +445,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     resetGame,
     setGameMode,
     updateAISettings,
+    updateAIModel,
     sendChatMessage,
     downloadGamePGN,
     isValidMove,

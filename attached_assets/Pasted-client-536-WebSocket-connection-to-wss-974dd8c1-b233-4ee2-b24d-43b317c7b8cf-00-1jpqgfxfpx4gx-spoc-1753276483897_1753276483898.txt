@@ -1,0 +1,199 @@
+client:536 WebSocket connection to 'wss://974dd8c1-b233-4ee2-b24d-43b317c7b8cf-00-1jpqgfxfpx4gx.spock.replit.dev/?token=uOcBWSdMIcbg' failed: 
+setupWebSocket @ client:536
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=uOcBWSdMIcbg' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+use-chess-game.tsx:146 Player making move from e2 to e4 
+use-chess-game.tsx:111 Player move analysis: Object
+use-chess-game.tsx:193 Player move analysis: Object
+use-chess-game.tsx:205 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:209 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:213 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 Requesting AI move for black pieces
+chess-game.tsx:112 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+onChange @ chess-game.tsx:112
+callCallback2 @ chunk-RPCDYKBN.js?v=fd0803fc:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=fd0803fc:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=fd0803fc:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=fd0803fc:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=fd0803fc:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=fd0803fc:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=fd0803fc:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=fd0803fc:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=fd0803fc:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=fd0803fc:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=fd0803fc:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=fd0803fc:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=fd0803fc:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=fd0803fc:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=fd0803fc:5449
+chunk-RPCDYKBN.js?v=fd0803fc:3750 Uncaught ReferenceError: updateAIModel is not defined
+    at onChange (chess-game.tsx:112:38)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=fd0803fc:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=fd0803fc:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=fd0803fc:3733:39)
+    at invokeGuardedCallbackAndCatchFirstError (chunk-RPCDYKBN.js?v=fd0803fc:3736:33)
+    at executeDispatch (chunk-RPCDYKBN.js?v=fd0803fc:7014:11)
+    at processDispatchQueueItemsInOrder (chunk-RPCDYKBN.js?v=fd0803fc:7034:15)
+    at processDispatchQueue (chunk-RPCDYKBN.js?v=fd0803fc:7043:13)
+    at dispatchEventsForPlugins (chunk-RPCDYKBN.js?v=fd0803fc:7051:11)
+    at chunk-RPCDYKBN.js?v=fd0803fc:7174:20
+onChange @ chess-game.tsx:112
+callCallback2 @ chunk-RPCDYKBN.js?v=fd0803fc:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=fd0803fc:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=fd0803fc:3733
+invokeGuardedCallbackAndCatchFirstError @ chunk-RPCDYKBN.js?v=fd0803fc:3736
+executeDispatch @ chunk-RPCDYKBN.js?v=fd0803fc:7014
+processDispatchQueueItemsInOrder @ chunk-RPCDYKBN.js?v=fd0803fc:7034
+processDispatchQueue @ chunk-RPCDYKBN.js?v=fd0803fc:7043
+dispatchEventsForPlugins @ chunk-RPCDYKBN.js?v=fd0803fc:7051
+(anonymous) @ chunk-RPCDYKBN.js?v=fd0803fc:7174
+batchedUpdates$1 @ chunk-RPCDYKBN.js?v=fd0803fc:18913
+batchedUpdates @ chunk-RPCDYKBN.js?v=fd0803fc:3579
+dispatchEventForPluginEventSystem @ chunk-RPCDYKBN.js?v=fd0803fc:7173
+dispatchEventWithEnableCapturePhaseSelectiveHydrationWithoutDiscreteEventReplay @ chunk-RPCDYKBN.js?v=fd0803fc:5478
+dispatchEvent @ chunk-RPCDYKBN.js?v=fd0803fc:5472
+dispatchDiscreteEvent @ chunk-RPCDYKBN.js?v=fd0803fc:5449

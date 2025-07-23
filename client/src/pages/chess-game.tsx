@@ -32,6 +32,7 @@ export default function ChessGame() {
     setGameMode,
     resetGame,
     updateAISettings,
+    updateAIModel,
     openingLearningState,
     setSelectedOpening,
     chatMessages,
@@ -106,16 +107,16 @@ export default function ChessGame() {
               <div className="flex flex-wrap gap-4 items-center justify-center">
                 {/* AI Model Selection */}
                 <div className="flex items-center gap-2">
-                  <span className="text-sm font-medium">AI Model:</span>
+                  <span className="text-sm font-medium text-muted-foreground">AI Engine:</span>
                   <select 
                     value={gameState.aiModel} 
                     onChange={(e) => updateAIModel(e.target.value)}
-                    className="px-3 py-1 border rounded text-sm bg-background"
+                    className="px-3 py-2 border border-input rounded-md text-sm bg-background hover:bg-accent transition-colors focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2"
                   >
-                    <option value="stockfish-16">Stockfish 16</option>
-                    <option value="llama3-70b-8192">Llama 3 70B</option>
-                    <option value="deepseek-r1-distill-llama-70b">DeepSeek R1</option>
-                    <option value="moonshotai/kimi-k2-instruct">Kimi K2</option>
+                    <option value="stockfish-16">🏆 Stockfish 16</option>
+                    <option value="llama3-70b-8192">🤖 Llama 3 70B</option>
+                    <option value="deepseek-r1-distill-llama-70b">🧠 DeepSeek R1</option>
+                    <option value="moonshotai/kimi-k2-instruct">⚡ Kimi K2</option>
                   </select>
                 </div>
 
