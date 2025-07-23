@@ -1,0 +1,126 @@
+client:536 WebSocket connection to 'wss://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/?token=IJ3B6QHf6LLT' failed: 
+setupWebSocket @ client:536
+(anonymous) @ client:531
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=IJ3B6QHf6LLT' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+setupWebSocket @ client:536
+fallback @ client:509
+(anonymous) @ client:555
+chess-board.tsx:149 Uncaught TypeError: Cannot read properties of undefined (reading 'length')
+    at generateBoard (chess-board.tsx:149:34)
+    at ChessBoard (chess-board.tsx:262:12)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=9d49a770:11548:26)
+    at mountIndeterminateComponent (chunk-RPCDYKBN.js?v=9d49a770:14926:21)
+    at beginWork (chunk-RPCDYKBN.js?v=9d49a770:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=9d49a770:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=9d49a770:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=9d49a770:3733:39)
+    at beginWork$1 (chunk-RPCDYKBN.js?v=9d49a770:19765:15)
+    at performUnitOfWork (chunk-RPCDYKBN.js?v=9d49a770:19198:20)
+generateBoard @ chess-board.tsx:149
+ChessBoard @ chess-board.tsx:262
+renderWithHooks @ chunk-RPCDYKBN.js?v=9d49a770:11548
+mountIndeterminateComponent @ chunk-RPCDYKBN.js?v=9d49a770:14926
+beginWork @ chunk-RPCDYKBN.js?v=9d49a770:15914
+callCallback2 @ chunk-RPCDYKBN.js?v=9d49a770:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=9d49a770:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=9d49a770:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=9d49a770:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=9d49a770:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=9d49a770:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=9d49a770:19116
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=9d49a770:18678
+workLoop @ chunk-RPCDYKBN.js?v=9d49a770:197
+flushWork @ chunk-RPCDYKBN.js?v=9d49a770:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=9d49a770:384
+chess-board.tsx:149 Uncaught TypeError: Cannot read properties of undefined (reading 'length')
+    at generateBoard (chess-board.tsx:149:34)
+    at ChessBoard (chess-board.tsx:262:12)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=9d49a770:11548:26)
+    at mountIndeterminateComponent (chunk-RPCDYKBN.js?v=9d49a770:14926:21)
+    at beginWork (chunk-RPCDYKBN.js?v=9d49a770:15914:22)
+    at HTMLUnknownElement.callCallback2 (chunk-RPCDYKBN.js?v=9d49a770:3674:22)
+    at Object.invokeGuardedCallbackDev (chunk-RPCDYKBN.js?v=9d49a770:3699:24)
+    at invokeGuardedCallback (chunk-RPCDYKBN.js?v=9d49a770:3733:39)
+    at beginWork$1 (chunk-RPCDYKBN.js?v=9d49a770:19765:15)
+    at performUnitOfWork (chunk-RPCDYKBN.js?v=9d49a770:19198:20)
+generateBoard @ chess-board.tsx:149
+ChessBoard @ chess-board.tsx:262
+renderWithHooks @ chunk-RPCDYKBN.js?v=9d49a770:11548
+mountIndeterminateComponent @ chunk-RPCDYKBN.js?v=9d49a770:14926
+beginWork @ chunk-RPCDYKBN.js?v=9d49a770:15914
+callCallback2 @ chunk-RPCDYKBN.js?v=9d49a770:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=9d49a770:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=9d49a770:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=9d49a770:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=9d49a770:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=9d49a770:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=9d49a770:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=9d49a770:18736
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=9d49a770:18684
+workLoop @ chunk-RPCDYKBN.js?v=9d49a770:197
+flushWork @ chunk-RPCDYKBN.js?v=9d49a770:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=9d49a770:384
+hook.js:608 The above error occurred in the <ChessBoard> component:
+
+    at ChessBoard (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/components/chess-board.tsx:25:3)
+    at div
+    at div
+    at main
+    at div
+    at ChessGamePage (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/pages/chess-game.tsx:35:17)
+    at Route (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9d49a770:323:16)
+    at Switch (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=9d49a770:379:17)
+    at Router
+    at Provider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=9d49a770:38:15)
+    at TooltipProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=9d49a770:65:5)
+    at I18nProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/lib/i18n.tsx:438:32)
+    at ThemeProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/hooks/use-theme.tsx:20:33)
+    at QueryClientProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=9d49a770:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+logCapturedError @ chunk-RPCDYKBN.js?v=9d49a770:14032
+update.callback @ chunk-RPCDYKBN.js?v=9d49a770:14052
+callCallback @ chunk-RPCDYKBN.js?v=9d49a770:11248
+commitUpdateQueue @ chunk-RPCDYKBN.js?v=9d49a770:11265
+commitLayoutEffectOnFiber @ chunk-RPCDYKBN.js?v=9d49a770:17093
+commitLayoutMountEffects_complete @ chunk-RPCDYKBN.js?v=9d49a770:17980
+commitLayoutEffects_begin @ chunk-RPCDYKBN.js?v=9d49a770:17969
+commitLayoutEffects @ chunk-RPCDYKBN.js?v=9d49a770:17920
+commitRootImpl @ chunk-RPCDYKBN.js?v=9d49a770:19353
+commitRoot @ chunk-RPCDYKBN.js?v=9d49a770:19277
+finishConcurrentRender @ chunk-RPCDYKBN.js?v=9d49a770:18760
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=9d49a770:18718
+workLoop @ chunk-RPCDYKBN.js?v=9d49a770:197
+flushWork @ chunk-RPCDYKBN.js?v=9d49a770:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=9d49a770:384
+chunk-RPCDYKBN.js?v=9d49a770:19413 Uncaught TypeError: Cannot read properties of undefined (reading 'length')
+    at generateBoard (chess-board.tsx:149:34)
+    at ChessBoard (chess-board.tsx:262:12)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=9d49a770:11548:26)
+    at mountIndeterminateComponent (chunk-RPCDYKBN.js?v=9d49a770:14926:21)
+    at beginWork (chunk-RPCDYKBN.js?v=9d49a770:15914:22)
+    at beginWork$1 (chunk-RPCDYKBN.js?v=9d49a770:19753:22)
+    at performUnitOfWork (chunk-RPCDYKBN.js?v=9d49a770:19198:20)
+    at workLoopSync (chunk-RPCDYKBN.js?v=9d49a770:19137:13)
+    at renderRootSync (chunk-RPCDYKBN.js?v=9d49a770:19116:15)
+    at recoverFromConcurrentError (chunk-RPCDYKBN.js?v=9d49a770:18736:28)
+generateBoard @ chess-board.tsx:149
+ChessBoard @ chess-board.tsx:262
+renderWithHooks @ chunk-RPCDYKBN.js?v=9d49a770:11548
+mountIndeterminateComponent @ chunk-RPCDYKBN.js?v=9d49a770:14926
+beginWork @ chunk-RPCDYKBN.js?v=9d49a770:15914
+beginWork$1 @ chunk-RPCDYKBN.js?v=9d49a770:19753
+performUnitOfWork @ chunk-RPCDYKBN.js?v=9d49a770:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=9d49a770:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=9d49a770:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=9d49a770:18736
+performConcurrentWorkOnRoot @ chunk-RPCDYKBN.js?v=9d49a770:18684
+workLoop @ chunk-RPCDYKBN.js?v=9d49a770:197
+flushWork @ chunk-RPCDYKBN.js?v=9d49a770:176
+performWorkUntilDeadline @ chunk-RPCDYKBN.js?v=9d49a770:384
