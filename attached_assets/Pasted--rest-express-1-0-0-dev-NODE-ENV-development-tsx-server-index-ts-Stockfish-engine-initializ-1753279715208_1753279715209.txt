@@ -1,0 +1,499 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+Stockfish engine initialized (simulation mode)
+2:05:04 PM [express] serving on port 5000
+2:05:09 PM [vite] warning: Duplicate key "settings.recommendedFor" in object literal
+59 |      "settings.recommendations": "Model Recommendations",
+60 |      "settings.recommendedFor": "Levels",
+61 |      "settings.recommendedFor": "Levels",
+   |      ^
+62 |      "settings.recommended": "Recommended",
+63 |      "common.white": "White",
+
+  Plugin: vite:esbuild
+  File: /home/runner/workspace/client/src/lib/i18n.tsx
+2:05:12 PM [express] GET /api/users/1/stats 304 in 2ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:05:12 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:05:39 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:05:40 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:05:48 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:05:49 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:06:05 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:06:05 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+2:06:23 PM [express] POST /api/chess/analyze-move 200 in 5ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "e5"},
+  "reasoning": "I'm playing ...e5 to challenge White's central pawn and prepare to develop other pieces. This move also opens up the f-file for my rook to poten...
+AI move successful: { from: 'e7', to: 'e5', promotion: undefined }
+2:06:25 PM [express] POST /api/chess/ai-move 200 in 860ms :: {"move":{"from":"e7","to":"e5"},"reason…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:06:25 PM [express] POST /api/chess/feedback 500 in 27ms :: {"error":"Failed to generate feedback"}
+2:06:30 PM [express] POST /api/chess/coach-response 200 in 728ms :: {"response":"💡 TIP: Consider pl…
+2:06:44 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "d8", "to": "e7"},
+  "reasoning": "Developing the queen to a strong central square, eyeing the pawn on d4 and preparing to control the d5 square. This move also supports the poten...
+AI move successful: { from: 'd8', to: 'e7', promotion: undefined }
+2:06:45 PM [express] POST /api/chess/ai-move 200 in 987ms :: {"move":{"from":"d8","to":"e7"},"reason…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:06:45 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:02 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:03 PM [express] POST /api/chess/ai-move 200 in 14ms :: {"move":{"from":"b8","to":"c6"},"reasoni…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:03 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:05 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:06 PM [express] POST /api/chess/ai-move 200 in 22ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:06 PM [express] POST /api/chess/feedback 500 in 2ms :: {"error":"Failed to generate feedback"}
+2:07:08 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:09 PM [express] POST /api/chess/ai-move 200 in 15ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:09 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:10 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:11 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:11 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:20 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:21 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"b8","to":"a8"},"reasonin…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:21 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:30 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:31 PM [express] POST /api/chess/ai-move 200 in 8ms :: {"move":{"from":"c6","to":"e5"},"reasonin…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:31 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:33 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:34 PM [express] POST /api/chess/ai-move 200 in 9ms :: {"move":{"from":"a8","to":"b8"},"reasonin…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:34 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:41 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:42 PM [express] POST /api/chess/ai-move 200 in 15ms :: {"move":{"from":"b8","to":"a8"},"reasoni…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:42 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:07:46 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Using Stockfish engine at difficulty 5
+2:07:47 PM [express] POST /api/chess/ai-move 200 in 20ms :: {"move":{"from":"a8","to":"b8"},"reasoni…
+AI feedback error: Error: Invalid FEN: side-to-move is invalid
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:766:15)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:197:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:07:47 PM [express] POST /api/chess/feedback 500 in 2ms :: {"error":"Failed to generate feedback"}
+Coach response failed: NotFoundError: 404 {"error":{"message":"The model `stockfish-16` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+    at Function.generate (/home/runner/workspace/node_modules/groq-sdk/src/error.ts:72:14)
+    at Groq.makeStatusError (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:445:21)
+    at Groq.makeRequest (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:511:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GroqAIService.generateCoachResponse (/home/runner/workspace/server/groq-ai.ts:582:26)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:808:26) {
+  status: 404,
+  headers: {
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'private, max-age=0, no-store, no-cache, must-revalidate',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '963bbf17d9db75be-SEA',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 23 Jul 2025 14:07:51 GMT',
+    server: 'cloudflare',
+    'set-cookie': '__cf_bm=HMjvE8I9FrquHRKKMXCFFCsMvyvzShxEUQyFj9ZzqBk-1753279671-1.0.1.1-Ij3kBRYp8_MBWyJCW3t5avqrf722bGLLo2t9wkKan0ZSjlCmrooW8Uz6NZqggp4vI9VmQXznb_eB545R30L_ctcgevqECadjRWcCuAHGBz8; path=/; expires=Wed, 23-Jul-25 14:37:51 GMT; domain=.groq.com; HttpOnly; Secure; SameSite=None',
+    'transfer-encoding': 'chunked',
+    vary: 'Origin',
+    via: '1.1 google',
+    'x-groq-region': 'us-west-1',
+    'x-request-id': 'req_01k0vssar6erptewekxv8z9pfa'
+  },
+  error: {
+    error: {
+      message: 'The model `stockfish-16` does not exist or you do not have access to it.',
+      type: 'invalid_request_error',
+      code: 'model_not_found'
+    }
+  }
+}
+2:07:51 PM [express] POST /api/chess/coach-response 200 in 142ms :: {"response":"💡 TIP: Great quest…
+Coach response failed: NotFoundError: 404 {"error":{"message":"The model `stockfish-16` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+    at Function.generate (/home/runner/workspace/node_modules/groq-sdk/src/error.ts:72:14)
+    at Groq.makeStatusError (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:445:21)
+    at Groq.makeRequest (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:511:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GroqAIService.generateCoachResponse (/home/runner/workspace/server/groq-ai.ts:582:26)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:808:26) {
+  status: 404,
+  headers: {
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'private, max-age=0, no-store, no-cache, must-revalidate',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '963bbf507b9276e0-SEA',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 23 Jul 2025 14:08:00 GMT',
+    server: 'cloudflare',
+    'set-cookie': '__cf_bm=T8qHBKHPfdeExH6GCXeOiTaf2a52Kpu1tPZl.5w_g9o-1753279680-1.0.1.1-XeW.8kRKQtimlrwp4OZnBecX1d4vfa9fPbqqINo59vB8.1pQ61Tj311qaaz_nTcW9Lp.ETBYAjTlcbk.Atgc0oHIRJZhcjEvC3T.jZatPmk; path=/; expires=Wed, 23-Jul-25 14:38:00 GMT; domain=.groq.com; HttpOnly; Secure; SameSite=None',
+    'transfer-encoding': 'chunked',
+    vary: 'Origin',
+    via: '1.1 google',
+    'x-groq-region': 'us-west-1',
+    'x-request-id': 'req_01k0vsskjsegrtq4pxeabmfg49'
+  },
+  error: {
+    error: {
+      message: 'The model `stockfish-16` does not exist or you do not have access to it.',
+      type: 'invalid_request_error',
+      code: 'model_not_found'
+    }
+  }
+}
+2:08:00 PM [express] POST /api/chess/coach-response 200 in 71ms :: {"response":"💡 TIP: Great questi…

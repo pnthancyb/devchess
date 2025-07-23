@@ -648,10 +648,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       let aiResponse;
 
-      // Check if it's Stockfish model
-      if (model === 'stockfish-16') {
+      // Check if it's Stockfish model or if model doesn't exist in Groq
+      if (model === 'stockfish-16' || model.includes('stockfish')) {
         try {
-          console.log(`Using Stockfish-16 at difficulty ${difficulty}`);
+          console.log(`Using Stockfish engine at difficulty ${difficulty}`);
           const stockfishMove = await stockfishEngine.getBestMove(fen, difficulty, 1000);
           
           if (stockfishMove) {
