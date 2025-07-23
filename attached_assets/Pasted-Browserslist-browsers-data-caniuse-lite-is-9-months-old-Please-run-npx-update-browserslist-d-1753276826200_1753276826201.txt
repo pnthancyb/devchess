@@ -1,0 +1,45 @@
+Browserslist: browsers data (caniuse-lite) is 9 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+1:19:04 PM [express] GET /api/users/1/stats 304 in 2ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:19:05 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:19:53 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:19:53 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:20:01 PM [express] POST /api/chess/analyze-move 200 in 3ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for stockfish-16 at difficulty 3
+Optimized AI request for stockfish-16 at difficulty 3
+AI generation error: NotFoundError: 404 {"error":{"message":"The model `stockfish-16` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+    at Function.generate (/home/runner/workspace/node_modules/groq-sdk/src/error.ts:72:14)
+    at Groq.makeStatusError (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:445:21)
+    at Groq.makeRequest (/home/runner/workspace/node_modules/groq-sdk/src/core.ts:511:24)
+    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)
+    at async GroqAIService.generateMove (/home/runner/workspace/server/groq-ai.ts:322:26)
+    at async <anonymous> (/home/runner/workspace/server/routes.ts:608:22) {
+  status: 404,
+  headers: {
+    'alt-svc': 'h3=":443"; ma=86400',
+    'cache-control': 'private, max-age=0, no-store, no-cache, must-revalidate',
+    'cf-cache-status': 'DYNAMIC',
+    'cf-ray': '963b790f8da8682c-SEA',
+    connection: 'keep-alive',
+    'content-encoding': 'gzip',
+    'content-type': 'application/json',
+    date: 'Wed, 23 Jul 2025 13:20:02 GMT',
+    server: 'cloudflare',
+    'set-cookie': '__cf_bm=5ZnMqV.Cr0EW02lyAliRxoUdqy0dc2P14NL4Ing7zhw-1753276802-1.0.1.1-XwscFBaackDc6hemuHfqT.0BMllX1OJogV49bRJ.2ga_drRJ80BATnvi4FltoNAkrXFuaYrsIPlE0jnASW6OFXvT7ycwPpT0h8r6bQs2TFc; path=/; expires=Wed, 23-Jul-25 13:50:02 GMT; domain=.groq.com; HttpOnly; Secure; SameSite=None',
+    'transfer-encoding': 'chunked',
+    vary: 'Origin',
+    via: '1.1 google',
+    'x-groq-region': 'us-west-1',
+    'x-request-id': 'req_01k0vq1sepe4zt5y0ctq9pcfnm'
+  },
+  error: {
+    error: {
+      message: 'The model `stockfish-16` does not exist or you do not have access to it.',
+      type: 'invalid_request_error',
+      code: 'model_not_found'
+    }
+  }
+}
+Groq AI failed, using local engine: 404 {"error":{"message":"The model `stockfish-16` does not exist or you do not have access to it.","type":"invalid_request_error","code":"model_not_found"}}
+1:20:07 PM [express] POST /api/chess/ai-move 200 in 5346ms :: {"move":{"from":"b8","to":"c6"},"reaso…
