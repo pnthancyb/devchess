@@ -91,47 +91,73 @@ export default function ChessGame() {
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        {/* Game Mode Selector and Settings */}
-        <div className="flex flex-col sm:flex-row gap-4 items-stretch sm:items-center justify-between mb-6">
-          <div className="flex-1">
-            <GameModeSelector
-              selectedMode={gameState.gameMode}
-              onModeChange={setGameMode}
-            />
-          </div>
-          <div className="flex gap-2 sm:gap-4">
-            {/* Difficulty controls directly in header */}
-            <div className="flex items-center space-x-2">
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => updateAISettings(gameState.aiModel, Math.max(1, gameState.difficulty - 1))}
-                disabled={gameState.difficulty <= 1}
-              >
-                -
-              </Button>
-              <span className="text-sm font-medium px-2">
-                Level {gameState.difficulty}
-              </span>
-              <Button 
-                variant="outline" 
-                size="sm"
-                onClick={() => updateAISettings(gameState.aiModel, Math.min(5, gameState.difficulty + 1))}
-                disabled={gameState.difficulty >= 5}
-              >
-                +
-              </Button>
-            </div>
-            <Button onClick={resetGame} variant="outline" size="sm" className="px-4">
-              <RefreshCcw className="w-4 h-4 mr-2" />
-              Reset Game
-            </Button>
-            
-            <Button onClick={handleDownloadPGN} variant="outline" size="sm" className="px-4">
-              <Download className="w-4 h-4 mr-2" />
-              Download PGN
-            </Button>
-          </div>
+        {/* Game Mode Selector */}
+        <div className="mb-6">
+          <GameModeSelector
+            selectedMode={gameState.gameMode}
+            onModeChange={setGameMode}
+          />
+        </div>
+
+        {/* Game Controls Header */}
+        <div className="mb-6">
+          <Card>
+            <CardContent className="p-4">
+              <div className="flex flex-wrap gap-4 items-center justify-center">
+                {/* AI Model Selection */}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">AI Model:</span>
+                  <select 
+                    value={gameState.aiModel} 
+                    onChange={(e) => updateAIModel(e.target.value)}
+                    className="px-3 py-1 border rounded text-sm bg-background"
+                  >
+                    <option value="stockfish-16">Stockfish 16</option>
+                    <option value="llama3-70b-8192">Llama 3 70B</option>
+                    <option value="deepseek-r1-distill-llama-70b">DeepSeek R1</option>
+                    <option value="moonshotai/kimi-k2-instruct">Kimi K2</option>
+                  </select>
+                </div>
+
+                {/* Level Controls */}
+                <div className="flex items-center gap-2">
+                  <span className="text-sm font-medium">Level:</span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => updateAISettings(gameState.aiModel, Math.max(1, gameState.difficulty - 1))}
+                    disabled={gameState.difficulty <= 1}
+                  >
+                    -
+                  </Button>
+                  <span className="text-sm font-medium px-3 min-w-[40px] text-center">
+                    {gameState.difficulty}
+                  </span>
+                  <Button 
+                    variant="outline" 
+                    size="sm"
+                    className="h-8 w-8 p-0"
+                    onClick={() => updateAISettings(gameState.aiModel, Math.min(5, gameState.difficulty + 1))}
+                    disabled={gameState.difficulty >= 5}
+                  >
+                    +
+                  </Button>
+                </div>
+
+                {/* Game Actions */}
+                <Button onClick={resetGame} variant="outline" size="sm">
+                  <RefreshCcw className="w-4 h-4 mr-2" />
+                  Reset Game
+                </Button>
+                
+                <Button onClick={handleDownloadPGN} variant="outline" size="sm">
+                  <Download className="w-4 h-4 mr-2" />
+                  Download PGN
+                </Button>
+              </div>
+            </CardContent>
+          </Card>
         </div>
 
         {/* Opening Learning Mode Interface */}
