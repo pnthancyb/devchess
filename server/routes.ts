@@ -800,18 +800,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const { fen, moves, model } = req.body;
       
       // Validate FEN before processing
-      if (!fen || typeof fen !== 'string') {
+      if (!fen || typeof fen !== 'string' || fen.trim() === '') {
+        console.error('Invalid FEN provided:', fen);
         return res.status(400).json({ error: 'Invalid FEN provided' });
       }
       
       // Test FEN validity
       try {
-        const testChess = new Chess(fen);
-        if (!testChess) {
-          throw new Error('Invalid position');
+        const testChess = new Chess(fen.trim());
+        // Check if chess instance was created successfully
+        if (!testChess || testChess.isGameOver() === undefined) {
+          throw new Error('Invalid chess position');
         }
       } catch (fenError) {
-        console.error('FEN validation failed:', fenError);
+        console.error('FEN validation failed:', fenError, 'FEN:', fen);
         return res.status(400).json({ error: 'Invalid chess position' });
       }
       
