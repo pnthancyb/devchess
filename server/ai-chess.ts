@@ -117,15 +117,15 @@ export class AIChessEngine {
       let maxEval = -Infinity;
       for (const move of moves) {
         chess.move(move);
-        const eval = this.minimax(chess, depth - 1, false, alpha, beta).value;
+        const evaluation = this.minimax(chess, depth - 1, false, alpha, beta).value;
         chess.undo();
         
-        if (eval > maxEval) {
-          maxEval = eval;
+        if (evaluation > maxEval) {
+          maxEval = evaluation;
           bestMove = move;
         }
         
-        alpha = Math.max(alpha, eval);
+        alpha = Math.max(alpha, evaluation);
         if (beta <= alpha) break; // Alpha-beta pruning
       }
       const result = { value: maxEval, move: bestMove };
@@ -135,15 +135,15 @@ export class AIChessEngine {
       let minEval = Infinity;
       for (const move of moves) {
         chess.move(move);
-        const eval = this.minimax(chess, depth - 1, true, alpha, beta).value;
+        const evaluation = this.minimax(chess, depth - 1, true, alpha, beta).value;
         chess.undo();
         
-        if (eval < minEval) {
-          minEval = eval;
+        if (evaluation < minEval) {
+          minEval = evaluation;
           bestMove = move;
         }
         
-        beta = Math.min(beta, eval);
+        beta = Math.min(beta, evaluation);
         if (beta <= alpha) break; // Alpha-beta pruning
       }
       const result = { value: minEval, move: bestMove };
