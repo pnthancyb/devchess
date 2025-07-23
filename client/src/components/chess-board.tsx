@@ -111,14 +111,35 @@ export function ChessBoard({
 
   // Generate board squares
   const generateBoard = () => {
+    // Ensure position is valid, fallback to starting position
+    const validPosition = position && typeof position === 'string' && position.trim() !== '' 
+      ? position 
+      : 'rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1';
+
+    let chess;
+    try {
+      chess = new Chess(validPosition);
+    } catch (error) {
+      console.error("Invalid FEN position:", validPosition, error);
+      chess = new Chess(); // Use starting position as fallback
+    }
+
+    const board = chess.board();
     const squares = [];
+
+    // Safety check for board array
+    if (!board || !Array.isArray(board) || board.length !== 8) {
+      console.error("Invalid board array:", board);
+      return [];
+    }
+
     const files = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'];
     const ranks = boardOrientation === 'white' ? [8, 7, 6, 5, 4, 3, 2, 1] : [1, 2, 3, 4, 5, 6, 7, 8];
 
     for (const rank of ranks) {
       const row = [];
       const fileOrder = boardOrientation === 'white' ? files : files.slice().reverse();
-      
+
       for (const file of fileOrder) {
         const square = `${file}${rank}`;
         const piece = game.get(square as any);
@@ -155,7 +176,7 @@ export function ChessBoard({
                 {pieceSymbols[`${piece.color}${piece.type.toUpperCase()}` as keyof typeof pieceSymbols]}
               </span>
             )}
-            
+
             {isLegalMove && (
               <div className={`
                 absolute inset-0 flex items-center justify-center
@@ -253,7 +274,7 @@ export function ChessBoard({
           <RotateCcw className="w-4 h-4" />
           {t('game.reset')}
         </Button>
-        
+
         <Button 
           onClick={flipBoard}
           variant="outline" 
