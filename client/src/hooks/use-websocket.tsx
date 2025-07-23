@@ -17,49 +17,27 @@ interface UseWebSocketReturn {
 }
 
 export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketReturn {
-  const {
-    onMessage,
-    onConnect,
-    onDisconnect,
-    autoReconnect = false,
-    reconnectDelay = 5000,
-  } = options;
-
   const [socket, setSocket] = useState<WebSocket | null>(null);
   const [lastMessage, setLastMessage] = useState<WebSocketMessage | null>(null);
   const [connectionState, setConnectionState] = useState<"connecting" | "connected" | "disconnected">("disconnected");
-  const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
-  const reconnectAttempts = useRef(0);
-  const connectingRef = useRef(false);
-  const token = "your_default_token"; // Added a placeholder for token
 
   useEffect(() => {
-    // WebSocket disabled - return disconnected state immediately
+    // WebSocket completely disabled to prevent connection errors
     setConnectionState("disconnected");
     setSocket(null);
-    connectingRef.current = false;
-    console.log("WebSocket disabled - using local mode only");
-    
-    return () => {
-      // Cleanup if needed
-      if (reconnectTimeoutRef.current) {
-        clearTimeout(reconnectTimeoutRef.current);
-      }
-    };
+    console.log("WebSocket disabled - using local API mode only");
   }, []);
 
   const sendMessage = useCallback((message: WebSocketMessage) => {
-    if (socket && socket.readyState === WebSocket.OPEN) {
-      socket.send(JSON.stringify(message));
-    } else {
-      console.warn("WebSocket is not connected");
-    }
-  }, [socket]);
+    // WebSocket disabled - all functionality is local via REST API
+    console.log("WebSocket message ignored (using local mode):", message);
+    return;
+  }, []);
 
   return {
-    socket,
+    socket: null,
     sendMessage,
-    lastMessage,
-    connectionState,
+    lastMessage: null,
+    connectionState: "disconnected" as const,
   };
 }

@@ -679,7 +679,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           console.log(`Using Stockfish engine at difficulty ${adjustedDifficulty}`);
           const stockfishMove = await stockfishEngine.getBestMove(fen, adjustedDifficulty, 2000);
           
-          if (stockfishMove) {
+          if (stockfishMove && stockfishMove.from && stockfishMove.to) {
             const chess = new Chess(fen);
             const validatedMove = chess.move({
               from: stockfishMove.from,
@@ -690,21 +690,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
             if (validatedMove) {
               aiResponse = {
                 move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
-                reasoning: `Stockfish-16 analysis at level ${adjustedDifficulty}`,
-                analysis: `${validatedMove.san} - Strategic Stockfish play`,
+                reasoning: `Stockfish enhanced engine at level ${adjustedDifficulty}`,
+                analysis: `${validatedMove.san} - Strategic engine play`,
                 score: "0.0"
               };
+            } else {
+              throw new Error('Move validation failed');
             }
-          }
-          
-          if (!aiResponse) {
-            throw new Error('Stockfish failed to generate move');
+          } else {
+            throw new Error('Stockfish returned invalid move');
           }
         } catch (stockfishError) {
-          console.log('Stockfish failed, using local engine:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
+          console.log('Stockfish engine issue, using local fallback:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
           
           // Use local AI engine as fallback
-          const localResponse = aiChessEngine.generateMove({ fen, model, difficulty: adjustedDifficulty });
+          const localResponse = aiChessEngine.generateMove({ fen, model: 'local', difficulty: adjustedDifficulty });
           if (localResponse && localResponse.move) {
             aiResponse = {
               move: localResponse.move,

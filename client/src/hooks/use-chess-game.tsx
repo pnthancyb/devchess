@@ -58,10 +58,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const { makeAIMove, isAIThinking } = useAIChess();
 
-  // Disable WebSocket completely to fix connection issues and black screen
+  // WebSocket completely disabled - using local API only
   const connectionState = "disconnected" as const;
   const sendMessage = useCallback((message: any) => {
-    // WebSocket disabled - all functionality is local
+    // All functionality is now local via REST API
     return;
   }, []);
 
@@ -219,22 +219,26 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       if (!gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
         console.log("AI should make move - Black turn detected, position:", gameState.chess.fen());
 
-        // Request AI move
+        // Request AI move with proper error handling
         setTimeout(async () => {
           console.log("AI (black) making move for position:", gameState.chess.fen());
           try {
             console.log("Requesting AI move for black pieces");
+            const currentFen = gameState.chess.fen();
             const aiMoveResult = await makeAIMove(
-              gameState.chess.fen(),
+              currentFen,
               aiModel,
               aiDifficulty
             );
 
-            if (aiMoveResult) {
+            if (aiMoveResult && aiMoveResult.from && aiMoveResult.to) {
               console.log("AI move successful:", aiMoveResult);
 
+              // Create new chess instance to avoid state mutation
+              const tempChess = new Chess(currentFen);
+              
               // Apply AI move
-              const aiMove = gameState.chess.move({
+              const aiMove = tempChess.move({
                 from: aiMoveResult.from,
                 to: aiMoveResult.to,
                 promotion: aiMoveResult.promotion
@@ -246,7 +250,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
                   to: aiMove.to,
                   piece: aiMove.piece,
                   san: aiMove.san,
-                  fen: gameState.chess.fen(),
+                  fen: tempChess.fen(),
                   moveNumber: Math.ceil((moveCountRef.current + 1) / 2) + 1
                 };
 
@@ -255,19 +259,25 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
                 setGameState(prev => ({
                   ...prev,
-                  chess: new Chess(gameState.chess.fen()),
+                  chess: tempChess,
                   isPlayerTurn: true,
-                  status: gameState.chess.isGameOver() ? "ended" : "playing",
+                  status: tempChess.isGameOver() ? "ended" : "playing",
                 }));
 
                 // Request feedback for appropriate modes
                 if (gameMode === "feedback" || gameMode === "scoring" || gameMode === "coach") {
-                  const currentFen = gameState.chess.fen();
+                  const currentFen = tempChess.fen();
                   if (currentFen && currentFen.trim() !== '') {
                     await requestAIFeedback(currentFen);
                   }
                 }
+              } else {
+                console.error("Failed to apply AI move to chess board");
+                setGameState(prev => ({ ...prev, isPlayerTurn: true }));
               }
+            } else {
+              console.error("AI failed to generate a valid move");
+              setGameState(prev => ({ ...prev, isPlayerTurn: true }));
             }
           } catch (error) {
             console.error("AI move error:", error);
