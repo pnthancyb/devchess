@@ -84,7 +84,14 @@ export function AIModelSelector({
   
   const selectedModel = AI_MODELS.find(model => model.id === currentModel) || AI_MODELS[0];
   const maxDifficulty = selectedModel.maxDifficulty;
-  const adjustedDifficulty = Math.min(currentDifficulty, maxDifficulty);
+  
+  // Ensure difficulty is within bounds and properly adjusted
+  const adjustedDifficulty = Math.max(1, Math.min(currentDifficulty, maxDifficulty));
+  
+  // Update parent if adjustment was needed
+  if (adjustedDifficulty !== currentDifficulty) {
+    onDifficultyChange(adjustedDifficulty);
+  }
   
   const difficultyInfo = DIFFICULTY_LABELS[adjustedDifficulty as keyof typeof DIFFICULTY_LABELS];
 

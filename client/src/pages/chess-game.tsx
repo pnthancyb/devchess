@@ -2,14 +2,14 @@ import { useEffect, useState } from "react";
 import { useParams } from "wouter";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { LanguageSelector } from "@/components/language-selector";
-import { SettingsPanel } from "@/components/settings-panel";
+import { EnhancedSettings } from "@/components/enhanced-settings";
 import { GameModeSelector } from "@/components/game-mode-selector";
 import { ChessBoard } from "@/components/chess-board";
 import { MoveHistory } from "@/components/move-history";
 import { AIFeedback } from "@/components/ai-feedback";
 import { CoachChat } from "@/components/coach-chat";
 import { OpeningSelector } from "@/components/opening-selector";
-import { OpeningFeedback } from "@/components/opening-feedback";
+import { OpeningLearningEnhanced } from "@/components/opening-learning-enhanced";
 import { UserStats } from "@/components/user-stats";
 import { PerfectChessInterface } from "@/components/perfect-chess-interface";
 import { Card, CardContent } from "@/components/ui/card";
@@ -80,6 +80,12 @@ export default function ChessGame() {
 
             {/* Header Controls */}
             <div className="flex items-center space-x-4">
+              <EnhancedSettings 
+                currentModel={gameState.aiModel}
+                currentDifficulty={gameState.difficulty}
+                onModelChange={updateAIModel}
+                onDifficultyChange={(difficulty) => updateAISettings(gameState.aiModel, difficulty)}
+              />
               <LanguageSelector />
               <ThemeToggle />
               <div className="w-8 h-8 gradient-chess-gold rounded-full flex items-center justify-center text-white font-semibold text-sm">
@@ -139,8 +145,8 @@ export default function ChessGame() {
                     variant="outline" 
                     size="sm"
                     className="h-8 w-8 p-0"
-                    onClick={() => updateAISettings(gameState.aiModel, Math.min(5, gameState.difficulty + 1))}
-                    disabled={gameState.difficulty >= 5}
+                    onClick={() => updateAISettings(gameState.aiModel, Math.min(gameState.aiModel === 'stockfish-16' ? 10 : 5, gameState.difficulty + 1))}
+                    disabled={gameState.difficulty >= (gameState.aiModel === 'stockfish-16' ? 10 : 5)}
                   >
                     +
                   </Button>
@@ -199,11 +205,27 @@ export default function ChessGame() {
               <UserStats />
             </div>
 
-            {/* Opening Learning Feedback */}
+            {/* Opening Learning Enhanced */}
             {isOpeningMode && openingLearningState.selectedOpening ? (
-              <OpeningFeedback
+              <OpeningLearningEnhanced
                 opening={openingLearningState.selectedOpening}
                 learningState={openingLearningState}
+                onMoveAttempt={(move: string) => {
+                  // Handle move attempt in opening learning
+                  console.log("Opening move attempt:", move);
+                  return false; // TODO: Implement proper move validation
+                }}
+                onReset={() => {
+                  setSelectedOpening(null);
+                  resetGame();
+                }}
+                currentFen={gameState.currentFen}
+                aiModel={gameState.aiModel}
+                aiDifficulty={gameState.difficulty}
+                onAIMove={() => {
+                  // TODO: Implement AI move in opening learning
+                  console.log("AI move in opening learning");
+                }}
               />
             ) : (
               /* AI Feedback Panel */
