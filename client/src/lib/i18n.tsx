@@ -58,7 +58,6 @@ const translations = {
     "settings.expertDesc": "Advanced strategic play with deep position analysis",
     "settings.recommendations": "Model Recommendations",
     "settings.recommendedFor": "Levels",
-    "settings.recommendedFor": "Levels",
     "settings.recommended": "Recommended",
     "common.white": "White",
     "common.black": "Black",
