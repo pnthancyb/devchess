@@ -44,6 +44,10 @@ class GroqAIService {
     this.client = new Groq({
       apiKey: this.apiKey,
     });
+    
+    if (!this.apiKey) {
+      console.warn("GROQ_API_KEY not found in environment variables. AI features will be limited.");
+    }
   }
 
   private isDeepSeekModel(model: string): boolean {
@@ -56,20 +60,23 @@ class GroqAIService {
   }
 
   private getModelSpecificSettings(model: string, difficulty: number) {
+    // Adjust temperature based on difficulty - higher difficulty = lower temperature (more precise)
+    const baseTemperature = Math.max(0.1, 1.0 - (difficulty * 0.18));
+    
     const modelConfigs = {
       'deepseek-r1-distill-llama-70b': {
-        temperature: 0.1,
-        maxTokens: 500,
+        temperature: Math.max(0.05, baseTemperature - 0.1),
+        maxTokens: 400,
         systemPromptStyle: 'analytical'
       },
       'llama3-70b-8192': {
-        temperature: difficulty <= 2 ? 0.7 : difficulty >= 4 ? 0.2 : 0.4,
-        maxTokens: 300,
+        temperature: baseTemperature,
+        maxTokens: 350,
         systemPromptStyle: 'strategic'
       },
       'moonshotai/kimi-k2-instruct': {
-        temperature: 0.5,
-        maxTokens: 250,
+        temperature: Math.max(0.1, baseTemperature + 0.1),
+        maxTokens: 300,
         systemPromptStyle: 'educational'
       }
     };
@@ -84,11 +91,11 @@ class GroqAIService {
     const config = this.getModelSpecificSettings(model, difficulty);
 
     const difficultyLevels = {
-      1: { elo: "1000-1200", style: "club player", mistakes: "tactical oversights", focus: "solid development", depth: "2-3 moves ahead" },
-      2: { elo: "1300-1600", style: "tournament player", mistakes: "positional inaccuracies", focus: "tactical combinations", depth: "4-5 moves ahead" },
-      3: { elo: "1700-2000", style: "expert player", mistakes: "subtle strategic errors", focus: "positional understanding", depth: "6-7 moves ahead" },
-      4: { elo: "2100-2300", style: "master level", mistakes: "rare calculation errors", focus: "deep strategic planning", depth: "8+ moves ahead" },
-      5: { elo: "2400+", style: "grandmaster level", mistakes: "almost no errors", focus: "perfection and precision", depth: "complete calculation" }
+      1: { elo: "1200-1400", style: "beginner player", mistakes: "frequent tactical blunders", focus: "basic piece development", depth: "1-2 moves ahead", errorRate: 0.4 },
+      2: { elo: "1400-1600", style: "intermediate player", mistakes: "occasional tactical errors", focus: "simple tactical patterns", depth: "3-4 moves ahead", errorRate: 0.25 },
+      3: { elo: "1600-1800", style: "advanced player", mistakes: "positional inaccuracies", focus: "strategic understanding", depth: "5-6 moves ahead", errorRate: 0.15 },
+      4: { elo: "1800-2100", style: "expert player", mistakes: "subtle strategic errors", focus: "deep tactical calculation", depth: "7-9 moves ahead", errorRate: 0.08 },
+      5: { elo: "2100+", style: "master level", mistakes: "rare calculation errors", focus: "perfect strategic execution", depth: "10+ moves ahead", errorRate: 0.03 }
     };
 
     const level = difficultyLevels[difficulty as keyof typeof difficultyLevels];
@@ -368,16 +375,47 @@ RESPONSE FORMAT (JSON ONLY):
         console.log(`AI suggested illegal move: ${from} to ${to}`);
         console.log(`Legal moves: ${legalMoves.map(m => `${m.from}-${m.to}`).join(', ')}`);
         
-        // Smart fallback: pick best available move
-        const randomMove = legalMoves[Math.floor(Math.random() * Math.min(3, legalMoves.length))];
-        const moveObj = { from: randomMove.from, to: randomMove.to, promotion: randomMove.promotion };
+        // Intelligent fallback: pick move based on difficulty and position
+        let bestMove;
+        const gamePhase = chess.moveNumber() <= 10 ? 'opening' : chess.moveNumber() <= 25 ? 'middlegame' : 'endgame';
+        
+        if (difficulty >= 4) {
+          // Expert level: prioritize tactical moves
+          const tacticalMoves = legalMoves.filter(m => {
+            const testChess = new Chess(fen);
+            const testMove = testChess.move(m);
+            return testMove && (testMove.captured || testMove.san.includes('+') || testMove.promotion);
+          });
+          
+          if (tacticalMoves.length > 0) {
+            bestMove = tacticalMoves[0];
+          } else {
+            // Find development or central control moves
+            const strategicMoves = legalMoves.filter(m => {
+              if (gamePhase === 'opening') {
+                return ['e4', 'e5', 'd4', 'd5', 'f4', 'f5', 'c4', 'c5'].includes(m.to) || 
+                       !m.piece.includes('p');
+              }
+              return ['e4', 'e5', 'd4', 'd5', 'f4', 'f5'].includes(m.to);
+            });
+            bestMove = strategicMoves.length > 0 ? strategicMoves[0] : legalMoves[0];
+          }
+        } else if (difficulty >= 2) {
+          // Intermediate: good moves with some variety
+          bestMove = legalMoves[Math.floor(Math.random() * Math.min(3, legalMoves.length))];
+        } else {
+          // Beginner: more random selection
+          bestMove = legalMoves[Math.floor(Math.random() * Math.min(6, legalMoves.length))];
+        }
+        
+        const moveObj = { from: bestMove.from, to: bestMove.to, promotion: bestMove.promotion };
         const move = chess.move(moveObj);
         
         return {
           move: { from: move.from, to: move.to, promotion: move.promotion },
-          reasoning: `AI error - using tactical fallback: ${move.san}`,
-          analysis: `Fallback move at difficulty ${difficulty}/5`,
-          score: "0.0"
+          reasoning: `AI fallback: ${move.san} - Strategic move selection`,
+          analysis: `Strategic fallback (Level ${difficulty}/5)`,
+          score: difficulty >= 4 ? "0.3" : difficulty >= 2 ? "0.1" : "-0.1"
         };
       }
 

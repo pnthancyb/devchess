@@ -141,7 +141,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             mode: gameMode,
             aiMemory: [],
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-            currentPlayer: 'white',
             result: null,
           });
           actualGameId = game.id;
@@ -154,7 +153,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
             mode: gameMode,
             aiMemory: [],
             fen: "rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1",
-            currentPlayer: 'white',
             result: null,
           };
         }
@@ -173,8 +171,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       gameSessions.set(ws, session);
 
       // Send game state
-      let moves = [];
-      let chatMessages = [];
+      let moves: any[] = [];
+      let chatMessages: any[] = [];
       
       try {
         moves = await storage.getGameMoves(actualGameId);
@@ -191,8 +189,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
           language,
           mode: game.mode,
           game,
-          moves,
-          chatMessages,
+          moves: moves,
+          chatMessages: chatMessages,
         },
       }));
       

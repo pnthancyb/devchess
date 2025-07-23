@@ -11,9 +11,10 @@ import { CoachChat } from "@/components/coach-chat";
 import { OpeningSelector } from "@/components/opening-selector";
 import { OpeningFeedback } from "@/components/opening-feedback";
 import { UserStats } from "@/components/user-stats";
+import { PerfectChessInterface } from "@/components/perfect-chess-interface";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, TrendingUp, Target, Award } from "lucide-react";
+import { Plus, TrendingUp, Target, Award, Crown, MessageSquare, BarChart3, Eye, RefreshCcw, Book } from "lucide-react";
 import { useChessGame } from "@/hooks/use-chess-game";
 import { useI18n } from "@/lib/i18n";
 import { downloadPGN } from "@/lib/chess-utils";
@@ -96,12 +97,36 @@ export default function ChessGame() {
             />
           </div>
           <div className="flex gap-2 sm:gap-4">
-            <SettingsPanel 
-              currentModel={gameState.aiModel}
-              currentDifficulty={gameState.difficulty}
-              onModelChange={(model) => updateAISettings(model, gameState.difficulty)}
-              onDifficultyChange={(difficulty) => updateAISettings(gameState.aiModel, difficulty)}
-            />
+            {/* Difficulty controls directly in header */}
+            <div className="flex items-center space-x-2">
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => updateAISettings(gameState.aiModel, Math.max(1, gameState.difficulty - 1))}
+                disabled={gameState.difficulty <= 1}
+              >
+                -
+              </Button>
+              <span className="text-sm font-medium px-2">
+                Level {gameState.difficulty}
+              </span>
+              <Button 
+                variant="outline" 
+                size="sm"
+                onClick={() => updateAISettings(gameState.aiModel, Math.min(5, gameState.difficulty + 1))}
+                disabled={gameState.difficulty >= 5}
+              >
+                +
+              </Button>
+            </div>
+            <Button onClick={resetGame} variant="outline" size="sm" className="px-4">
+              <RefreshCcw className="w-4 h-4 mr-2" />
+              {t("reset.game")}
+            </Button>
+            <Button onClick={handleDownloadPGN} variant="outline" size="sm" className="px-4">
+              <Plus className="w-4 h-4 mr-2" />
+              {t("download.pgn")}
+            </Button>
           </div>
         </div>
 
@@ -140,7 +165,7 @@ export default function ChessGame() {
           <div className="xl:col-span-1 order-1 xl:order-2 space-y-4">
             {/* User Stats - Mobile/Tablet View */}
             <div className="xl:hidden">
-              <UserStats userId={1} />
+              <UserStats />
             </div>
 
             {/* Opening Learning Feedback */}
@@ -152,12 +177,8 @@ export default function ChessGame() {
             ) : (
               /* AI Feedback Panel */
               <AIFeedback
-                mode={gameState.gameMode}
-                feedback={gameState.lastAIFeedback?.feedback}
-                score={gameState.lastAIFeedback?.score?.toString()}
-                evaluation={gameState.lastAIFeedback?.evaluation}
-                quality={gameState.lastAIFeedback?.quality === "excellent" ? "good" : 
-                         gameState.lastAIFeedback?.quality === "inaccuracy" || gameState.lastAIFeedback?.quality === "mistake" || gameState.lastAIFeedback?.quality === "blunder" ? "bad" : "neutral"}
+                feedback={gameState.lastAIFeedback}
+                isThinking={gameState.isAIThinking}
               />
             )}
 
@@ -166,41 +187,25 @@ export default function ChessGame() {
               <CoachChat
                 messages={chatMessages}
                 onSendMessage={sendChatMessage}
-                isVisible={isCoachMode}
-                currentFen={gameState.currentFen}
-                aiModel={gameState.aiModel}
+                position={gameState.currentFen}
+                isCoachThinking={gameState.isAIThinking}
               />
             )}
 
             {/* Move History Panel */}
             <MoveHistory
-              moves={gameState.moves.map(move => ({
-                id: move.moveNumber,
-                gameId: null,
-                createdAt: new Date(),
-                feedback: null,
-                score: null,
-                evaluation: null,
-                ...move,
-              }))}
+              moves={gameState.moves}
               onMoveSelect={setSelectedMove}
               selectedMove={selectedMove}
             />
 
             {/* User Stats - Desktop View */}
             <div className="hidden xl:block">
-              <UserStats userId={1} />
+              <UserStats />
             </div>
           </div>
         </div>
-
-        
       </main>
-
-      {/* Floating Action Button for Mobile */}
-      <Button className="floating-action-btn">
-        <Plus className="w-6 h-6" />
-      </Button>
 
       {/* Connection Status */}
       {connectionState !== "connected" && (
