@@ -311,10 +311,18 @@ export class StockfishEngine {
     const currentTurnMoves = chess.moves().length;
     
     // Create a temporary chess instance to check opponent moves
-    const tempChess = new Chess(chess.fen());
-    tempChess.load(chess.fen().replace(chess.turn() === 'w' ? 'w' : 'b', chess.turn() === 'w' ? 'b' : 'w'));
-    const opponentMoves = tempChess.moves().length;
-
+    // Safe opponent move calculation
+    let opponentMoves = 0;
+    try {
+      const fenParts = chess.fen().split(' ');
+      fenParts[1] = chess.turn() === 'w' ? 'b' : 'w'; // Switch turn
+      const opponentFen = fenParts.join(' ');
+      const tempChess = new Chess(opponentFen);
+      opponentMoves = tempChess.moves().length;
+    } catch (error) {
+      // If FEN manipulation fails, use current position
+      opponentMoves = currentTurnMoves;
+    }
     score += (currentTurnMoves - opponentMoves) * 2;
 
     return score;

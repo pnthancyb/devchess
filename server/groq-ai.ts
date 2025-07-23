@@ -121,39 +121,42 @@ GAME MEMORY:
       moveHistory = `RECENT MOVES: ${recentMoves.slice(-8).map((m: any) => m.san || `${m.from}-${m.to}`).join(" ")}`;
     }
 
-    const basePrompt = `You are a chess AI playing as Black at ${level.elo} ELO (${level.style}).
+    const basePrompt = `You are a WORLD-CLASS chess AI at ${level.elo} ELO (${level.style}) with MAXIMUM STRENGTH.
 
-GAME ANALYSIS:
-- Position: ${fen}
-- Phase: ${gamePhase} (Move ${chess.moveNumber()})
-- Your level: ${level.style} - calculate ${level.depth}
-- Playing style: ${level.focus}
-- Error rate: ${level.mistakes}
+POSITION ANALYSIS:
+- FEN: ${fen}
+- Game Phase: ${gamePhase} (Move ${chess.moveNumber()})
+- Playing Level: ${level.style} - Calculate ${level.depth} moves deep
+- Strategic Focus: ${level.focus}
+- Precision Level: ${level.mistakes}
 ${memoryContext}
 ${moveHistory}
 
-CHESS PRINCIPLES TO FOLLOW:
-1. Look for tactical shots (pins, forks, skewers, discoveries)
-2. Evaluate pawn structure and weaknesses
-3. Consider king safety and attack potential  
-4. Calculate forcing sequences deeply
-5. Assess piece activity and coordination
-6. Control key squares and open files
+ENHANCED ANALYSIS PROTOCOL:
+1. TACTICAL SCAN: Find ALL checks, captures, threats (pins, forks, skewers, discoveries, deflections)
+2. KING SAFETY: Assess both kings' safety, attacking chances, weaknesses around the castle
+3. MATERIAL BALANCE: Count material, evaluate piece trades, look for tactical gains
+4. POSITIONAL FACTORS: Pawn structure, piece activity, space advantage, weak squares
+5. ENDGAME AWARENESS: Consider transitions, pawn promotion, king activity
+6. STRATEGIC PLANNING: Long-term goals, piece improvement, positional pressure
 
-AVAILABLE LEGAL MOVES:
+CALCULATION REQUIREMENTS:
+- Calculate FORCED VARIATIONS ${level.depth} minimum with concrete assessment
+- Always check for TACTICAL MOTIFS in candidate moves
+- Evaluate ALL reasonable alternatives, not just the first good move
+- Consider opponent's STRONGEST responses, not just obvious ones
+- Look for HIDDEN tactical themes and positional improvements
+
+CANDIDATE MOVES TO ANALYZE:
 ${legalMoves.map(m => `${m.from}->${m.to} (${m.san}) - ${this.evaluateMoveBriefly(chess, m)}`).join("\n")}
 
-ANALYSIS REQUIREMENTS:
-- Calculate ${level.depth} minimum
-- Consider opponent's best responses
-- Look for forcing moves first (checks, captures, threats)
-- Evaluate resulting positions objectively
-- Play the strongest move, not just "good enough"
+AI STRENGTH DIRECTIVE: 
+Play at MAXIMUM tactical and positional strength. Find the OBJECTIVELY BEST move based on deep calculation and evaluation. No compromises on move quality.
 
-RESPONSE FORMAT (JSON ONLY):
+FORMAT (JSON ONLY, NO OTHER TEXT):
 {
   "move": {"from": "e7", "to": "e5"},
-  "reasoning": "Deep tactical/positional analysis"
+  "reasoning": "Comprehensive tactical and positional analysis with concrete variations"
 }`;
 
     // Model-specific prompt adjustments

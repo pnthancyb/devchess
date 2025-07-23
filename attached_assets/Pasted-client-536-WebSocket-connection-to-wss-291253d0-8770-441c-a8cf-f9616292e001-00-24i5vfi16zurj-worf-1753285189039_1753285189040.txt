@@ -1,0 +1,392 @@
+client:536 WebSocket connection to 'wss://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/?token=zTCufEEaneoE' failed: 
+setupWebSocket @ client:536
+client:536 Uncaught (in promise) SyntaxError: Failed to construct 'WebSocket': The URL 'wss://localhost:undefined/?token=zTCufEEaneoE' is invalid.
+    at setupWebSocket (client:536:19)
+    at fallback (client:509:16)
+    at WebSocket.<anonymous> (client:555:7)
+use-chess-game.tsx:148 Player making move from d2 to d4 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/3P4/8/PPP1PPPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e2 to e3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/pppppppp/2n5/8/3P4/4P3/PPP2PPP/RNBQKBNR b KQkq - 0 2
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/pppppppp/2n5/8/3P4/4P3/PPP2PPP/RNBQKBNR b KQkq - 0 2
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/pppppppp/2n5/8/3P4/4P3/PPP2PPP/RNBQKBNR b KQkq - 0 2
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from b1 to c3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/ppppppp1/2n4p/8/3P4/2N1P3/PPP2PPP/R1BQKBNR b KQkq - 1 3
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/ppppppp1/2n4p/8/3P4/2N1P3/PPP2PPP/R1BQKBNR b KQkq - 1 3
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/ppppppp1/2n4p/8/3P4/2N1P3/PPP2PPP/R1BQKBNR b KQkq - 1 3
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from f1 to b5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/ppp1ppp1/2n4p/1B1p4/3P4/2N1P3/PPP2PPP/R1BQK1NR b KQkq - 1 4
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/ppp1ppp1/2n4p/1B1p4/3P4/2N1P3/PPP2PPP/R1BQK1NR b KQkq - 1 4
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/ppp1ppp1/2n4p/1B1p4/3P4/2N1P3/PPP2PPP/R1BQK1NR b KQkq - 1 4
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from g1 to f3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/p1p1ppp1/1pn4p/1B1p4/3P4/2N1PN2/PPP2PPP/R1BQK2R b KQkq - 1 5
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/p1p1ppp1/1pn4p/1B1p4/3P4/2N1PN2/PPP2PPP/R1BQK2R b KQkq - 1 5
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/p1p1ppp1/1pn4p/1B1p4/3P4/2N1PN2/PPP2PPP/R1BQK2R b KQkq - 1 5
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from f3 to e5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/p1p1pp2/1pn3pp/1B1pN3/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 1 6
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/p1p1pp2/1pn3pp/1B1pN3/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 1 6
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/p1p1pp2/1pn3pp/1B1pN3/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 1 6
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e5 to c6 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bqkbnr/2p1pp2/1pN3pp/pB1p4/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 7
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bqkbnr/2p1pp2/1pN3pp/pB1p4/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 7
+use-chess-game.tsx:215 AI (black) making move for position: r1bqkbnr/2p1pp2/1pN3pp/pB1p4/3P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 7
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from c6 to d8 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bNkbnr/2p1pp2/1p4pp/1B1p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 8
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bNkbnr/2p1pp2/1p4pp/1B1p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 8
+use-chess-game.tsx:215 AI (black) making move for position: r1bNkbnr/2p1pp2/1p4pp/1B1p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 8
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from b5 to c6 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bNkbnr/4pp2/1pB3pp/3p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 9
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bNkbnr/4pp2/1pB3pp/3p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 9
+use-chess-game.tsx:215 AI (black) making move for position: r1bNkbnr/4pp2/1pB3pp/3p4/p2P4/2N1P3/PPP2PPP/R1BQK2R b KQkq - 0 9
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from d1 to d3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r1bk1bnr/4pp2/1pB3pp/3p4/p2P4/2NQP3/PPP2PPP/R1B1K2R b KQ - 1 10
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r1bk1bnr/4pp2/1pB3pp/3p4/p2P4/2NQP3/PPP2PPP/R1B1K2R b KQ - 1 10
+use-chess-game.tsx:215 AI (black) making move for position: r1bk1bnr/4pp2/1pB3pp/3p4/p2P4/2NQP3/PPP2PPP/R1B1K2R b KQ - 1 10
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e3 to e4 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k1bnr/4pp2/1pB3pp/3p4/p2PP1b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 11
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k1bnr/4pp2/1pB3pp/3p4/p2PP1b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 11
+use-chess-game.tsx:215 AI (black) making move for position: r2k1bnr/4pp2/1pB3pp/3p4/p2PP1b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 11
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e4 to d5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k1bnr/4pp2/1pB4p/3P2p1/p2P2b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 12
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k1bnr/4pp2/1pB4p/3P2p1/p2P2b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 12
+use-chess-game.tsx:215 AI (black) making move for position: r2k1bnr/4pp2/1pB4p/3P2p1/p2P2b1/2NQ4/PPP2PPP/R1B1K2R b KQ - 0 12
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from d3 to g3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/4ppb1/1pB4p/3P2p1/p2P2b1/2N3Q1/PPP2PPP/R1B1K2R b KQ - 2 13
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/4ppb1/1pB4p/3P2p1/p2P2b1/2N3Q1/PPP2PPP/R1B1K2R b KQ - 2 13
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/4ppb1/1pB4p/3P2p1/p2P2b1/2N3Q1/PPP2PPP/R1B1K2R b KQ - 2 13
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e1 to d1 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/4ppb1/1pB4p/3P2p1/p2P4/2N3Q1/PPP2PPP/R1BK3R b - - 0 14
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/4ppb1/1pB4p/3P2p1/p2P4/2N3Q1/PPP2PPP/R1BK3R b - - 0 14
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/4ppb1/1pB4p/3P2p1/p2P4/2N3Q1/PPP2PPP/R1BK3R b - - 0 14
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+hook.js:608 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. Error Component Stack
+    at DescriptionWarning (@radix-ui_react-dialog.js?v=130b59c9:335:29)
+    at @radix-ui_react-dialog.js?v=130b59c9:239:13
+    at @radix-ui_react-dialog.js?v=130b59c9:162:58
+    at Presence (chunk-LF3VT6QG.js?v=130b59c9:24:11)
+    at @radix-ui_react-dialog.js?v=130b59c9:153:64
+    at chunk-LHPXHTGV.js?v=130b59c9:43:13
+    at chunk-LHPXHTGV.js?v=130b59c9:20:13
+    at chunk-IWFJIMEQ.js?v=130b59c9:42:13
+    at chunk-MTDBOXDD.js?v=130b59c9:258:22
+    at Presence (chunk-LF3VT6QG.js?v=130b59c9:24:11)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at DialogPortal (@radix-ui_react-dialog.js?v=130b59c9:115:11)
+    at _c3 (dialog.tsx:35:6)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at Dialog (@radix-ui_react-dialog.js?v=130b59c9:56:5)
+    at EnhancedSettings (enhanced-settings.tsx:97:3)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at header (<anonymous>)
+    at div (<anonymous>)
+    at ChessGame (chess-game.tsx:23:18)
+    at Route (wouter.js?v=130b59c9:323:16)
+    at Switch (wouter.js?v=130b59c9:379:17)
+    at Router (<anonymous>)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at TooltipProvider (@radix-ui_react-tooltip.js?v=130b59c9:65:5)
+    at I18nProvider (i18n.tsx:434:67)
+    at ThemeProvider (use-theme.tsx:13:33)
+    at QueryClientProvider (@tanstack_react-query.js?v=130b59c9:2805:3)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608
+use-chess-game.tsx:148 Player making move from g3 to g5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/4ppb1/1pB5/3P2Qp/p2P4/2N5/PPP2PPP/R1BK3R b - - 0 15
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/4ppb1/1pB5/3P2Qp/p2P4/2N5/PPP2PPP/R1BK3R b - - 0 15
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/4ppb1/1pB5/3P2Qp/p2P4/2N5/PPP2PPP/R1BK3R b - - 0 15
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from g5 to e5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/4pp2/1pB4b/3PQ2p/p2P4/2N5/PPP2PPP/R1BK3R b - - 2 16
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/4pp2/1pB4b/3PQ2p/p2P4/2N5/PPP2PPP/R1BK3R b - - 2 16
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/4pp2/1pB4b/3PQ2p/p2P4/2N5/PPP2PPP/R1BK3R b - - 2 16
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from c1 to e3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/4pp2/1pB5/3PQ2p/p2P4/2N1B3/PPP2PPP/R2K3R b - - 0 17
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/4pp2/1pB5/3PQ2p/p2P4/2N1B3/PPP2PPP/R2K3R b - - 0 17
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/4pp2/1pB5/3PQ2p/p2P4/2N1B3/PPP2PPP/R2K3R b - - 0 17
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e3 to g5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/5p2/1pB1p3/3PQ1Bp/p2P4/2N5/PPP2PPP/R2K3R b - - 1 18
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/5p2/1pB1p3/3PQ1Bp/p2P4/2N5/PPP2PPP/R2K3R b - - 1 18
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/5p2/1pB1p3/3PQ1Bp/p2P4/2N5/PPP2PPP/R2K3R b - - 1 18
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from g5 to h4 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: r2k2nr/8/1pB1pp2/3PQ2p/p2P3B/2N5/PPP2PPP/R2K3R b - - 1 19
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: r2k2nr/8/1pB1pp2/3PQ2p/p2P3B/2N5/PPP2PPP/R2K3R b - - 1 19
+use-chess-game.tsx:215 AI (black) making move for position: r2k2nr/8/1pB1pp2/3PQ2p/p2P3B/2N5/PPP2PPP/R2K3R b - - 1 19
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e5 to d6 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: 2rk2nr/8/1pBQpp2/3P3p/p2P3B/2N5/PPP2PPP/R2K3R b - - 3 20
+hook.js:608 Warning: Missing `Description` or `aria-describedby={undefined}` for {DialogContent}. Error Component Stack
+    at DescriptionWarning (@radix-ui_react-dialog.js?v=130b59c9:335:29)
+    at @radix-ui_react-dialog.js?v=130b59c9:239:13
+    at @radix-ui_react-dialog.js?v=130b59c9:162:58
+    at Presence (chunk-LF3VT6QG.js?v=130b59c9:24:11)
+    at @radix-ui_react-dialog.js?v=130b59c9:153:64
+    at chunk-LHPXHTGV.js?v=130b59c9:43:13
+    at chunk-LHPXHTGV.js?v=130b59c9:20:13
+    at chunk-IWFJIMEQ.js?v=130b59c9:42:13
+    at chunk-MTDBOXDD.js?v=130b59c9:258:22
+    at Presence (chunk-LF3VT6QG.js?v=130b59c9:24:11)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at DialogPortal (@radix-ui_react-dialog.js?v=130b59c9:115:11)
+    at _c3 (dialog.tsx:35:6)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at Dialog (@radix-ui_react-dialog.js?v=130b59c9:56:5)
+    at EnhancedSettings (enhanced-settings.tsx:97:3)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at div (<anonymous>)
+    at header (<anonymous>)
+    at div (<anonymous>)
+    at ChessGame (chess-game.tsx:23:18)
+    at Route (wouter.js?v=130b59c9:323:16)
+    at Switch (wouter.js?v=130b59c9:379:17)
+    at Router (<anonymous>)
+    at Provider (chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at TooltipProvider (@radix-ui_react-tooltip.js?v=130b59c9:65:5)
+    at I18nProvider (i18n.tsx:434:67)
+    at ThemeProvider (use-theme.tsx:13:33)
+    at QueryClientProvider (@tanstack_react-query.js?v=130b59c9:2805:3)
+    at App (<anonymous>)
+overrideMethod @ hook.js:608
+use-chess-game.tsx:148 Player making move from e2 to e4 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from g1 to f3 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppp1ppp/8/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R b KQkq - 1 2
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from f3 to e5 
+use-chess-game.tsx:113 Player move analysis: Object
+use-chess-game.tsx:195 Player move analysis: Object
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnb1kbnr/pppp1ppp/5q2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnb1kbnr/pppp1ppp/5q2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:215 AI (black) making move for position: rnb1kbnr/pppp1ppp/5q2/4N3/4P3/8/PPPP1PPP/RNBQKB1R b KQkq - 0 3
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: Object
+use-chess-game.tsx:148 Player making move from e2 to e4 
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: {from: 'e7', to: 'e5', promotion: undefined, evaluation: '0.0', analysis: 'Strong tactical analysis'}
+use-chess-game.tsx:148 Player making move from f1 to c4 
+use-chess-game.tsx:183 Incorrect move in opening learning mode. Expected: e5 Got: Bc4
+use-chess-game.tsx:148 Player making move from e2 to e4 
+use-chess-game.tsx:207 Player move complete, AI should move next for FEN: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:211 AI should make move - Black turn detected, position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:215 AI (black) making move for position: rnbqkbnr/pppppppp/8/8/4P3/8/PPPP1PPP/RNBQKBNR b KQkq - 0 1
+use-chess-game.tsx:217 Requesting AI move for black pieces
+use-chess-game.tsx:225 AI move successful: {from: 'e7', to: 'e5', promotion: undefined, evaluation: '0.0', analysis: 'Strong tactical analysis'}
+use-chess-game.tsx:148 Player making move from f2 to f4 
+use-chess-game.tsx:183 Incorrect move in opening learning mode. Expected: e5 Got: f4
+use-chess-game.tsx:387 Uncaught TypeError: Cannot read properties of null (reading 'moves')
+    at use-chess-game.tsx:387:25
+    at basicStateReducer (chunk-RPCDYKBN.js?v=130b59c9:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=130b59c9:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=130b59c9:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=130b59c9:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=130b59c9:1066:29)
+    at useChessGame (use-chess-game.tsx:37:59)
+    at ChessGame (chess-game.tsx:39:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=130b59c9:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=130b59c9:14582:28)
+(anonymous) @ use-chess-game.tsx:387
+basicStateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11703
+updateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11794
+updateState @ chunk-RPCDYKBN.js?v=130b59c9:12021
+useState @ chunk-RPCDYKBN.js?v=130b59c9:12753
+useState @ chunk-QCHXOAYK.js?v=130b59c9:1066
+useChessGame @ use-chess-game.tsx:37
+ChessGame @ chess-game.tsx:39
+renderWithHooks @ chunk-RPCDYKBN.js?v=130b59c9:11548
+updateFunctionComponent @ chunk-RPCDYKBN.js?v=130b59c9:14582
+beginWork @ chunk-RPCDYKBN.js?v=130b59c9:15924
+callCallback2 @ chunk-RPCDYKBN.js?v=130b59c9:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=130b59c9:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=130b59c9:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=130b59c9:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=130b59c9:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=130b59c9:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=130b59c9:19116
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=130b59c9:18874
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=130b59c9:9119
+(anonymous) @ chunk-RPCDYKBN.js?v=130b59c9:18627
+use-chess-game.tsx:387 Uncaught TypeError: Cannot read properties of null (reading 'moves')
+    at use-chess-game.tsx:387:25
+    at basicStateReducer (chunk-RPCDYKBN.js?v=130b59c9:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=130b59c9:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=130b59c9:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=130b59c9:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=130b59c9:1066:29)
+    at useChessGame (use-chess-game.tsx:37:59)
+    at ChessGame (chess-game.tsx:39:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=130b59c9:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=130b59c9:14582:28)
+(anonymous) @ use-chess-game.tsx:387
+basicStateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11703
+updateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11794
+updateState @ chunk-RPCDYKBN.js?v=130b59c9:12021
+useState @ chunk-RPCDYKBN.js?v=130b59c9:12753
+useState @ chunk-QCHXOAYK.js?v=130b59c9:1066
+useChessGame @ use-chess-game.tsx:37
+ChessGame @ chess-game.tsx:39
+renderWithHooks @ chunk-RPCDYKBN.js?v=130b59c9:11548
+updateFunctionComponent @ chunk-RPCDYKBN.js?v=130b59c9:14582
+beginWork @ chunk-RPCDYKBN.js?v=130b59c9:15924
+callCallback2 @ chunk-RPCDYKBN.js?v=130b59c9:3674
+invokeGuardedCallbackDev @ chunk-RPCDYKBN.js?v=130b59c9:3699
+invokeGuardedCallback @ chunk-RPCDYKBN.js?v=130b59c9:3733
+beginWork$1 @ chunk-RPCDYKBN.js?v=130b59c9:19765
+performUnitOfWork @ chunk-RPCDYKBN.js?v=130b59c9:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=130b59c9:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=130b59c9:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=130b59c9:18736
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=130b59c9:18879
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=130b59c9:9119
+(anonymous) @ chunk-RPCDYKBN.js?v=130b59c9:18627
+hook.js:608 The above error occurred in the <ChessGame> component:
+
+    at ChessGame (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/pages/chess-game.tsx:39:18)
+    at Route (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=130b59c9:323:16)
+    at Switch (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/wouter.js?v=130b59c9:379:17)
+    at Router
+    at Provider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/chunk-OXZDJRWN.js?v=130b59c9:38:15)
+    at TooltipProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@radix-ui_react-tooltip.js?v=130b59c9:65:5)
+    at I18nProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/lib/i18n.tsx:438:32)
+    at ThemeProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/src/hooks/use-theme.tsx:20:33)
+    at QueryClientProvider (https://291253d0-8770-441c-a8cf-f9616292e001-00-24i5vfi16zurj.worf.replit.dev/@fs/home/runner/workspace/node_modules/.vite/deps/@tanstack_react-query.js?v=130b59c9:2805:3)
+    at App
+
+Consider adding an error boundary to your tree to customize error handling behavior.
+Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
+overrideMethod @ hook.js:608
+logCapturedError @ chunk-RPCDYKBN.js?v=130b59c9:14032
+update.callback @ chunk-RPCDYKBN.js?v=130b59c9:14052
+callCallback @ chunk-RPCDYKBN.js?v=130b59c9:11248
+commitUpdateQueue @ chunk-RPCDYKBN.js?v=130b59c9:11265
+commitLayoutEffectOnFiber @ chunk-RPCDYKBN.js?v=130b59c9:17093
+commitLayoutMountEffects_complete @ chunk-RPCDYKBN.js?v=130b59c9:17980
+commitLayoutEffects_begin @ chunk-RPCDYKBN.js?v=130b59c9:17969
+commitLayoutEffects @ chunk-RPCDYKBN.js?v=130b59c9:17920
+commitRootImpl @ chunk-RPCDYKBN.js?v=130b59c9:19353
+commitRoot @ chunk-RPCDYKBN.js?v=130b59c9:19277
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=130b59c9:18895
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=130b59c9:9119
+(anonymous) @ chunk-RPCDYKBN.js?v=130b59c9:18627
+chunk-RPCDYKBN.js?v=130b59c9:9129 Uncaught TypeError: Cannot read properties of null (reading 'moves')
+    at use-chess-game.tsx:387:25
+    at basicStateReducer (chunk-RPCDYKBN.js?v=130b59c9:11703:49)
+    at updateReducer (chunk-RPCDYKBN.js?v=130b59c9:11794:30)
+    at updateState (chunk-RPCDYKBN.js?v=130b59c9:12021:18)
+    at Object.useState (chunk-RPCDYKBN.js?v=130b59c9:12753:24)
+    at useState (chunk-QCHXOAYK.js?v=130b59c9:1066:29)
+    at useChessGame (use-chess-game.tsx:37:59)
+    at ChessGame (chess-game.tsx:39:7)
+    at renderWithHooks (chunk-RPCDYKBN.js?v=130b59c9:11548:26)
+    at updateFunctionComponent (chunk-RPCDYKBN.js?v=130b59c9:14582:28)
+(anonymous) @ use-chess-game.tsx:387
+basicStateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11703
+updateReducer @ chunk-RPCDYKBN.js?v=130b59c9:11794
+updateState @ chunk-RPCDYKBN.js?v=130b59c9:12021
+useState @ chunk-RPCDYKBN.js?v=130b59c9:12753
+useState @ chunk-QCHXOAYK.js?v=130b59c9:1066
+useChessGame @ use-chess-game.tsx:37
+ChessGame @ chess-game.tsx:39
+renderWithHooks @ chunk-RPCDYKBN.js?v=130b59c9:11548
+updateFunctionComponent @ chunk-RPCDYKBN.js?v=130b59c9:14582
+beginWork @ chunk-RPCDYKBN.js?v=130b59c9:15924
+beginWork$1 @ chunk-RPCDYKBN.js?v=130b59c9:19753
+performUnitOfWork @ chunk-RPCDYKBN.js?v=130b59c9:19198
+workLoopSync @ chunk-RPCDYKBN.js?v=130b59c9:19137
+renderRootSync @ chunk-RPCDYKBN.js?v=130b59c9:19116
+recoverFromConcurrentError @ chunk-RPCDYKBN.js?v=130b59c9:18736
+performSyncWorkOnRoot @ chunk-RPCDYKBN.js?v=130b59c9:18879
+flushSyncCallbacks @ chunk-RPCDYKBN.js?v=130b59c9:9119
+(anonymous) @ chunk-RPCDYKBN.js?v=130b59c9:18627
