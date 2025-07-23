@@ -1,4 +1,6 @@
+
 import { Chess } from "chess.js";
+import { spawn, ChildProcess } from "child_process";
 
 interface StockfishEvaluation {
   score: number;
@@ -17,11 +19,16 @@ interface StockfishMove {
 }
 
 export class StockfishEngine {
-  private engine: any = null;
+  private engine: ChildProcess | null = null;
   private isReady = false;
-  private pendingPromises = new Map<string, { resolve: (value: any) => void; reject: (error: any) => void }>();
-  private commandId = 0;
+  private engineQueue: Array<{
+    command: string;
+    resolve: (value: any) => void;
+    reject: (error: any) => void;
+    timeout?: NodeJS.Timeout;
+  }> = [];
   private transpositionTable = new Map<string, any>();
+  private usingFallback = false;
 
   constructor() {
     this.initializeEngine();
@@ -29,14 +36,137 @@ export class StockfishEngine {
 
   private async initializeEngine() {
     try {
-      // Use Web Workers or subprocess for Stockfish in production
-      // For now, we'll simulate Stockfish with a chess evaluation algorithm
-      this.isReady = true;
-      console.log("Stockfish engine initialized (simulation mode)");
+      // Try to spawn actual Stockfish binary
+      console.log("Attempting to initialize real Stockfish engine...");
+      
+      // Try common Stockfish binary names and paths
+      const stockfishPaths = [
+        'stockfish',
+        '/usr/bin/stockfish',
+        '/usr/local/bin/stockfish',
+        'stockfish-16',
+        'stockfish16'
+      ];
+
+      for (const path of stockfishPaths) {
+        try {
+          const testEngine = spawn(path, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+          
+          await new Promise<void>((resolve, reject) => {
+            const timeout = setTimeout(() => {
+              testEngine.kill();
+              reject(new Error('Timeout'));
+            }, 3000);
+
+            testEngine.stdout?.on('data', (data) => {
+              const output = data.toString();
+              if (output.includes('Stockfish')) {
+                clearTimeout(timeout);
+                testEngine.kill();
+                this.engine = spawn(path, [], { stdio: ['pipe', 'pipe', 'pipe'] });
+                this.setupEngineHandlers();
+                resolve();
+              }
+            });
+
+            testEngine.on('error', () => {
+              clearTimeout(timeout);
+              reject(new Error('Engine error'));
+            });
+
+            testEngine.stdin?.write('uci\n');
+          });
+
+          console.log(`Stockfish engine initialized successfully with: ${path}`);
+          this.isReady = true;
+          this.usingFallback = false;
+          return;
+        } catch (error) {
+          continue;
+        }
+      }
+
+      throw new Error('No Stockfish binary found');
     } catch (error) {
-      console.error("Failed to initialize Stockfish:", error);
-      this.isReady = false;
+      console.log("Real Stockfish not available, using enhanced simulation mode");
+      this.isReady = true;
+      this.usingFallback = true;
     }
+  }
+
+  private setupEngineHandlers() {
+    if (!this.engine) return;
+
+    this.engine.stdout?.on('data', (data) => {
+      const lines = data.toString().split('\n');
+      for (const line of lines) {
+        if (line.trim()) {
+          this.handleEngineOutput(line.trim());
+        }
+      }
+    });
+
+    this.engine.on('error', (error) => {
+      console.error('Stockfish engine error:', error);
+      this.fallbackToSimulation();
+    });
+
+    this.engine.on('close', () => {
+      console.log('Stockfish engine closed');
+      this.fallbackToSimulation();
+    });
+
+    // Initialize engine
+    this.sendCommand('uci');
+    this.sendCommand('ucinewgame');
+  }
+
+  private fallbackToSimulation() {
+    this.usingFallback = true;
+    this.isReady = true;
+    this.engine = null;
+    console.log('Falling back to enhanced simulation mode');
+  }
+
+  private handleEngineOutput(line: string) {
+    // Handle bestmove responses
+    const bestmoveMatch = line.match(/^bestmove\s+(\w+)/);
+    if (bestmoveMatch && this.engineQueue.length > 0) {
+      const pending = this.engineQueue.shift();
+      if (pending) {
+        if (pending.timeout) clearTimeout(pending.timeout);
+        pending.resolve(bestmoveMatch[1]);
+      }
+    }
+
+    // Handle evaluation responses
+    const evalMatch = line.match(/score cp (-?\d+)/);
+    if (evalMatch && this.engineQueue.length > 0) {
+      const score = parseInt(evalMatch[1]);
+      // Store evaluation for later use
+    }
+  }
+
+  private sendCommand(command: string): Promise<string> {
+    return new Promise((resolve, reject) => {
+      if (this.usingFallback || !this.engine) {
+        resolve('');
+        return;
+      }
+
+      const timeout = setTimeout(() => {
+        reject(new Error('Engine timeout'));
+      }, 5000);
+
+      this.engineQueue.push({ command, resolve, reject, timeout });
+      
+      try {
+        this.engine.stdin?.write(command + '\n');
+      } catch (error) {
+        clearTimeout(timeout);
+        reject(error);
+      }
+    });
   }
 
   async getBestMove(fen: string, level: number = 5, timeMs: number = 2000): Promise<StockfishMove | null> {
@@ -60,53 +190,35 @@ export class StockfishEngine {
       
       if (moves.length === 0) return null;
 
-      // Extended difficulty levels with deeper analysis
       let selectedMove;
-      const depth = Math.min(level + 2, 8); // Increase search depth based on level
-      
-      switch (level) {
-        case 1:
-          // Random move (easiest)
-          selectedMove = moves[Math.floor(Math.random() * moves.length)];
-          break;
-        case 2:
-          // Slightly better moves (avoid obvious blunders)
-          selectedMove = this.getDecentMove(chess, moves);
-          break;
-        case 3:
-          // Good moves with some tactical awareness
-          selectedMove = this.getGoodMove(chess, moves, depth);
-          break;
-        case 4:
-          // Strong moves with positional understanding
-          selectedMove = this.getStrongMove(chess, moves, depth);
-          break;
-        case 5:
-          // Very strong moves with deep calculation
-          selectedMove = this.getVeryStrongMove(chess, moves, depth);
-          break;
-        case 6:
-          // Expert level with advanced tactics
-          selectedMove = this.getExpertMove(chess, moves, depth);
-          break;
-        case 7:
-          // Master level with deep positional understanding
-          selectedMove = this.getMasterMove(chess, moves, depth);
-          break;
-        case 8:
-          // Grandmaster level - near perfect play
-          selectedMove = this.getGrandmasterMove(chess, moves, depth);
-          break;
-        case 9:
-          // Super-GM level with extensive calculation
-          selectedMove = this.getSuperGMMove(chess, moves, Math.min(depth + 2, 10));
-          break;
-        case 10:
-          // Engine level - maximum strength
-          selectedMove = this.getEngineMove(chess, moves, Math.min(depth + 3, 12));
-          break;
-        default:
-          selectedMove = this.getStrongMove(chess, moves, depth);
+
+      if (!this.usingFallback && this.engine) {
+        try {
+          // Use real Stockfish
+          await this.sendCommand(`position fen ${fen}`);
+          const depth = Math.min(level + 5, 20); // Real Stockfish can handle deeper search
+          const bestMoveUci = await this.sendCommand(`go depth ${depth}`);
+          
+          if (bestMoveUci) {
+            // Convert UCI move to our format
+            const from = bestMoveUci.substring(0, 2);
+            const to = bestMoveUci.substring(2, 4);
+            const promotion = bestMoveUci.length > 4 ? bestMoveUci.substring(4) : undefined;
+            
+            const move = chess.move({ from, to, promotion });
+            if (move) {
+              selectedMove = move;
+            }
+          }
+        } catch (engineError) {
+          console.log('Real Stockfish failed, using fallback:', engineError);
+          this.fallbackToSimulation();
+        }
+      }
+
+      // Fallback to enhanced simulation if real Stockfish failed
+      if (!selectedMove) {
+        selectedMove = this.getEnhancedMove(chess, moves, level);
       }
 
       const result = {
@@ -126,6 +238,35 @@ export class StockfishEngine {
     } catch (error) {
       console.error("Error getting best move:", error);
       return this.getFallbackMove(fen);
+    }
+  }
+
+  private getEnhancedMove(chess: Chess, moves: any[], level: number): any {
+    const depth = Math.min(level + 2, 8);
+    
+    switch (level) {
+      case 1:
+        return moves[Math.floor(Math.random() * moves.length)];
+      case 2:
+        return this.getDecentMove(chess, moves);
+      case 3:
+        return this.getGoodMove(chess, moves, depth);
+      case 4:
+        return this.getStrongMove(chess, moves, depth);
+      case 5:
+        return this.getVeryStrongMove(chess, moves, depth);
+      case 6:
+        return this.getExpertMove(chess, moves, depth);
+      case 7:
+        return this.getMasterMove(chess, moves, depth);
+      case 8:
+        return this.getGrandmasterMove(chess, moves, depth);
+      case 9:
+        return this.getSuperGMMove(chess, moves, Math.min(depth + 2, 10));
+      case 10:
+        return this.getEngineMove(chess, moves, Math.min(depth + 3, 12));
+      default:
+        return this.getStrongMove(chess, moves, depth);
     }
   }
 
@@ -149,7 +290,6 @@ export class StockfishEngine {
   }
 
   private getDecentMove(chess: Chess, moves: any[]): any {
-    // Filter out obvious blunders (moves that lose material without compensation)
     const safeMovesFilter = moves.filter(move => {
       chess.move(move);
       const isCheck = chess.isCheck();
@@ -176,27 +316,22 @@ export class StockfishEngine {
   }
 
   private getExpertMove(chess: Chess, moves: any[], depth: number): any {
-    // Advanced tactical awareness with deeper search
     return this.getBestMoveByEvaluation(chess, moves, depth + 1, 0.95);
   }
 
   private getMasterMove(chess: Chess, moves: any[], depth: number): any {
-    // Master level with positional understanding
     return this.getBestMoveByEvaluation(chess, moves, depth + 2, 0.97);
   }
 
   private getGrandmasterMove(chess: Chess, moves: any[], depth: number): any {
-    // Near-perfect calculation
     return this.getBestMoveByEvaluation(chess, moves, depth + 2, 0.98);
   }
 
   private getSuperGMMove(chess: Chess, moves: any[], depth: number): any {
-    // Super-GM level with extensive calculation
     return this.getBestMoveByEvaluation(chess, moves, depth + 3, 0.99);
   }
 
   private getEngineMove(chess: Chess, moves: any[], depth: number): any {
-    // Maximum engine strength - always best move
     return this.getBestMoveByEvaluation(chess, moves, depth + 4, 1.0);
   }
 
@@ -208,14 +343,12 @@ export class StockfishEngine {
       
       return {
         move,
-        evaluation: chess.turn() === 'w' ? -evaluation : evaluation // Flip for black
+        evaluation: chess.turn() === 'w' ? -evaluation : evaluation
       };
     });
 
-    // Sort by evaluation (best first)
     evaluatedMoves.sort((a, b) => b.evaluation - a.evaluation);
 
-    // Apply accuracy - sometimes pick suboptimal moves
     if (Math.random() > accuracy && evaluatedMoves.length > 1) {
       const randomIndex = Math.floor(Math.random() * Math.min(3, evaluatedMoves.length));
       return evaluatedMoves[randomIndex].move;
@@ -232,7 +365,7 @@ export class StockfishEngine {
     const moves = chess.moves({ verbose: true });
     let bestEval = chess.turn() === 'w' ? -Infinity : Infinity;
 
-    for (const move of moves.slice(0, 15)) { // Limit moves for performance
+    for (const move of moves.slice(0, 15)) {
       chess.move(move);
       const evaluation = this.evaluatePosition(chess, depth - 1);
       chess.undo();
@@ -263,7 +396,6 @@ export class StockfishEngine {
       }
     }
 
-    // Positional factors
     evaluation += this.evaluatePositionalFactors(chess);
     evaluation += this.evaluateTacticalFactors(chess);
     evaluation += this.evaluateEndgameFactors(chess);
@@ -275,7 +407,6 @@ export class StockfishEngine {
     let score = 0;
     const board = chess.board();
 
-    // Center control
     const centerSquares = [[3, 3], [3, 4], [4, 3], [4, 4]];
     for (const [row, col] of centerSquares) {
       const piece = board[row][col];
@@ -284,7 +415,6 @@ export class StockfishEngine {
       }
     }
 
-    // King safety
     const whiteKing = this.findKing(board, 'w');
     const blackKing = this.findKing(board, 'b');
     
@@ -295,7 +425,6 @@ export class StockfishEngine {
       score -= this.evaluateKingSafety(board, blackKing, 'b');
     }
 
-    // Pawn structure
     score += this.evaluatePawnStructure(board);
 
     return score;
@@ -304,23 +433,18 @@ export class StockfishEngine {
   private evaluateTacticalFactors(chess: Chess): number {
     let score = 0;
 
-    // Check for forks, pins, skewers, discovered attacks
     score += this.detectTacticalMotifs(chess);
 
-    // Mobility bonus
     const currentTurnMoves = chess.moves().length;
     
-    // Create a temporary chess instance to check opponent moves
-    // Safe opponent move calculation
     let opponentMoves = 0;
     try {
       const fenParts = chess.fen().split(' ');
-      fenParts[1] = chess.turn() === 'w' ? 'b' : 'w'; // Switch turn
+      fenParts[1] = chess.turn() === 'w' ? 'b' : 'w';
       const opponentFen = fenParts.join(' ');
       const tempChess = new Chess(opponentFen);
       opponentMoves = tempChess.moves().length;
     } catch (error) {
-      // If FEN manipulation fails, use current position
       opponentMoves = currentTurnMoves;
     }
     score += (currentTurnMoves - opponentMoves) * 2;
@@ -331,10 +455,9 @@ export class StockfishEngine {
   private evaluateEndgameFactors(chess: Chess): number {
     const pieces = chess.board().flat().filter(p => p && p.type !== 'k');
     
-    if (pieces.length <= 8) { // Endgame
+    if (pieces.length <= 8) {
       let score = 0;
       
-      // King activity in endgame
       const board = chess.board();
       const whiteKing = this.findKing(board, 'w');
       const blackKing = this.findKing(board, 'b');
@@ -368,7 +491,6 @@ export class StockfishEngine {
     let safety = 0;
     const [row, col] = kingPos;
 
-    // Check for pawn shield
     if (color === 'w' && row === 7) {
       for (let c = Math.max(0, col - 1); c <= Math.min(7, col + 1); c++) {
         const piece = board[6][c];
@@ -391,7 +513,6 @@ export class StockfishEngine {
   private evaluatePawnStructure(board: any[][]): number {
     let score = 0;
     
-    // Check for doubled, isolated, and backward pawns
     for (let col = 0; col < 8; col++) {
       let whitePawns = [];
       let blackPawns = [];
@@ -404,7 +525,6 @@ export class StockfishEngine {
         }
       }
       
-      // Doubled pawns penalty
       if (whitePawns.length > 1) score -= 20 * (whitePawns.length - 1);
       if (blackPawns.length > 1) score += 20 * (blackPawns.length - 1);
     }
@@ -413,8 +533,6 @@ export class StockfishEngine {
   }
 
   private detectTacticalMotifs(chess: Chess): number {
-    // This would contain logic to detect forks, pins, skewers, etc.
-    // For now, return a basic bonus for captures and checks
     let score = 0;
     
     const moves = chess.moves({ verbose: true });
@@ -445,7 +563,6 @@ export class StockfishEngine {
         };
       }
 
-      // Find best move with evaluation
       let bestMove = moves[0];
       let bestEval = -Infinity;
       const principalVariation: string[] = [];
@@ -463,7 +580,6 @@ export class StockfishEngine {
 
       principalVariation.push(bestMove.san);
 
-      // Determine move quality based on evaluation
       let quality: "excellent" | "good" | "inaccuracy" | "mistake" | "blunder";
       if (bestEval > 200) quality = 'excellent';
       else if (bestEval > 50) quality = 'good';
@@ -492,7 +608,22 @@ export class StockfishEngine {
       };
     }
   }
+
+  public getEngineStatus(): { isReady: boolean; usingFallback: boolean; engineType: string } {
+    return {
+      isReady: this.isReady,
+      usingFallback: this.usingFallback,
+      engineType: this.usingFallback ? 'Enhanced Simulation' : 'Real Stockfish'
+    };
+  }
+
+  public cleanup() {
+    if (this.engine) {
+      this.engine.kill();
+      this.engine = null;
+    }
+    this.isReady = false;
+  }
 }
 
-// Export instance for use in routes
 export const stockfishEngine = new StockfishEngine();
