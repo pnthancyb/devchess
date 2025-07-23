@@ -1,3 +1,4 @@
+
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { WebSocketServer, WebSocket } from "ws";
@@ -117,7 +118,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
   async function handleJoinGame(ws: WebSocket, data: any) {
     try {
-      const { gameId, userId = 1, language = 'en', gameMode = 'classic', aiModel = 'stockfish-16', difficulty = 3 } = data;
+      const { gameId, userId = 1, language = 'en', gameMode = 'classic', aiModel = 'stockfish-16', difficulty = 5 } = data;
       
       // Check if already in a game session
       const existingSession = gameSessions.get(ws);
@@ -466,14 +467,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       // Determine which AI model to use
       const aiModel = session.aiModel || 'stockfish-16';
-      const difficulty = session.difficulty || 3;
+      const difficulty = Math.max(1, Math.min(10, session.difficulty || 5)); // Extended range 1-10
       
       let aiResponse;
       
       if (aiModel === 'stockfish-16') {
         // Use Stockfish engine for strongest play
-        console.log(`Using Stockfish-16 at level ${difficulty}`);
-        const stockfishMove = await stockfishEngine.getBestMove(move.fen, difficulty, 1000);
+        console.log(`Using Stockfish engine at difficulty ${difficulty}`);
+        const stockfishMove = await stockfishEngine.getBestMove(move.fen, difficulty, 2000);
         
         if (stockfishMove) {
           const chess = new Chess(move.fen);
@@ -500,39 +501,44 @@ export async function registerRoutes(app: Express): Promise<Server> {
           }
         }
         
-        // If Stockfish fails, fall back to random move
-        console.log('Stockfish failed, using fallback random move');
-        const chess = new Chess(move.fen);
-        const legalMoves = chess.moves({ verbose: true });
+        // If Stockfish fails, fall back to local AI engine
+        console.log('Stockfish failed, using local AI engine');
+        const localResponse = aiChessEngine.generateMove({ 
+          fen: move.fen, 
+          model: aiModel, 
+          difficulty 
+        });
         
-        if (legalMoves.length > 0) {
-          const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
-          const validatedMove = chess.move(randomMove);
-          
-          if (validatedMove) {
+        if (localResponse && localResponse.move) {
+          const chess = new Chess(move.fen);
+          const aiMove = chess.move(localResponse.move);
+
+          if (aiMove) {
             return {
               aiMove: {
-                from: validatedMove.from,
-                to: validatedMove.to,
-                piece: validatedMove.piece,
-                captured: validatedMove.captured,
-                promotion: validatedMove.promotion,
-                san: validatedMove.san,
+                from: aiMove.from,
+                to: aiMove.to,
+                piece: aiMove.piece,
+                captured: aiMove.captured,
+                promotion: aiMove.promotion,
+                san: aiMove.san,
                 fen: chess.fen(),
                 moveNumber: move.moveNumber + 1
               },
-              reasoning: "Stockfish fallback move",
+              reasoning: localResponse.reasoning || "Local AI engine move",
             };
           }
         }
       } else {
         // Use Groq LLM models for human-like play
         try {
-          console.log(`Using Groq model ${aiModel} at difficulty ${difficulty}`);
+          console.log(`Using Groq model ${aiModel} at difficulty ${Math.min(difficulty, 5)}`); // Groq limited to 1-5
+          const groqDifficulty = Math.min(difficulty, 5); // Limit Groq to max difficulty 5
+          
           aiResponse = await groqAIService.generateMove({
             fen: move.fen,
             model: aiModel,
-            difficulty: difficulty,
+            difficulty: groqDifficulty,
             gameMode: session.mode,
             recentMoves: []
           });
@@ -562,7 +568,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           
           // Fall back to Stockfish when Groq fails
           try {
-            const stockfishMove = await stockfishEngine.getBestMove(move.fen, difficulty, 1000);
+            const stockfishMove = await stockfishEngine.getBestMove(move.fen, difficulty, 2000);
             
             if (stockfishMove) {
               const chess = new Chess(move.fen);
@@ -584,7 +590,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
                     fen: chess.fen(),
                     moveNumber: move.moveNumber + 1
                   },
-                  reasoning: `Stockfish fallback (Groq failed)`,
+                  reasoning: `Stockfish fallback (${aiModel} failed)`,
                 };
               }
             }
@@ -594,28 +600,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
         }
       }
       
-      // Final fallback: random legal move
-      console.log('Using fallback random move generation');
-      const chess = new Chess(move.fen);
-      const legalMoves = chess.moves({ verbose: true });
+      // Final fallback: local AI engine
+      console.log('Using final fallback: local AI engine');
+      const localResponse = aiChessEngine.generateMove({ 
+        fen: move.fen, 
+        model: 'local', 
+        difficulty 
+      });
       
-      if (legalMoves.length > 0) {
-        const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
-        const validatedMove = chess.move(randomMove);
-        
-        if (validatedMove) {
+      if (localResponse && localResponse.move) {
+        const chess = new Chess(move.fen);
+        const aiMove = chess.move(localResponse.move);
+
+        if (aiMove) {
           return {
             aiMove: {
-              from: validatedMove.from,
-              to: validatedMove.to,
-              piece: validatedMove.piece,
-              captured: validatedMove.captured,
-              promotion: validatedMove.promotion,
-              san: validatedMove.san,
+              from: aiMove.from,
+              to: aiMove.to,
+              piece: aiMove.piece,
+              captured: aiMove.captured,
+              promotion: aiMove.promotion,
+              san: aiMove.san,
               fen: chess.fen(),
               moveNumber: move.moveNumber + 1
             },
-            reasoning: "Fallback random move",
+            reasoning: "Local AI engine fallback",
           };
         }
       }
@@ -661,13 +670,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ error: 'Invalid FEN position' });
       }
 
+      const adjustedDifficulty = Math.max(1, Math.min(10, difficulty || 5)); // Extended range 1-10
       let aiResponse;
 
       // Check if it's Stockfish model or if model doesn't exist in Groq
       if (model === 'stockfish-16' || model.includes('stockfish')) {
         try {
-          console.log(`Using Stockfish engine at difficulty ${difficulty}`);
-          const stockfishMove = await stockfishEngine.getBestMove(fen, difficulty, 1000);
+          console.log(`Using Stockfish engine at difficulty ${adjustedDifficulty}`);
+          const stockfishMove = await stockfishEngine.getBestMove(fen, adjustedDifficulty, 2000);
           
           if (stockfishMove) {
             const chess = new Chess(fen);
@@ -680,7 +690,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
             if (validatedMove) {
               aiResponse = {
                 move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
-                reasoning: `Stockfish-16 analysis at level ${difficulty}`,
+                reasoning: `Stockfish-16 analysis at level ${adjustedDifficulty}`,
                 analysis: `${validatedMove.san} - Strategic Stockfish play`,
                 score: "0.0"
               };
@@ -691,23 +701,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
             throw new Error('Stockfish failed to generate move');
           }
         } catch (stockfishError) {
-          console.log('Stockfish failed, using fallback:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
-          // Use fallback random move for Stockfish
-          const chess = new Chess(fen);
-          const legalMoves = chess.moves({ verbose: true });
+          console.log('Stockfish failed, using local engine:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
           
-          if (legalMoves.length > 0) {
-            const randomMove = legalMoves[Math.floor(Math.random() * legalMoves.length)];
-            const validatedMove = chess.move(randomMove);
-            
-            if (validatedMove) {
-              aiResponse = {
-                move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
-                reasoning: "Stockfish fallback move",
-                analysis: `${validatedMove.san} - Random fallback`,
-                score: "0.0"
-              };
-            }
+          // Use local AI engine as fallback
+          const localResponse = aiChessEngine.generateMove({ fen, model, difficulty: adjustedDifficulty });
+          if (localResponse && localResponse.move) {
+            aiResponse = {
+              move: localResponse.move,
+              reasoning: localResponse.reasoning || "Local AI engine fallback",
+              analysis: `AI analysis at difficulty ${adjustedDifficulty}`,
+              score: "0.0"
+            };
           }
         }
       } else {
@@ -724,13 +728,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           };
         }
 
-        // Use Groq AI for LLM models
+        // Use Groq AI for LLM models (limit difficulty to 1-5 for Groq)
+        const groqDifficulty = Math.min(adjustedDifficulty, 5);
         try {
-          console.log(`Optimized AI move generation for ${model} at difficulty ${difficulty}`);
+          console.log(`Optimized AI move generation for ${model} at difficulty ${groqDifficulty}`);
           aiResponse = await groqAIService.generateMove({ 
             fen, 
             model, 
-            difficulty, 
+            difficulty: groqDifficulty, 
             gameMode,
             recentMoves,
             gameMemory
@@ -739,36 +744,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         } catch (groqError) {
           console.log('Groq AI failed, using local engine:', groqError instanceof Error ? groqError.message : String(groqError));
           
-          // Fallback to Stockfish when Groq fails
-          try {
-            const stockfishMove = await stockfishEngine.getBestMove(fen, difficulty, 1000);
-            
-            if (stockfishMove) {
-              const chess = new Chess(fen);
-              const validatedMove = chess.move({
-                from: stockfishMove.from,
-                to: stockfishMove.to,
-                promotion: stockfishMove.promotion
-              });
-              
-              if (validatedMove) {
-                aiResponse = {
-                  move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
-                  reasoning: `Stockfish fallback (${model} failed)`,
-                  analysis: `${validatedMove.san} - Fallback analysis`,
-                  score: "0.0"
-                };
-              }
-            }
-          } catch (stockfishError) {
-            console.log('Stockfish fallback also failed');
-            // Final fallback: local AI engine
-            try {
-              aiResponse = aiChessEngine.generateMove({ fen, model, difficulty });
-            } catch (localError) {
-              console.error('All engines failed:', localError);
-              return res.status(500).json({ error: 'All AI engines failed to generate move' });
-            }
+          // Fallback to local AI engine when Groq fails
+          const localResponse = aiChessEngine.generateMove({ fen, model: 'local', difficulty: adjustedDifficulty });
+          if (localResponse && localResponse.move) {
+            aiResponse = {
+              move: localResponse.move,
+              reasoning: localResponse.reasoning || `Local AI fallback (${model} failed)`,
+              analysis: `Local AI analysis at difficulty ${adjustedDifficulty}`,
+              score: "0.0"
+            };
           }
         }
       }

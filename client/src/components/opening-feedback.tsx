@@ -1,211 +1,127 @@
+import React from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Progress } from "@/components/ui/progress";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { BookOpen, ArrowRight, RotateCcw, CheckCircle, Target, Clock } from "lucide-react";
-import { useI18n } from "@/lib/i18n";
-import type { ChessOpening, OpeningLearningState } from "@/types/chess";
-import { useEffect, useRef } from "react";
+import { Progress } from "@/components/ui/progress";
+import { CheckCircle, Circle, Target, TrendingUp, BookOpen } from "lucide-react";
+import { ChessOpening } from "@/types/chess";
 
 interface OpeningFeedbackProps {
-  opening: ChessOpening;
-  learningState: OpeningLearningState;
-  onReset?: () => void;
+  selectedOpening: ChessOpening | null;
+  currentMoveIndex: number;
+  nextMove: string | null;
+  completedMoves: string[];
 }
 
-export function OpeningFeedback({ opening, learningState, onReset }: OpeningFeedbackProps) {
-  const { t } = useI18n();
-  const contentRef = useRef<HTMLDivElement>(null);
-
-  const progress = (learningState.currentMoveIndex / opening.moves.length) * 100;
-  const isComplete = learningState.currentMoveIndex >= opening.moves.length;
-  const currentMove = opening.moves[learningState.currentMoveIndex];
-  const remainingMoves = opening.moves.slice(learningState.currentMoveIndex);
-
-  useEffect(() => {
-    if (contentRef.current) {
-      contentRef.current.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
-        inline: 'nearest'
-      });
-    }
-  }, [learningState.currentMoveIndex, isComplete]);
-
-  if (isComplete) {
+export function OpeningFeedback({ 
+  selectedOpening, 
+  currentMoveIndex, 
+  nextMove, 
+  completedMoves 
+}: OpeningFeedbackProps) {
+  // Early return with safe fallback
+  if (!selectedOpening) {
     return (
-      <Card className="max-h-[70vh] flex flex-col border-green-200 bg-green-50 dark:bg-green-950 dark:border-green-800">
-        <CardContent className="p-6 text-center space-y-4" ref={contentRef}>
-          <div className="space-y-4">
-            <CheckCircle className="w-16 h-16 text-green-500 mx-auto" />
-            <div>
-              <h3 className="text-2xl font-bold text-green-700 dark:text-green-400 mb-2">
-                Opening Mastered! 🎉
-              </h3>
-              <p className="text-green-600 dark:text-green-300 mb-4">
-                Congratulations! You've successfully learned the <strong>{opening.name}</strong> opening.
-              </p>
-            </div>
-
-            {/* Completion Stats */}
-            <div className="bg-white dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700">
-              <div className="grid grid-cols-2 gap-4 text-sm">
-                <div className="text-center">
-                  <Target className="w-5 h-5 text-green-500 mx-auto mb-1" />
-                  <div className="font-semibold">{opening.moves.length}</div>
-                  <div className="text-green-600 dark:text-green-400">Moves Learned</div>
-                </div>
-                <div className="text-center">
-                  <CheckCircle className="w-5 h-5 text-green-500 mx-auto mb-1" />
-                  <div className="font-semibold">100%</div>
-                  <div className="text-green-600 dark:text-green-400">Complete</div>
-                </div>
-              </div>
-            </div>
-
-            {/* Move Sequence Review */}
-            <div className="bg-white dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700">
-              <h4 className="font-semibold mb-3 text-green-700 dark:text-green-300">Complete Sequence:</h4>
-              <div className="flex flex-wrap gap-1 justify-center">
-                {opening.moves.map((move, index) => (
-                  <Badge key={index} variant="secondary" className="text-xs font-mono bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
-                    {index + 1}. {move}
-                  </Badge>
-                ))}
-              </div>
-            </div>
-
-            {/* Opening Description */}
-            <div className="bg-white dark:bg-green-900 p-4 rounded-lg border border-green-200 dark:border-green-700">
-              <h4 className="font-semibold mb-2 text-green-700 dark:text-green-300">About this Opening:</h4>
-              <p className="text-sm text-green-600 dark:text-green-400 leading-relaxed">
-                {opening.description}
-              </p>
-            </div>
-
-            {/* Actions */}
-            {onReset && (
-              <div className="pt-2">
-                <Button 
-                  variant="outline" 
-                  onClick={onReset} 
-                  className="border-green-300 text-green-700 hover:bg-green-100 dark:border-green-600 dark:text-green-300 dark:hover:bg-green-900"
-                >
-                  <RotateCcw className="w-4 h-4 mr-2" />
-                  Practice Again
-                </Button>
-              </div>
-            )}
-          </div>
+      <Card className="w-full bg-white dark:bg-slate-800">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            Opening Learning
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground">Select an opening to start learning.</p>
         </CardContent>
       </Card>
     );
   }
 
+  // Ensure safe values to prevent rendering issues
+  const safeMoveIndex = Math.max(0, currentMoveIndex || 0);
+  const safeCompletedMoves = completedMoves || [];
+  const totalMoves = selectedOpening.moves?.length || 0;
+
+  const progress = totalMoves > 0 
+    ? Math.min(100, (safeMoveIndex / totalMoves) * 100)
+    : 0;
+
+  const isComplete = safeMoveIndex >= totalMoves;
+
   return (
-    <Card className="max-h-[70vh] flex flex-col">
-      <CardHeader className="flex-shrink-0 pb-4">
-        <CardTitle className="flex items-center text-lg">
-          <BookOpen className="w-5 h-5 mr-2 text-chess-gold" />
-          Learning: {opening.name}
-        </CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4 overflow-y-auto flex-1" ref={contentRef}>
-        {/* Progress */}
-        <div className="space-y-3">
-          <div className="flex justify-between items-center">
-            <span className="text-sm font-medium">Progress</span>
-            <span className="text-sm text-muted-foreground">
-              {learningState.currentMoveIndex}/{opening.moves.length} moves
-            </span>
+    <div className="w-full">
+      <Card className="bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <BookOpen className="w-5 h-5 text-blue-600" />
+            {selectedOpening.name}
+            <Badge variant="outline">{selectedOpening.category}</Badge>
+          </CardTitle>
+        </CardHeader>
+        <CardContent className="space-y-4">
+          {/* Progress Section */}
+          <div className="space-y-2">
+            <div className="flex justify-between text-sm">
+              <span>Progress</span>
+              <span>{safeMoveIndex}/{totalMoves} moves</span>
+            </div>
+            <Progress value={progress} className="h-2" />
           </div>
-          <Progress value={progress} className="h-3" />
-        </div>
-
-        {/* Next Move to Learn */}
-        <div className="p-4 bg-primary/10 border border-primary/20 rounded-lg">
-          <div className="flex items-center space-x-2 mb-2">
-            <ArrowRight className="w-4 h-4 text-primary" />
-            <h4 className="font-semibold text-primary">Next Move:</h4>
-          </div>
-          {currentMove ? (
-            <div className="space-y-2">
-              <div className="flex items-center space-x-3">
-                <Badge variant="default" className="font-mono text-base px-3 py-1">
-                  {currentMove}
-                </Badge>
-                <span className="text-sm text-muted-foreground">
-                  Move {learningState.currentMoveIndex + 1}
-                </span>
+          {/* Current Status */}
+          <div className="space-y-3">
+            {isComplete ? (
+              <div className="flex items-center gap-2 text-green-600">
+                <CheckCircle className="w-5 h-5" />
+                <span className="font-medium">Opening Complete!</span>
               </div>
-              <p className="text-sm text-muted-foreground">
-                Make this move on the board to continue learning the opening.
-              </p>
-            </div>
-          ) : (
-            <p className="text-sm text-muted-foreground">
-              No more moves to learn!
-            </p>
-          )}
-        </div>
+            ) : nextMove ? (
+              <div className="flex items-center gap-2 text-blue-600">
+                <Target className="w-5 h-5" />
+                <span className="font-medium">Next move: {nextMove}</span>
+              </div>
+            ) : (
+              <div className="flex items-center gap-2 text-amber-600">
+                <Circle className="w-5 h-5" />
+                <span className="font-medium">Waiting for your move...</span>
+              </div>
+            )}
+          </div>
 
-        {/* Completed Moves */}
-        {learningState.completedMoves.length > 0 && (
-          <div className="p-4 bg-muted/50 rounded-lg">
-            <h4 className="font-semibold mb-3 flex items-center">
-              <CheckCircle className="w-4 h-4 mr-2 text-green-500" />
-              Completed Moves:
+          {/* Description */}
+          <div className="p-3 bg-blue-50 dark:bg-blue-950/20 rounded-lg border border-blue-200 dark:border-blue-800">
+            <p className="text-sm text-blue-800 dark:text-blue-200">{selectedOpening.description}</p>
+          </div>
+
+          {/* Move List */}
+          <div className="space-y-2">
+            <h4 className="font-medium flex items-center gap-2">
+              <TrendingUp className="w-4 h-4" />
+              Moves in this opening
             </h4>
-            <div className="flex flex-wrap gap-1">
-              {learningState.completedMoves.map((move, index) => (
-                <Badge key={index} variant="secondary" className="text-xs font-mono bg-green-100 text-green-800 dark:bg-green-800 dark:text-green-100">
-                  {index + 1}. {move}
-                </Badge>
-              ))}
+            <div className="space-y-1 max-h-32 overflow-y-auto">
+              {selectedOpening.moves?.map((move, index) => (
+                <div 
+                  key={`${selectedOpening.name}-move-${index}`}
+                  className={`flex items-center gap-2 text-sm p-2 rounded transition-colors ${
+                    index < safeMoveIndex 
+                      ? 'bg-green-50 dark:bg-green-950/20 text-green-700 dark:text-green-300 border border-green-200 dark:border-green-800' 
+                      : index === safeMoveIndex 
+                      ? 'bg-blue-50 dark:bg-blue-950/20 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-800' 
+                      : 'bg-gray-50 dark:bg-gray-900/20 text-gray-600 dark:text-gray-400 border border-gray-200 dark:border-gray-700'
+                  }`}
+                >
+                  {index < safeMoveIndex ? (
+                    <CheckCircle className="w-4 h-4 text-green-600 dark:text-green-400" />
+                  ) : index === safeMoveIndex ? (
+                    <Target className="w-4 h-4 text-blue-600 dark:text-blue-400" />
+                  ) : (
+                    <Circle className="w-4 h-4 text-gray-400" />
+                  )}
+                  <span>{Math.floor(index / 2) + 1}.{index % 2 === 0 ? '' : '..'} {move}</span>
+                </div>
+              )) || []}
             </div>
           </div>
-        )}
-
-        {/* Remaining Moves Preview */}
-        {remainingMoves.length > 1 && (
-          <div className="p-4 bg-background border rounded-lg">
-            <h4 className="font-semibold mb-2 text-sm flex items-center">
-              <Clock className="w-4 h-4 mr-2 text-muted-foreground" />
-              Upcoming Moves:
-            </h4>
-            <div className="flex flex-wrap gap-1">
-              {remainingMoves.slice(1, 4).map((move, index) => (
-                <Badge key={index} variant="outline" className="text-xs font-mono">
-                  {learningState.currentMoveIndex + index + 2}. {move}
-                </Badge>
-              ))}
-              {remainingMoves.length > 4 && (
-                <Badge variant="outline" className="text-xs">
-                  +{remainingMoves.length - 4} more
-                </Badge>
-              )}
-            </div>
-          </div>
-        )}
-
-        {/* Opening Description */}
-        <div className="p-3 bg-background border rounded-lg">
-          <h4 className="font-semibold mb-1 text-sm">About this Opening:</h4>
-          <p className="text-sm text-muted-foreground leading-relaxed">
-            {opening.description}
-          </p>
-        </div>
-
-        {/* Actions */}
-        {onReset && (
-          <div className="pt-2">
-            <Button variant="outline" size="sm" onClick={onReset} className="w-full">
-              <RotateCcw className="w-4 h-4 mr-2" />
-              Start Over
-            </Button>
-          </div>
-        )}
-      </CardContent>
-    </Card>
+        </CardContent>
+      </Card>
+    </div>
   );
 }

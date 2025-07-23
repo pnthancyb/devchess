@@ -1,169 +1,177 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Slider } from "@/components/ui/slider";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Cpu, Zap, Brain, Target } from "lucide-react";
+import { Brain, Zap, Target, Crown, Sparkles } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
 
-export interface AIModel {
-  id: string;
-  name: string;
-  description: string;
-  strength: number;
-  speed: "fast" | "medium" | "slow";
-  type: "groq" | "stockfish";
+interface AIModelSelectorProps {
+  currentModel: string;
+  currentDifficulty: number;
+  onModelChange: (model: string) => void;
+  onDifficultyChange: (difficulty: number) => void;
 }
 
-const AI_MODELS: AIModel[] = [
+const AI_MODELS = [
   {
     id: "stockfish-16",
-    name: "Stockfish Engine",
+    name: "Stockfish 16",
     description: "World's strongest chess engine",
-    strength: 10,
-    speed: "medium",
-    type: "stockfish"
+    icon: Crown,
+    maxDifficulty: 10,
+    color: "text-purple-600"
   },
   {
     id: "llama3-70b-8192",
     name: "Llama 3 70B",
-    description: "Large language model for human-like play",
-    strength: 7,
-    speed: "fast",
-    type: "groq"
+    description: "Advanced reasoning and strategy",
+    icon: Brain,
+    maxDifficulty: 5,
+    color: "text-blue-600"
   },
   {
     id: "llama3-8b-8192",
     name: "Llama 3 8B",
-    description: "Faster, more creative play style",
-    strength: 6,
-    speed: "fast",
-    type: "groq"
+    description: "Fast and efficient play",
+    icon: Zap,
+    maxDifficulty: 5,
+    color: "text-green-600"
   },
   {
     id: "mixtral-8x7b-32768",
     name: "Mixtral 8x7B",
-    description: "Balanced strategic play",
-    strength: 7,
-    speed: "medium",
-    type: "groq"
+    description: "Creative tactical play",
+    icon: Sparkles,
+    maxDifficulty: 5,
+    color: "text-orange-600"
+  },
+  {
+    id: "gemma-7b-it",
+    name: "Gemma 7B",
+    description: "Balanced and instructive",
+    icon: Target,
+    maxDifficulty: 5,
+    color: "text-indigo-600"
   }
 ];
 
-interface AIModelSelectorProps {
-  selectedModel: string;
-  onModelChange: (modelId: string) => void;
-  difficulty: number;
-  onDifficultyChange: (level: number) => void;
-  className?: string;
-}
+const DIFFICULTY_LABELS = {
+  1: { label: "Beginner", description: "Random moves, perfect for learning", color: "bg-green-100 text-green-800" },
+  2: { label: "Casual", description: "Avoids obvious mistakes", color: "bg-green-100 text-green-800" },
+  3: { label: "Amateur", description: "Basic tactical awareness", color: "bg-blue-100 text-blue-800" },
+  4: { label: "Club Player", description: "Good positional understanding", color: "bg-blue-100 text-blue-800" },
+  5: { label: "Expert", description: "Strong tactical play", color: "bg-yellow-100 text-yellow-800" },
+  6: { label: "Candidate Master", description: "Advanced strategic thinking", color: "bg-orange-100 text-orange-800" },
+  7: { label: "Master", description: "Deep positional understanding", color: "bg-red-100 text-red-800" },
+  8: { label: "Grandmaster", description: "Near-perfect calculation", color: "bg-purple-100 text-purple-800" },
+  9: { label: "Super-GM", description: "World championship level", color: "bg-gray-100 text-gray-800" },
+  10: { label: "Engine", description: "Maximum strength", color: "bg-black text-white" }
+};
 
 export function AIModelSelector({ 
-  selectedModel, 
+  currentModel, 
+  currentDifficulty, 
   onModelChange, 
-  difficulty, 
-  onDifficultyChange,
-  className = "" 
+  onDifficultyChange 
 }: AIModelSelectorProps) {
   const { t } = useI18n();
-
-  const currentModel = AI_MODELS.find(m => m.id === selectedModel) || AI_MODELS[0];
-
-  const getSpeedIcon = (speed: string) => {
-    switch (speed) {
-      case "fast": return <Zap className="w-3 h-3 text-green-500" />;
-      case "medium": return <Target className="w-3 h-3 text-yellow-500" />;
-      case "slow": return <Brain className="w-3 h-3 text-red-500" />;
-      default: return <Cpu className="w-3 h-3" />;
-    }
-  };
-
-  const getStrengthColor = (strength: number) => {
-    if (strength >= 9) return "bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-300";
-    if (strength >= 7) return "bg-orange-100 text-orange-800 dark:bg-orange-900/20 dark:text-orange-300";
-    if (strength >= 5) return "bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-300";
-    return "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300";
-  };
+  
+  const selectedModel = AI_MODELS.find(model => model.id === currentModel) || AI_MODELS[0];
+  const maxDifficulty = selectedModel.maxDifficulty;
+  const adjustedDifficulty = Math.min(currentDifficulty, maxDifficulty);
+  
+  const difficultyInfo = DIFFICULTY_LABELS[adjustedDifficulty as keyof typeof DIFFICULTY_LABELS];
 
   return (
-    <Card className={className}>
-      <CardHeader className="pb-3">
-        <CardTitle className="flex items-center text-sm font-medium">
-          <Cpu className="w-4 h-4 mr-2" />
-          AI Opponent
+    <Card>
+      <CardHeader>
+        <CardTitle className="flex items-center">
+          <Brain className="w-5 h-5 mr-2 text-primary" />
+          {t('ai.title')}
         </CardTitle>
       </CardHeader>
-      <CardContent className="space-y-4">
-        {/* AI Model Selection */}
+      <CardContent className="space-y-6">
+        {/* Model Selection */}
         <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Model</label>
-          <Select value={selectedModel} onValueChange={onModelChange}>
-            <SelectTrigger className="h-8 text-xs">
+          <label className="text-sm font-medium">{t('ai.model')}</label>
+          <Select value={currentModel} onValueChange={onModelChange}>
+            <SelectTrigger>
               <SelectValue />
             </SelectTrigger>
             <SelectContent>
-              {AI_MODELS.map((model) => (
-                <SelectItem key={model.id} value={model.id}>
-                  <div className="flex items-center space-x-2 py-1">
-                    <div className="flex items-center space-x-1">
-                      <span className="font-medium">{model.name}</span>
-                      {getSpeedIcon(model.speed)}
+              {AI_MODELS.map((model) => {
+                const Icon = model.icon;
+                return (
+                  <SelectItem key={model.id} value={model.id}>
+                    <div className="flex items-center space-x-2">
+                      <Icon className={`w-4 h-4 ${model.color}`} />
+                      <div>
+                        <div className="font-medium">{model.name}</div>
+                        <div className="text-xs text-muted-foreground">
+                          {model.description}
+                        </div>
+                      </div>
                     </div>
-                    <Badge variant="outline" className={`text-xs ${getStrengthColor(model.strength)}`}>
-                      {model.strength}/10
-                    </Badge>
-                  </div>
-                </SelectItem>
-              ))}
+                  </SelectItem>
+                );
+              })}
             </SelectContent>
           </Select>
-          <p className="text-xs text-muted-foreground">{currentModel.description}</p>
         </div>
 
-        {/* Difficulty Level */}
-        <div className="space-y-2">
-          <label className="text-xs font-medium text-muted-foreground">Difficulty Level</label>
-          <div className="flex items-center space-x-2">
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="h-7 w-7 p-0"
-              onClick={() => onDifficultyChange(Math.max(1, difficulty - 1))}
-              disabled={difficulty <= 1}
-            >
-              -
-            </Button>
-            <div className="flex-1 text-center">
-              <span className="text-sm font-medium">Level {difficulty}</span>
-              <div className="flex justify-center space-x-1 mt-1">
-                {[1, 2, 3, 4, 5].map((level) => (
-                  <div
-                    key={level}
-                    className={`w-2 h-2 rounded-full ${
-                      level <= difficulty
-                        ? "bg-primary"
-                        : "bg-muted-foreground/20"
-                    }`}
-                  />
-                ))}
-              </div>
-            </div>
-            <Button 
-              variant="outline" 
-              size="sm"
-              className="h-7 w-7 p-0"
-              onClick={() => onDifficultyChange(Math.min(5, difficulty + 1))}
-              disabled={difficulty >= 5}
-            >
-              +
-            </Button>
+        {/* Difficulty Slider */}
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <label className="text-sm font-medium">{t('ai.difficulty')}</label>
+            <Badge className={difficultyInfo.color}>
+              Level {adjustedDifficulty}
+            </Badge>
           </div>
-          <p className="text-xs text-muted-foreground">
-            {difficulty === 1 && "Beginner - Makes some mistakes"}
-            {difficulty === 2 && "Casual - Decent play with occasional blunders"}
-            {difficulty === 3 && "Intermediate - Good tactical awareness"}
-            {difficulty === 4 && "Advanced - Strong positional play"}
-            {difficulty === 5 && "Expert - Near-perfect play"}
-          </p>
+          
+          <div className="space-y-2">
+            <Slider
+              value={[adjustedDifficulty]}
+              onValueChange={(value) => onDifficultyChange(value[0])}
+              max={maxDifficulty}
+              min={1}
+              step={1}
+              className="w-full"
+            />
+            
+            <div className="flex justify-between text-xs text-muted-foreground">
+              <span>Beginner</span>
+              <span>{maxDifficulty === 10 ? "Engine" : "Expert"}</span>
+            </div>
+          </div>
+
+          {/* Difficulty Info */}
+          <div className="p-3 bg-muted rounded-lg">
+            <div className="flex items-center justify-between mb-1">
+              <span className="font-medium text-sm">{difficultyInfo.label}</span>
+              <Badge variant="outline" className="text-xs">
+                {selectedModel.name}
+              </Badge>
+            </div>
+            <p className="text-xs text-muted-foreground">
+              {difficultyInfo.description}
+            </p>
+          </div>
+
+          {/* Model-specific info */}
+          {currentModel === 'stockfish-16' && (
+            <div className="p-2 bg-purple-50 dark:bg-purple-900/20 rounded text-xs">
+              <strong>Stockfish 16:</strong> World's strongest chess engine with extended difficulty levels (1-10).
+              Levels 8-10 represent superhuman strength.
+            </div>
+          )}
+          
+          {currentModel !== 'stockfish-16' && (
+            <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-xs">
+              <strong>AI Models:</strong> Human-like play with creative strategies.
+              Difficulty limited to 1-5 for more natural gameplay.
+            </div>
+          )}
         </div>
       </CardContent>
     </Card>
