@@ -192,7 +192,9 @@ export class AIChessEngine {
   }
 
   generateFeedback(fen: string, recentMoves: any[], model: string): string {
-    const chess = new Chess(fen);
+    // Ensure fen is a string
+    const fenString = typeof fen === 'string' ? fen : String(fen);
+    const chess = new Chess(fenString);
     const evaluation = this.evaluatePosition(chess);
     
     let feedback = `Current position evaluation: ${evaluation.toFixed(2)}. `;

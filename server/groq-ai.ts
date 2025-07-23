@@ -535,43 +535,55 @@ Give constructive feedback in 2-3 sentences focusing on what the player did well
     try {
       const chess = new Chess(fen);
       const isDeepSeek = this.isDeepSeekModel(model);
+      const gamePhase = chess.moveNumber() <= 10 ? "opening" : chess.moveNumber() <= 25 ? "middlegame" : "endgame";
+      const legalMoves = chess.moves({ verbose: true });
+      const evaluation = this.evaluatePosition(chess);
+      
+      // Analyze current position for live context
+      const positionAnalysis = this.analyzeCurrentPosition(chess, evaluation);
       
       let memoryContext = "";
       if (gameMemory) {
         memoryContext = `
-Player Context:
-- Playing style: ${gameMemory.playerStyle || "Observing"}
-- Current phase: ${gameMemory.gamePhase}
-- Strengths: ${gameMemory.playerStrengths?.join(", ") || "Developing"}
-- Areas to work on: ${gameMemory.playerWeaknesses?.join(", ") || "All aspects"}
-- Recent key moments: ${gameMemory.keyMoments?.slice(-2).join("; ") || "Game beginning"}
+PLAYER PROFILE:
+- Style: ${gameMemory.playerStyle || "Developing"}
+- Phase expertise: ${gameMemory.gamePhase}
+- Strengths: ${gameMemory.playerStrengths?.join(", ") || "Learning"}
+- Improvement areas: ${gameMemory.playerWeaknesses?.join(", ") || "All aspects"}
+- Recent highlights: ${gameMemory.keyMoments?.slice(-2).join("; ") || "Starting journey"}
 `;
       }
 
-      const prompt = `You are an expert chess coach providing personalized guidance.
+      const prompt = `You are a world-class chess coach analyzing a live game position.
 
-Current Position: ${fen}
-Game Phase: ${chess.moveNumber() <= 10 ? "opening" : chess.moveNumber() <= 25 ? "middlegame" : "endgame"}
-Move Number: ${chess.moveNumber()}
+LIVE POSITION ANALYSIS:
+- FEN: ${fen}
+- Phase: ${gamePhase} (Move ${chess.moveNumber()})
+- Evaluation: ${evaluation > 1 ? "Advantage" : evaluation < -1 ? "Disadvantage" : "Equal"}
+- Key features: ${positionAnalysis.features}
+- Immediate concerns: ${positionAnalysis.concerns}
+- Tactical opportunities: ${positionAnalysis.tactics}
 
 ${memoryContext}
 
-Player Question: "${message}"
+Player asks: "${message}"
 
-Provide a helpful, encouraging response that:
-1. Directly answers their question
-2. Relates to the current position
-3. Offers specific, actionable advice
-4. Uses their playing history to personalize guidance
-5. Keeps response under 100 words
+Respond as an expert coach with:
+1. 💡 TIP: One specific tactical/strategic tip for this exact position
+2. Live analysis of WHY their recent moves make sense (or suggest improvements)
+3. What they should focus on NEXT in this position
+4. Encourage their thought process
 
-${isDeepSeek ? "Think step by step about the position and player needs, then respond clearly." : "Respond directly and helpfully."}`;
+Format: Start with "💡 TIP:" then provide concise, position-specific guidance.
+Keep under 120 words. Be encouraging but precise.
+
+${isDeepSeek ? "Analyze the position thoroughly, then give actionable coaching advice." : "Provide immediate, practical chess coaching."}`;
 
       const completion = await this.client.chat.completions.create({
         messages: [{ role: "user", content: prompt }],
         model: model || "llama3-70b-8192",
-        temperature: 0.6,
-        max_tokens: 200,
+        temperature: 0.5,
+        max_tokens: 250,
       });
 
       let content = completion.choices[0]?.message?.content?.trim();
@@ -582,11 +594,78 @@ ${isDeepSeek ? "Think step by step about the position and player needs, then res
         content = this.cleanDeepSeekResponse(content);
       }
 
-      return content || "Great question! Focus on controlling the center and developing your pieces actively. What specific aspect of the position concerns you most?";
+      // Ensure response starts with TIP if not already formatted
+      if (!content.includes("💡 TIP:")) {
+        content = `💡 TIP: ${content}`;
+      }
+
+      return content || `💡 TIP: In this ${gamePhase} position, focus on piece activity and king safety. Look for tactics like pins, forks, and discovered attacks!`;
     } catch (error) {
       console.error("Coach response failed:", error);
-      return "I'm here to help with your chess journey! Try asking about specific moves, tactics, or strategy for this position.";
+      const chess = new Chess(fen);
+      const gamePhase = chess.moveNumber() <= 10 ? "opening" : chess.moveNumber() <= 25 ? "middlegame" : "endgame";
+      return `💡 TIP: Great question! In this ${gamePhase} position, focus on improving your piece coordination and looking for tactical opportunities. What's your main concern right now?`;
     }
+  }
+
+  private evaluatePosition(chess: Chess): number {
+    const pieceValues = { p: 1, n: 3, b: 3, r: 5, q: 9, k: 0 };
+    let evaluation = 0;
+    const board = chess.board();
+    
+    for (let i = 0; i < 8; i++) {
+      for (let j = 0; j < 8; j++) {
+        const piece = board[i][j];
+        if (piece) {
+          const value = pieceValues[piece.type] || 0;
+          evaluation += piece.color === 'w' ? value : -value;
+        }
+      }
+    }
+    
+    return evaluation;
+  }
+
+  private analyzeCurrentPosition(chess: Chess, evaluation: number) {
+    const features = [];
+    const concerns = [];
+    const tactics = [];
+
+    if (chess.isCheck()) {
+      concerns.push("King in check");
+    }
+    
+    if (Math.abs(evaluation) > 3) {
+      features.push(evaluation > 0 ? "Major material advantage" : "Material deficit");
+    }
+    
+    const moves = chess.moves({ verbose: true });
+    const captureMoves = moves.filter(m => m.captured);
+    const checkMoves = moves.filter(m => m.san.includes('+'));
+    
+    if (captureMoves.length > 3) {
+      tactics.push("Multiple capture opportunities");
+    }
+    
+    if (checkMoves.length > 0) {
+      tactics.push("Checking moves available");
+    }
+
+    const gamePhase = chess.moveNumber() <= 10 ? "opening" : chess.moveNumber() <= 25 ? "middlegame" : "endgame";
+    
+    if (gamePhase === "opening") {
+      features.push("Development phase");
+      concerns.push("King safety and center control");
+    } else if (gamePhase === "endgame") {
+      features.push("Endgame precision required");
+      concerns.push("King activity and pawn promotion");
+    }
+
+    return {
+      features: features.join(", ") || "Balanced position",
+      concerns: concerns.join(", ") || "Standard play",
+      tactics: tactics.join(", ") || "Positional maneuvering"
+    };
   }
 
   getGameMemory(gameId: string): GameMemory | undefined {

@@ -58,6 +58,7 @@ const translations = {
     "settings.expertDesc": "Advanced strategic play with deep position analysis",
     "settings.recommendations": "Model Recommendations",
     "settings.recommendedFor": "Levels",
+    "settings.recommendedFor": "Levels",
     "settings.recommended": "Recommended",
     "common.white": "White",
     "common.black": "Black",
@@ -71,7 +72,40 @@ const translations = {
     "game.exportPGN": "Export PGN",
     "game.turn": "Turn",
     "game.difficulty": "Difficulty",
-    "coach.welcome": "Hello! I'm your AI chess coach. I can help you analyze positions, suggest moves, explain tactics, and answer any chess questions you have. What would you like to work on?",
+    coach: {
+      welcome: "💡 Welcome! I'm your AI chess coach. I analyze positions live and provide tips based on your current game situation.",
+      opening: {
+        advice: "Focus on controlling center squares, develop knights before bishops, castle early for king safety."
+      },
+      tactics: {
+        advice: "Look for tactical patterns in your current position: pins, forks, skewers, and discovered attacks."
+      },
+      endgame: {
+        advice: "Activate your king, push passed pawns, and centralize pieces. King activity becomes crucial."
+      },
+      position: {
+        advice: "Check king safety, piece activity, center control, and pawn structure in this position."
+      },
+      mistake: {
+        advice: "Before each move ask: Is my king safe? Are pieces defended? Does this improve my position?"
+      },
+      improve: {
+        advice: "Study similar positions, practice tactics daily, analyze your games, and focus on one aspect at a time."
+      },
+      default: {
+        1: "💡 TIP: Every move should have a purpose in this position.",
+        2: "💡 TIP: Consider the three phases: opening, middlegame, endgame strategies.",
+        3: "💡 TIP: Look for forcing moves first - checks, captures, threats.",
+        4: "💡 TIP: Pattern recognition improves with practice and analysis.",
+        5: "💡 TIP: Create and exploit weaknesses in the current position."
+      },
+      chat: {
+        title: "AI Chess Coach",
+        subtitle: "Live position analysis • Tips • Move explanations",
+        placeholder: "Ask about this position, tactics, or why you should make a move...",
+        help: "💡 Get live tips • Press Enter to send • Ask 'Why should I move here?'"
+      }
+    },
     "coach.chat.title": "AI Coach Chat",
     "coach.chat.subtitle": "Get personalized chess guidance and analysis",
     "coach.chat.placeholder": "Ask about tactics, strategy, this position...",
