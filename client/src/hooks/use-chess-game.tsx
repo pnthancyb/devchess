@@ -88,6 +88,11 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
   const [chatMessages, setChatMessages] = useState<ChatMessage[]>([]);
 
   const analyzeMove = useCallback(async (move: ChessMove): Promise<any> => {
+    // Skip analysis for opening mode to prevent errors
+    if (gameMode === "opening") {
+      return { score: 0, quality: "opening", explanation: "Opening move" };
+    }
+
     try {
       const currentFen = gameState.chess.fen();
       const response = await fetch('/api/chess/analyze-move', {
@@ -178,7 +183,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
             nextMove: prev.selectedOpening?.moves[prev.currentMoveIndex + 1] || null,
           }));
         } else {
-          // Incorrect move - revert it
+          // Incorrect move - revert it and show error
           gameState.chess.undo();
           console.log("Incorrect move in opening learning mode. Expected:", expectedMove, "Got:", moveResult.san);
           return false;
@@ -221,15 +226,26 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
               aiDifficulty
             );
 
+            console.log("AI move result:", aiMoveResult);
+
             if (aiMoveResult && aiMoveResult.from && aiMoveResult.to) {
               console.log("AI move successful:", aiMoveResult);
 
-              // Apply AI move
-              const aiMove = gameState.chess.move({
+              // Validate AI move before applying
+              const testMove = gameState.chess.move({
                 from: aiMoveResult.from,
                 to: aiMoveResult.to,
                 promotion: aiMoveResult.promotion
               });
+
+              if (!testMove) {
+                console.error("Invalid AI move:", aiMoveResult);
+                setGameState(prev => ({ ...prev, isPlayerTurn: true }));
+                return;
+              }
+
+              // Apply AI move
+              const aiMove = testMove;
 
               if (aiMove) {
                 const aiChessMove: ChessMove = {

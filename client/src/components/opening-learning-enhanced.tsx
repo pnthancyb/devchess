@@ -64,6 +64,7 @@ export function OpeningLearningEnhanced({
   const { t } = useI18n();
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
   const [feedback, setFeedback] = useState<string>("");
+  const [selectedOpeningLocal, setSelectedOpeningLocal] = useState<ChessOpening>(opening);
 
   const currentOpening = opening;
   const progress = currentOpening ? (learningState.currentMoveIndex / currentOpening.moves.length) * 100 : 0;
@@ -226,7 +227,6 @@ export function OpeningLearningEnhanced({
               <p className="text-sm text-blue-800 dark:text-blue-200">{feedback}</p>
             </div>
           )}
-          </div>
 
           {/* Control Buttons */}
           <div className="flex space-x-2 pt-2">
@@ -267,7 +267,7 @@ export function OpeningLearningEnhanced({
                 <Button
                   variant="outline"
                   size="sm"
-                  onClick={onAIPlay}
+                  onClick={onAIMove}
                   className="flex-1"
                 >
                   <Brain className="w-4 h-4 mr-1" />
