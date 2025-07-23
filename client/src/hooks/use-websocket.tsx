@@ -21,8 +21,8 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
     onMessage,
     onConnect,
     onDisconnect,
-    autoReconnect = false, // Disable auto-reconnect to prevent loops
-    reconnectDelay = 5000, // Increase delay
+    autoReconnect = false,
+    reconnectDelay = 5000,
   } = options;
 
   const [socket, setSocket] = useState<WebSocket | null>(null);
@@ -31,13 +31,14 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
   const reconnectTimeoutRef = useRef<NodeJS.Timeout>();
   const reconnectAttempts = useRef(0);
   const connectingRef = useRef(false);
+  const token = "your_default_token"; // Added a placeholder for token
 
   useEffect(() => {
-    // Prevent multiple connection attempts
     if (connectingRef.current) return;
 
     const protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
-    const wsUrl = `${protocol}//${window.location.host}/ws`;
+    const host = window.location.host;
+    const wsUrl = `${protocol}//${host}/ws?token=${token}`; // Modified to include token
 
     const connect = () => {
       if (connectingRef.current) return;
@@ -46,10 +47,6 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
       setConnectionState("connecting");
 
       try {
-        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
-        const host = window.location.host;
-        // Ensure we have a valid host and port
-        const wsUrl = host ? `${protocol}//${host}/ws` : `ws://localhost:5000/ws`;
         const ws = new WebSocket(wsUrl);
 
         ws.onopen = () => {
@@ -60,7 +57,6 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
           connectingRef.current = false;
           onConnect?.();
 
-          // Join game session immediately after connection
           ws.send(JSON.stringify({
             type: "join_game",
             data: {
@@ -71,15 +67,15 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
           }));
         };
 
-      ws.onmessage = (event) => {
-        try {
-          const message = JSON.parse(event.data);
-          setLastMessage(message);
-          onMessage?.(message);
-        } catch (error) {
-          console.error("Failed to parse WebSocket message:", error);
-        }
-      };
+        ws.onmessage = (event) => {
+          try {
+            const message = JSON.parse(event.data);
+            setLastMessage(message);
+            onMessage?.(message);
+          } catch (error) {
+            console.error("Failed to parse WebSocket message:", error);
+          }
+        };
 
         ws.onclose = (event) => {
           console.log("WebSocket disconnected", event.code, event.reason);
@@ -88,7 +84,6 @@ export function useWebSocket(options: UseWebSocketOptions = {}): UseWebSocketRet
           connectingRef.current = false;
           onDisconnect?.();
 
-          // Only reconnect if it was an unexpected disconnection
           if (autoReconnect && reconnectAttempts.current < 3 && event.code !== 1000) {
             const delay = reconnectDelay * Math.pow(2, reconnectAttempts.current);
             reconnectTimeoutRef.current = setTimeout(() => {

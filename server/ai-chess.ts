@@ -156,7 +156,18 @@ export class AIChessEngine {
     const beforeEval = this.evaluatePosition(chess);
     
     try {
-      chess.move(move);
+      // Create a proper move object for chess.js
+      const moveObj = typeof move === 'string' ? move : {
+        from: move.from,
+        to: move.to,
+        promotion: move.promotion
+      };
+      
+      const madeMove = chess.move(moveObj);
+      if (!madeMove) {
+        throw new Error('Invalid move');
+      }
+      
       const afterEval = this.evaluatePosition(chess);
       const scoreDiff = afterEval - beforeEval;
       

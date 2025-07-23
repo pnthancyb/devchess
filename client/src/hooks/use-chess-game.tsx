@@ -1,4 +1,3 @@
-
 import { useState, useCallback, useRef, useEffect } from "react";
 import { Chess, type Move as ChessJSMove, type Square } from "chess.js";
 import type { ChessMove, GameMode, GameState, AIFeedback, OpeningLearningState, ChessOpening, ChatMessage } from "@/types/chess";
@@ -56,9 +55,9 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const gameIdRef = useRef<number | null>(null);
   const moveCountRef = useRef(0);
-  
+
   const { makeAIMove, isAIThinking } = useAIChess();
-  
+
   // Disable WebSocket completely to fix connection issues and black screen
   const connectionState = "disconnected" as const;
   const sendMessage = useCallback((message: any) => {
@@ -90,20 +89,22 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const analyzeMove = useCallback(async (move: ChessMove): Promise<any> => {
     try {
+      const currentFen = gameState.chess.fen();
       const response = await fetch('/api/chess/analyze-move', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify({
-          fen: move.fen,
+        body: JSON.stringify({ 
+          fen: currentFen, 
           move: {
             from: move.from,
             to: move.to,
             piece: move.piece,
-            san: move.san
-          },
-          gameMode
+            san: move.san,
+            promotion: move.promotion
+          }, 
+          model: aiModel 
         }),
       });
 
@@ -115,9 +116,9 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
     } catch (error) {
       console.error("Move analysis error:", error);
     }
-    
+
     return { score: 0, quality: "unknown", explanation: "Analysis not available" };
-  }, [gameMode]);
+  }, [gameMode, aiModel, gameState.chess]);
 
   const requestAIFeedback = useCallback(async (fen: string): Promise<void> => {
     try {
@@ -145,7 +146,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
   const makeMoveFromSquares = useCallback(async (from: Square, to: Square, promotion?: string): Promise<boolean> => {
     try {
       console.log("Player making move from", from, "to", to, promotion ? "promotion: " + promotion : "");
-      
+
       const moveResult = gameState.chess.move({
         from,
         to,
@@ -208,7 +209,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       // Check if AI should move 
       if (!gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
         console.log("AI should make move - Black turn detected, position:", gameState.chess.fen());
-        
+
         // Request AI move
         setTimeout(async () => {
           console.log("AI (black) making move for position:", gameState.chess.fen());
@@ -219,10 +220,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
               aiModel,
               aiDifficulty
             );
-            
+
             if (aiMoveResult) {
               console.log("AI move successful:", aiMoveResult);
-              
+
               // Apply AI move
               const aiMove = gameState.chess.move({
                 from: aiMoveResult.from,
@@ -252,7 +253,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
                 // Request feedback for appropriate modes
                 if (gameMode === "feedback" || gameMode === "scoring" || gameMode === "coach") {
-                  await requestAIFeedback(aiChessMove);
+                  const currentFen = gameState.chess.fen();
+                  if (currentFen && currentFen.trim() !== '') {
+                    await requestAIFeedback(currentFen);
+                  }
                 }
               }
             }
@@ -296,7 +300,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       timestamp: new Date(),
       language: "en",
     };
-    
+
     setChatMessages(prev => [...prev, userMessage]);
 
     try {
@@ -312,7 +316,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       });
 
       const data = await response.json();
-      
+
       if (data.response) {
         const aiMessage: ChatMessage = {
           id: (Date.now() + 1).toString(),
@@ -321,7 +325,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
           timestamp: new Date(),
           language: "en",
         };
-        
+
         setChatMessages(prev => [...prev, aiMessage]);
       }
     } catch (error) {
@@ -333,7 +337,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
         timestamp: new Date(),
         language: "en",
       };
-      
+
       setChatMessages(prev => [...prev, errorMessage]);
     }
   }, [gameState.chess, aiModel]);
@@ -382,7 +386,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       completedMoves: [],
       nextMove: opening.moves[0] || null,
     }));
-    
+
     // Reset the chess board for the opening
     resetGame();
     setGameMode("opening");
@@ -396,7 +400,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
         openingLearningState.selectedOpening,
         currentMoveCount // Use actual move count instead of currentMoveIndex
       );
-      
+
       setOpeningLearningState(prev => ({
         ...prev,
         nextMove,
@@ -411,7 +415,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
           openingLearningState.selectedOpening,
           currentMoveCount
         );
-        
+
         setOpeningLearningState(prev => ({
           ...prev,
           nextMove: nextPlayerMove
