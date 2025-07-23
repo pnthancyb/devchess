@@ -79,10 +79,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
           // Get game memory for personalized coaching
           const gameMemory = groqAIService.getGameMemory(session.gameId.toString());
 
-          // Use Groq AI for coach response
+          // Use Groq AI for coach response with valid model
           let aiResponse;
           try {
-            aiResponse = await groqAIService.generateCoachResponse(message, currentFen, "moonshotai/kimi-k2-instruct", gameMemory);
+            // Use a valid Groq model instead of stockfish-16
+            const coachModel = session.aiModel && session.aiModel !== 'stockfish-16' 
+              ? session.aiModel 
+              : "llama3-70b-8192";
+            aiResponse = await groqAIService.generateCoachResponse(message, currentFen, coachModel, gameMemory);
           } catch (groqError) {
             console.log('Groq coach failed, using fallback:', groqError instanceof Error ? groqError.message : String(groqError));
             aiResponse = `Great question about "${message}"! Based on your current position, focus on piece development and tactical opportunities. What specific move or idea interests you?`;
@@ -398,6 +402,17 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // AI Integration Functions
   async function getAIFeedback(move: any, session: GameSession) {
     try {
+      // Validate FEN before analysis
+      if (!move.fen || typeof move.fen !== 'string') {
+        throw new Error('Invalid FEN provided');
+      }
+      
+      // Test FEN validity
+      const testChess = new Chess(move.fen);
+      if (!testChess) {
+        throw new Error('Invalid chess position');
+      }
+      
       const analysis = aiChessEngine.analyzeMove(move.fen, move);
       return {
         feedback: analysis.explanation,
@@ -783,7 +798,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post('/api/chess/feedback', async (req, res) => {
     try {
       const { fen, moves, model } = req.body;
-      const feedback = aiChessEngine.generateFeedback(fen, moves, model);
+      
+      // Validate FEN before processing
+      if (!fen || typeof fen !== 'string') {
+        return res.status(400).json({ error: 'Invalid FEN provided' });
+      }
+      
+      // Test FEN validity
+      try {
+        const testChess = new Chess(fen);
+        if (!testChess) {
+          throw new Error('Invalid position');
+        }
+      } catch (fenError) {
+        console.error('FEN validation failed:', fenError);
+        return res.status(400).json({ error: 'Invalid chess position' });
+      }
+      
+      const feedback = aiChessEngine.generateFeedback(fen, moves || [], model || 'default');
       res.json({ feedback });
     } catch (error) {
       console.error('AI feedback error:', error);
@@ -805,7 +837,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Try Groq AI first, fallback to basic response
       try {
-        const response = await groqAIService.generateCoachResponse(message, fen, model, gameMemory);
+        // Ensure we use a valid Groq model
+        const validModel = model && model !== 'stockfish-16' ? model : "llama3-70b-8192";
+        const response = await groqAIService.generateCoachResponse(message, fen, validModel, gameMemory);
         res.json({ response });
       } catch (groqError) {
         console.log('Groq coach failed, using fallback:', groqError instanceof Error ? groqError.message : String(groqError));

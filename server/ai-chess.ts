@@ -192,10 +192,17 @@ export class AIChessEngine {
   }
 
   generateFeedback(fen: string, recentMoves: any[], model: string): string {
-    // Ensure fen is a string
-    const fenString = typeof fen === 'string' ? fen : String(fen);
-    const chess = new Chess(fenString);
-    const evaluation = this.evaluatePosition(chess);
+    try {
+      // Ensure fen is a string and validate it
+      const fenString = typeof fen === 'string' ? fen : String(fen);
+      
+      // Validate FEN before creating Chess instance
+      if (!fenString || fenString.trim() === '') {
+        throw new Error('Empty FEN string');
+      }
+      
+      const chess = new Chess(fenString);
+      const evaluation = this.evaluatePosition(chess);
     
     let feedback = `Current position evaluation: ${evaluation.toFixed(2)}. `;
     
@@ -225,6 +232,10 @@ export class AIChessEngine {
     }
     
     return feedback;
+    } catch (error) {
+      console.error('Feedback generation error:', error);
+      return "Position analysis temporarily unavailable. Continue with your strategy and focus on piece development.";
+    }
   }
 }
 
