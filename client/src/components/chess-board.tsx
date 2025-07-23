@@ -16,6 +16,8 @@ interface ChessBoardProps {
   moves: any[];
   aiModel: string;
   difficulty: number;
+  onAIModelChange?: (model: string) => void;
+  onDifficultyChange?: (level: number) => void;
 }
 
 export function ChessBoard({

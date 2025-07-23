@@ -14,7 +14,7 @@ import { UserStats } from "@/components/user-stats";
 import { PerfectChessInterface } from "@/components/perfect-chess-interface";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Plus, TrendingUp, Target, Award, Crown, MessageSquare, BarChart3, Eye, RefreshCcw, Book } from "lucide-react";
+import { Plus, TrendingUp, Target, Award, Crown, MessageSquare, BarChart3, Eye, RefreshCcw, Book, Download } from "lucide-react";
 import { useChessGame } from "@/hooks/use-chess-game";
 import { useI18n } from "@/lib/i18n";
 import { downloadPGN } from "@/lib/chess-utils";
@@ -47,8 +47,11 @@ export default function ChessGame() {
   const handleDownloadPGN = () => {
     downloadPGN(gameState.moves, {
       white: "Player",
-      black: "Groq AI",
+      black: `AI (${gameState.aiModel})`,
       mode: gameState.gameMode,
+      aiModel: gameState.aiModel,
+      difficulty: gameState.difficulty,
+      result: "*", // Always * as requested for result section
     });
   };
 
@@ -121,11 +124,12 @@ export default function ChessGame() {
             </div>
             <Button onClick={resetGame} variant="outline" size="sm" className="px-4">
               <RefreshCcw className="w-4 h-4 mr-2" />
-              {t("reset.game")}
+              Reset Game
             </Button>
+            
             <Button onClick={handleDownloadPGN} variant="outline" size="sm" className="px-4">
-              <Plus className="w-4 h-4 mr-2" />
-              {t("download.pgn")}
+              <Download className="w-4 h-4 mr-2" />
+              Download PGN
             </Button>
           </div>
         </div>
@@ -177,8 +181,11 @@ export default function ChessGame() {
             ) : (
               /* AI Feedback Panel */
               <AIFeedback
-                feedback={gameState.lastAIFeedback}
-                isThinking={gameState.isAIThinking}
+                mode={gameState.gameMode}
+                feedback={gameState.lastAIFeedback?.feedback}
+                score={gameState.lastAIFeedback?.score?.toString()}
+                evaluation={gameState.lastAIFeedback?.evaluation}
+                quality={gameState.lastAIFeedback?.quality === "excellent" ? "good" : gameState.lastAIFeedback?.quality === "blunder" ? "bad" : "neutral"}
               />
             )}
 
@@ -187,14 +194,28 @@ export default function ChessGame() {
               <CoachChat
                 messages={chatMessages}
                 onSendMessage={sendChatMessage}
-                position={gameState.currentFen}
-                isCoachThinking={gameState.isAIThinking}
+                isVisible={true}
+                currentFen={gameState.currentFen}
+                aiModel={gameState.aiModel}
               />
             )}
 
             {/* Move History Panel */}
             <MoveHistory
-              moves={gameState.moves}
+              moves={gameState.moves.map((move, index) => ({
+                id: index + 1,
+                createdAt: new Date(),
+                fen: move.fen,
+                gameId: gameId || null,
+                moveNumber: move.moveNumber,
+                from: move.from,
+                to: move.to,
+                piece: move.piece,
+                san: move.san,
+                evaluation: move.analysis?.evaluation || null,
+                score: move.analysis?.score?.toString() || null,
+                feedback: move.analysis?.feedback || null,
+              }))}
               onMoveSelect={setSelectedMove}
               selectedMove={selectedMove}
             />

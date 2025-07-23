@@ -2,7 +2,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Lightbulb, TrendingUp } from "lucide-react";
 import { useI18n } from "@/lib/i18n";
-import type { GameMode } from "@/hooks/use-chess-game";
+import type { GameMode } from "@/types/chess";
 
 interface AIFeedbackProps {
   mode: GameMode;

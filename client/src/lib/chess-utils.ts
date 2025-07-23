@@ -64,16 +64,85 @@ export function generatePGNContent(moves: ChessMove[], options: PGNOptions = {})
 }
 
 export function downloadPGN(moves: ChessMove[], options: PGNOptions = {}) {
-  const pgnContent = generatePGNContent(moves, options);
-  const blob = new Blob([pgnContent], { type: 'text/plain' });
+  // Enhanced PGN generation with complete metadata and analysis
+  const now = new Date();
+  const dateStr = now.toISOString().split('T')[0].replace(/-/g, '.');
+  const timeStr = now.toTimeString().split(' ')[0];
+  
+  // Determine game result (only * for ongoing games as requested)
+  const result = options.result || "*";
+  
+  let pgn = `[Event "Chess Groq Coach - ${options.mode || 'Classic'}"]\n`;
+  pgn += `[Site "Replit Chess Training Platform"]\n`;
+  pgn += `[Date "${options.date || dateStr}"]\n`;
+  pgn += `[Time "${timeStr}"]\n`;
+  pgn += `[Round "1"]\n`;
+  pgn += `[White "${options.white || 'Player'}"]\n`;
+  pgn += `[Black "${options.black || 'AI Opponent'}"]\n`;
+  pgn += `[Result "${result}"]\n`;
+  pgn += `[TimeControl "-"]\n`;
+  pgn += `[Mode "${options.mode || 'classic'}"]\n`;
+  
+  if (options.aiModel) {
+    pgn += `[AI_Engine "${options.aiModel}"]\n`;
+  }
+  if (options.difficulty) {
+    pgn += `[AI_Level "${options.difficulty}/5"]\n`;
+  }
+  
+  pgn += `[Annotator "Chess Groq Coach AI"]\n`;
+  pgn += `[Generated "${now.toISOString()}"]\n\n`;
+  
+  // Enhanced move notation with analysis
+  let moveText = "";
+  for (let i = 0; i < moves.length; i += 2) {
+    const moveNumber = Math.floor(i / 2) + 1;
+    const whiteMove = moves[i];
+    const blackMove = moves[i + 1];
+    
+    moveText += `${moveNumber}.`;
+    
+    if (whiteMove) {
+      moveText += ` ${whiteMove.san}`;
+      
+      // Add evaluation comments for analysis
+      if (whiteMove.analysis?.score !== undefined) {
+        const score = whiteMove.analysis.score / 100;
+        moveText += ` {${score > 0 ? '+' : ''}${score.toFixed(2)}}`;
+      }
+      
+      if (blackMove) {
+        moveText += ` ${blackMove.san}`;
+        
+        if (blackMove.analysis?.score !== undefined) {
+          const score = blackMove.analysis.score / 100;
+          moveText += ` {${score > 0 ? '+' : ''}${score.toFixed(2)}}`;
+        }
+      }
+    }
+    
+    moveText += " ";
+    
+    // Line break every 4 full moves for readability
+    if (moveNumber % 4 === 0) {
+      moveText += "\n";
+    }
+  }
+  
+  pgn += moveText.trim();
+  pgn += ` ${result}\n`;
+  
+  // Create optimized download
+  const blob = new Blob([pgn], { type: 'application/x-chess-pgn;charset=utf-8' });
   const url = URL.createObjectURL(blob);
-
-  const timestamp = new Date().toISOString().replace(/[:.]/g, '-').slice(0, 19);
-  const filename = `chess-game-${timestamp}.pgn`;
-
+  
+  const timestamp = now.toISOString().replace(/[:.]/g, '-').split('T')[0];
+  const filename = `chess-${options.mode || 'game'}-${timestamp}.pgn`;
+  
   const a = document.createElement('a');
   a.href = url;
   a.download = filename;
+  a.style.display = 'none';
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
