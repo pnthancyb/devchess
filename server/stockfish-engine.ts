@@ -40,35 +40,34 @@ class StockfishEngine {
   }
 
   async getBestMove(fen: string, level: number = 5, timeMs: number = 2000): Promise<StockfishMove | null> {
-    if (!this.isReady) {
-      console.warn("Stockfish engine not ready, using fallback");
-      return this.getFallbackMove(fen);
-    }
-
     try {
+      // Validate FEN first
+      const chess = new Chess(fen);
+      const moves = chess.moves({ verbose: true });
+
+      if (moves.length === 0) {
+        console.log("No legal moves available for position:", fen);
+        return null;
+      }
+
+      console.log(`Stockfish engine generating move at level ${level} for position with ${moves.length} legal moves`);
+
       // Check transposition table first
       const tableKey = `${fen}-${level}`;
       if (this.transpositionTable.has(tableKey)) {
         const cached = this.transpositionTable.get(tableKey);
         if (Date.now() - cached.timestamp < 30000) { // 30 second cache
+          console.log("Using cached move:", cached.move);
           return cached.move;
         }
       }
 
-      const chess = new Chess(fen);
-      const moves = chess.moves({ verbose: true });
-
-      if (moves.length === 0) {
-        console.log("No legal moves available");
-        return null;
-      }
-
-      // Always use enhanced simulation since real Stockfish isn't available
+      // Get the best move using enhanced simulation
       const selectedMove = this.getEnhancedMove(chess, moves, level);
 
       if (!selectedMove) {
-        console.log("Failed to select enhanced move, using random fallback");
-        return this.getFallbackMove(fen);
+        console.log("Enhanced move selection failed, using smart fallback");
+        return this.getSmartFallbackMove(chess, moves);
       }
 
       const result = {
@@ -78,16 +77,25 @@ class StockfishEngine {
         san: selectedMove.san
       };
 
+      // Validate the move is actually legal
+      const testChess = new Chess(fen);
+      const validatedMove = testChess.move(result);
+      
+      if (!validatedMove) {
+        console.log("Generated move was invalid, using smart fallback");
+        return this.getSmartFallbackMove(chess, moves);
+      }
+
       // Cache the result
       this.transpositionTable.set(tableKey, {
         move: result,
         timestamp: Date.now()
       });
 
-      console.log(`Stockfish (level ${level}) selected move:`, result);
+      console.log(`Stockfish (level ${level}) selected move: ${result.san} (${result.from}-${result.to})`);
       return result;
     } catch (error) {
-      console.error("Error getting best move:", error);
+      console.error("Error in getBestMove:", error);
       return this.getFallbackMove(fen);
     }
   }
@@ -133,16 +141,60 @@ class StockfishEngine {
       const moves = chess.moves({ verbose: true });
       if (moves.length === 0) return null;
 
-      const randomMove = moves[Math.floor(Math.random() * moves.length)];
-      return {
-        from: randomMove.from,
-        to: randomMove.to,
-        promotion: randomMove.promotion,
-        san: randomMove.san
-      };
+      return this.getSmartFallbackMove(chess, moves);
     } catch (error) {
       console.error("Error in fallback move:", error);
       return null;
+    }
+  }
+
+  private getSmartFallbackMove(chess: Chess, moves: any[]): StockfishMove | null {
+    try {
+      if (moves.length === 0) return null;
+
+      // Prioritize captures, checks, and central moves
+      const captureMoves = moves.filter(move => move.captured);
+      const checkMoves = moves.filter(move => {
+        chess.move(move);
+        const isCheck = chess.isCheck();
+        chess.undo();
+        return isCheck;
+      });
+      const centralMoves = moves.filter(move => {
+        const to = move.to;
+        return ['d4', 'e4', 'd5', 'e5', 'c4', 'f4', 'c5', 'f5'].includes(to);
+      });
+
+      let candidateMoves = [];
+      
+      if (captureMoves.length > 0) {
+        candidateMoves = captureMoves;
+      } else if (checkMoves.length > 0) {
+        candidateMoves = checkMoves;
+      } else if (centralMoves.length > 0) {
+        candidateMoves = centralMoves;
+      } else {
+        candidateMoves = moves;
+      }
+
+      const selectedMove = candidateMoves[Math.floor(Math.random() * candidateMoves.length)];
+      
+      return {
+        from: selectedMove.from,
+        to: selectedMove.to,
+        promotion: selectedMove.promotion,
+        san: selectedMove.san
+      };
+    } catch (error) {
+      console.error("Error in smart fallback:", error);
+      // Ultimate fallback - just pick the first legal move
+      const firstMove = moves[0];
+      return firstMove ? {
+        from: firstMove.from,
+        to: firstMove.to,
+        promotion: firstMove.promotion,
+        san: firstMove.san
+      } : null;
     }
   }
 

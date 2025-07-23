@@ -219,12 +219,21 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
       if (!gameState.chess.isGameOver() && gameState.chess.turn() === 'b') {
         console.log("AI should make move - Black turn detected, position:", gameState.chess.fen());
 
-        // Request AI move with proper error handling
+        // Request AI move with improved error handling
         setTimeout(async () => {
           console.log("AI (black) making move for position:", gameState.chess.fen());
           try {
             console.log("Requesting AI move for black pieces");
             const currentFen = gameState.chess.fen();
+            
+            // Validate FEN before making AI request
+            const testChess = new Chess(currentFen);
+            if (testChess.moves().length === 0) {
+              console.log("No legal moves available for AI");
+              setGameState(prev => ({ ...prev, status: "ended" }));
+              return;
+            }
+
             const aiMoveResult = await makeAIMove(
               currentFen,
               aiModel,
@@ -232,58 +241,65 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
             );
 
             if (aiMoveResult && aiMoveResult.from && aiMoveResult.to) {
-              console.log("AI move successful:", aiMoveResult);
+              console.log("AI move received:", aiMoveResult);
 
               // Create new chess instance to avoid state mutation
               const tempChess = new Chess(currentFen);
               
-              // Apply AI move
-              const aiMove = tempChess.move({
-                from: aiMoveResult.from,
-                to: aiMoveResult.to,
-                promotion: aiMoveResult.promotion
-              });
+              // Apply AI move with validation
+              try {
+                const aiMove = tempChess.move({
+                  from: aiMoveResult.from,
+                  to: aiMoveResult.to,
+                  promotion: aiMoveResult.promotion
+                });
 
-              if (aiMove) {
-                const aiChessMove: ChessMove = {
-                  from: aiMove.from,
-                  to: aiMove.to,
-                  piece: aiMove.piece,
-                  san: aiMove.san,
-                  fen: tempChess.fen(),
-                  moveNumber: Math.ceil((moveCountRef.current + 1) / 2) + 1
-                };
+                if (aiMove) {
+                  console.log("AI move applied successfully:", aiMove.san);
+                  
+                  const aiChessMove: ChessMove = {
+                    from: aiMove.from,
+                    to: aiMove.to,
+                    piece: aiMove.piece,
+                    san: aiMove.san,
+                    fen: tempChess.fen(),
+                    moveNumber: Math.ceil((moveCountRef.current + 1) / 2) + 1
+                  };
 
-                moveCountRef.current += 1;
-                setMoves(prev => [...prev, aiChessMove]);
+                  moveCountRef.current += 1;
+                  setMoves(prev => [...prev, aiChessMove]);
 
-                setGameState(prev => ({
-                  ...prev,
-                  chess: tempChess,
-                  isPlayerTurn: true,
-                  status: tempChess.isGameOver() ? "ended" : "playing",
-                }));
+                  setGameState(prev => ({
+                    ...prev,
+                    chess: tempChess,
+                    isPlayerTurn: true,
+                    status: tempChess.isGameOver() ? "ended" : "playing",
+                  }));
 
-                // Request feedback for appropriate modes
-                if (gameMode === "feedback" || gameMode === "scoring" || gameMode === "coach") {
-                  const currentFen = tempChess.fen();
-                  if (currentFen && currentFen.trim() !== '') {
-                    await requestAIFeedback(currentFen);
+                  // Request feedback for appropriate modes
+                  if (gameMode === "feedback" || gameMode === "scoring" || gameMode === "coach") {
+                    const currentFen = tempChess.fen();
+                    if (currentFen && currentFen.trim() !== '') {
+                      await requestAIFeedback(currentFen);
+                    }
                   }
+                } else {
+                  console.error("Failed to apply AI move - move was invalid");
+                  setGameState(prev => ({ ...prev, isPlayerTurn: true }));
                 }
-              } else {
-                console.error("Failed to apply AI move to chess board");
+              } catch (moveError) {
+                console.error("Error applying AI move:", moveError);
                 setGameState(prev => ({ ...prev, isPlayerTurn: true }));
               }
             } else {
-              console.error("AI failed to generate a valid move");
+              console.error("AI failed to generate a valid move response:", aiMoveResult);
               setGameState(prev => ({ ...prev, isPlayerTurn: true }));
             }
           } catch (error) {
-            console.error("AI move error:", error);
+            console.error("AI move request error:", error);
             setGameState(prev => ({ ...prev, isPlayerTurn: true }));
           }
-        }, 500);
+        }, 750);
       }
 
       // WebSocket disabled for now - moves processed locally

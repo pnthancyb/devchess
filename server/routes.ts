@@ -677,9 +677,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       if (model === 'stockfish-16' || model.includes('stockfish')) {
         try {
           console.log(`Using Stockfish engine at difficulty ${adjustedDifficulty}`);
-          const stockfishMove = await stockfishEngine.getBestMove(fen, adjustedDifficulty, 2000);
+          const stockfishMove = await stockfishEngine.getBestMove(fen, adjustedDifficulty, 3000);
           
           if (stockfishMove && stockfishMove.from && stockfishMove.to) {
+            // Double-validate the move
             const chess = new Chess(fen);
             const validatedMove = chess.move({
               from: stockfishMove.from,
@@ -688,30 +689,40 @@ export async function registerRoutes(app: Express): Promise<Server> {
             });
             
             if (validatedMove) {
+              console.log(`Stockfish move validated: ${validatedMove.san} (${validatedMove.from}-${validatedMove.to})`);
               aiResponse = {
-                move: { from: validatedMove.from, to: validatedMove.to, promotion: validatedMove.promotion },
-                reasoning: `Stockfish enhanced engine at level ${adjustedDifficulty}`,
-                analysis: `${validatedMove.san} - Strategic engine play`,
+                move: { 
+                  from: validatedMove.from, 
+                  to: validatedMove.to, 
+                  promotion: validatedMove.promotion 
+                },
+                reasoning: `Stockfish enhanced engine at level ${adjustedDifficulty}: ${validatedMove.san}`,
+                analysis: `${validatedMove.san} - Strategic engine analysis`,
                 score: "0.0"
               };
             } else {
-              throw new Error('Move validation failed');
+              throw new Error(`Move validation failed: ${stockfishMove.from}-${stockfishMove.to}`);
             }
           } else {
-            throw new Error('Stockfish returned invalid move');
+            throw new Error('Stockfish returned no move or invalid move format');
           }
         } catch (stockfishError) {
-          console.log('Stockfish engine issue, using local fallback:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
+          console.log('Stockfish engine error, using local fallback:', stockfishError instanceof Error ? stockfishError.message : String(stockfishError));
           
           // Use local AI engine as fallback
           const localResponse = aiChessEngine.generateMove({ fen, model: 'local', difficulty: adjustedDifficulty });
           if (localResponse && localResponse.move) {
-            aiResponse = {
-              move: localResponse.move,
-              reasoning: localResponse.reasoning || "Local AI engine fallback",
-              analysis: `AI analysis at difficulty ${adjustedDifficulty}`,
-              score: "0.0"
-            };
+            // Validate local move too
+            const chess = new Chess(fen);
+            const validatedLocalMove = chess.move(localResponse.move);
+            if (validatedLocalMove) {
+              aiResponse = {
+                move: localResponse.move,
+                reasoning: localResponse.reasoning || "Local AI engine fallback (Stockfish failed)",
+                analysis: `${validatedLocalMove.san} - Local AI analysis at difficulty ${adjustedDifficulty}`,
+                score: "0.0"
+              };
+            }
           }
         }
       } else {
