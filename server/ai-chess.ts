@@ -28,7 +28,7 @@ export class AIChessEngine {
   private transpositionTable = new Map<string, any>();
 
   private evaluatePosition(chess: Chess): number {
-    const pieceValues = {
+    const pieceValues: Record<string, number> = {
       p: 100, n: 320, b: 330, r: 500, q: 900, k: 0
     };
     
@@ -40,7 +40,7 @@ export class AIChessEngine {
       for (let j = 0; j < 8; j++) {
         const piece = board[i][j];
         if (piece) {
-          const value = pieceValues[piece.type] || 0;
+          const value = pieceValues[piece.type as keyof typeof pieceValues] || 0;
           evaluation += piece.color === 'w' ? value : -value;
         }
       }
@@ -271,8 +271,8 @@ export class AIChessEngine {
     
     for (const move of opponentMoves) {
       if (move.captured) {
-        const pieceValues = { 'p': 100, 'n': 320, 'b': 330, 'r': 500, 'q': 900 };
-        if ((pieceValues[move.captured] || 0) >= 300) {
+        const pieceValues: Record<string, number> = { 'p': 100, 'n': 320, 'b': 330, 'r': 500, 'q': 900, 'k': 0 };
+        if ((pieceValues[move.captured as keyof typeof pieceValues] || 0) >= 300) {
           return true; // Opponent can capture valuable piece
         }
       }

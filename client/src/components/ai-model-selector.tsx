@@ -17,42 +17,47 @@ const AI_MODELS = [
   {
     id: "stockfish-16",
     name: "Stockfish 16",
-    description: "World's strongest chess engine",
+    description: "World's strongest chess engine with 10 difficulty levels",
     icon: Crown,
     maxDifficulty: 10,
-    color: "text-purple-600"
+    color: "text-purple-600",
+    category: "Engine"
   },
   {
     id: "llama3-70b-8192",
     name: "Llama 3 70B",
-    description: "Advanced reasoning and strategy",
+    description: "Advanced reasoning and human-like strategy",
     icon: Brain,
     maxDifficulty: 5,
-    color: "text-blue-600"
+    color: "text-blue-600",
+    category: "AI Model"
   },
   {
     id: "llama3-8b-8192",
     name: "Llama 3 8B",
-    description: "Fast and efficient play",
+    description: "Fast and efficient creative play",
     icon: Zap,
     maxDifficulty: 5,
-    color: "text-green-600"
+    color: "text-green-600",
+    category: "AI Model"
   },
   {
     id: "mixtral-8x7b-32768",
     name: "Mixtral 8x7B",
-    description: "Creative tactical play",
+    description: "Creative tactical and positional play",
     icon: Sparkles,
     maxDifficulty: 5,
-    color: "text-orange-600"
+    color: "text-orange-600",
+    category: "AI Model"
   },
   {
     id: "gemma-7b-it",
     name: "Gemma 7B",
-    description: "Balanced and instructive",
+    description: "Balanced and instructive gameplay",
     icon: Target,
     maxDifficulty: 5,
-    color: "text-indigo-600"
+    color: "text-indigo-600",
+    category: "AI Model"
   }
 ];
 
@@ -168,8 +173,8 @@ export function AIModelSelector({
           
           {currentModel !== 'stockfish-16' && (
             <div className="p-2 bg-blue-50 dark:bg-blue-900/20 rounded text-xs">
-              <strong>AI Models:</strong> Human-like play with creative strategies.
-              Difficulty limited to 1-5 for more natural gameplay.
+              <strong>AI Models:</strong> Human-like creative chess with natural playing styles.
+              Levels 1-5 offer balanced gameplay without engine-level calculation.
             </div>
           )}
         </div>
