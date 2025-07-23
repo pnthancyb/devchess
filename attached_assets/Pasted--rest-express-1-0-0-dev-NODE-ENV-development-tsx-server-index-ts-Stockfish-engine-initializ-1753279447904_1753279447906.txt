@@ -1,0 +1,175 @@
+
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+Stockfish engine initialized (simulation mode)
+1:56:59 PM [express] serving on port 5000
+1:57:13 PM [express] GET /api/users/1/stats 304 in 3ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:57:13 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:58:32 PM [express] GET /api/users/1/stats 304 in 1ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:58:32 PM [express] GET /api/users/1/stats 304 in 0ms :: {"gamesPlayed":0,"totalWins":0,"totalLosse…
+1:58:40 PM [express] POST /api/chess/analyze-move 200 in 5ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "e5"},
+  "reasoning": "I'm playing ...e5, a classical response to 1.d4, aiming to challenge White's central control and prepare to develop the rest of my pieces. This ...
+AI move successful: { from: 'e7', to: 'e5', promotion: undefined }
+1:58:42 PM [express] POST /api/chess/ai-move 200 in 1120ms :: {"move":{"from":"e7","to":"e5"},"reaso…
+AI feedback error: TypeError: fen.split is not a function
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:753:22)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:195:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+1:58:42 PM [express] POST /api/chess/feedback 500 in 22ms :: {"error":"Failed to generate feedback"}
+1:58:44 PM [express] POST /api/chess/analyze-move 200 in 1ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "d8", "to": "e7"},
+  "reasoning": "Developing the queen to a strong central square, controlling the d5 square and preparing to develop other pieces. This move also eyes the white ...
+AI move successful: { from: 'd8', to: 'e7', promotion: undefined }
+1:58:46 PM [express] POST /api/chess/ai-move 200 in 941ms :: {"move":{"from":"d8","to":"e7"},"reason…
+AI feedback error: TypeError: fen.split is not a function
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:753:22)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:195:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+1:58:46 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+1:58:50 PM [express] POST /api/chess/coach-response 200 in 552ms :: {"response":"\"Hi there! I see y…
+2:01:34 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "e7", "to": "e5"},
+  "reasoning": "I'm playing ...e5 to challenge White's central pawn and prepare to develop other pieces. This move also opens up the f-file for my rook to poten...
+AI move successful: { from: 'e7', to: 'e5', promotion: undefined }
+2:01:36 PM [express] POST /api/chess/ai-move 200 in 902ms :: {"move":{"from":"e7","to":"e5"},"reason…
+AI feedback error: TypeError: fen.split is not a function
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:753:22)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:195:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:01:36 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
+2:01:40 PM [express] POST /api/chess/analyze-move 200 in 0ms :: {"score":0,"quality":"illegal","expl…
+Optimized AI move generation for llama3-70b-8192 at difficulty 3
+Optimized AI request for llama3-70b-8192 at difficulty 3
+Raw AI response: {
+  "move": {"from": "d8", "to": "e7"},
+  "reasoning": "Developing the queen, controlling the center, and preparing to develop other pieces. This move also eyes the pawn on e4, potentially creating a ...
+AI move successful: { from: 'd8', to: 'e7', promotion: undefined }
+2:01:41 PM [express] POST /api/chess/ai-move 200 in 658ms :: {"move":{"from":"d8","to":"e7"},"reason…
+AI feedback error: TypeError: fen.split is not a function
+    at Chess.load (/home/runner/workspace/node_modules/src/chess.ts:753:22)
+    at new Chess (/home/runner/workspace/node_modules/src/chess.ts:726:10)
+    at AIChessEngine.generateFeedback (/home/runner/workspace/server/ai-chess.ts:195:19)
+    at <anonymous> (/home/runner/workspace/server/routes.ts:786:38)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/runner/workspace/node_modules/express/lib/router/route.js:149:13)
+    at Route.dispatch (/home/runner/workspace/node_modules/express/lib/router/route.js:119:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at <anonymous> (/home/runner/workspace/server/index.ts:37:3)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/runner/workspace/node_modules/body-parser/lib/types/urlencoded.js:85:7)
+    at Layer.handle [as handle_request] (/home/runner/workspace/node_modules/express/lib/router/layer.js:95:5)
+    at trim_prefix (/home/runner/workspace/node_modules/express/lib/router/index.js:328:13)
+    at /home/runner/workspace/node_modules/express/lib/router/index.js:286:9
+    at Function.process_params (/home/runner/workspace/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/runner/workspace/node_modules/express/lib/router/index.js:280:10)
+    at /home/runner/workspace/node_modules/body-parser/lib/read.js:137:5
+    at AsyncResource.runInAsyncScope (node:async_hooks:206:9)
+    at invokeCallback (/home/runner/workspace/node_modules/raw-body/index.js:238:16)
+    at done (/home/runner/workspace/node_modules/raw-body/index.js:227:7)
+    at IncomingMessage.onEnd (/home/runner/workspace/node_modules/raw-body/index.js:287:7)
+    at IncomingMessage.emit (node:events:524:28)
+    at endReadableNT (node:internal/streams/readable:1698:12)
+    at process.processTicksAndRejections (node:internal/process/task_queues:82:21)
+2:01:41 PM [express] POST /api/chess/feedback 500 in 1ms :: {"error":"Failed to generate feedback"}
