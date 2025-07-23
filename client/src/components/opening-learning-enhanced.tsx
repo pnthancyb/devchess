@@ -9,17 +9,19 @@ import { useI18n } from "@/lib/i18n";
 import type { ChessOpening } from "@/types/chess";
 
 interface OpeningLearningEnhancedProps {
-  selectedOpening: ChessOpening | null;
-  currentMoveIndex: number;
-  completedMoves: string[];
+  opening: ChessOpening;
+  learningState: {
+    selectedOpening: ChessOpening | null;
+    currentMoveIndex: number;
+    completedMoves: string[];
+    nextMove: string | null;
+  };
   onMoveAttempt: (move: string) => boolean;
   onReset: () => void;
-  onAIPlay: () => void;
-  isLearningMode: boolean;
-  gameState?: {
-    fen: string;
-    moves: any[];
-  };
+  currentFen: string;
+  aiModel: string;
+  aiDifficulty: number;
+  onAIMove: () => void;
 }
 
 const SAMPLE_OPENINGS: ChessOpening[] = [
@@ -50,47 +52,53 @@ const SAMPLE_OPENINGS: ChessOpening[] = [
 ];
 
 export function OpeningLearningEnhanced({
-  selectedOpening,
-  currentMoveIndex,
-  completedMoves,
+  opening,
+  learningState,
   onMoveAttempt,
   onReset,
-  onAIPlay,
-  isLearningMode,
-  gameState
+  currentFen,
+  aiModel,
+  aiDifficulty,
+  onAIMove
 }: OpeningLearningEnhancedProps) {
   const { t } = useI18n();
   const [isAutoPlaying, setIsAutoPlaying] = useState(false);
-  const [selectedOpeningLocal, setSelectedOpeningLocal] = useState<ChessOpening | null>(selectedOpening);
+  const [feedback, setFeedback] = useState<string>("");
 
-  // Use selected opening or fallback to first sample opening
-  const currentOpening = selectedOpeningLocal || SAMPLE_OPENINGS[0];
-  const progress = currentOpening ? (currentMoveIndex / currentOpening.moves.length) * 100 : 0;
-  const isCompleted = currentOpening && currentMoveIndex >= currentOpening.moves.length;
+  const currentOpening = opening;
+  const progress = currentOpening ? (learningState.currentMoveIndex / currentOpening.moves.length) * 100 : 0;
+  const isCompleted = currentOpening && learningState.currentMoveIndex >= currentOpening.moves.length;
 
   const handleAutoPlay = async () => {
     if (!currentOpening || isCompleted) return;
     
     setIsAutoPlaying(true);
+    setFeedback("Auto-playing opening moves...");
     
     // Auto-play remaining moves with delay
-    for (let i = currentMoveIndex; i < currentOpening.moves.length; i++) {
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    for (let i = learningState.currentMoveIndex; i < currentOpening.moves.length; i++) {
+      await new Promise(resolve => setTimeout(resolve, 1500));
       
       if (!isAutoPlaying) break; // Allow stopping
       
       const move = currentOpening.moves[i];
-      onMoveAttempt(move);
+      const success = onMoveAttempt(move);
       
-      // Let AI respond if it's their turn
+      if (!success) {
+        setFeedback(`Failed to make move: ${move}`);
+        break;
+      }
+      
+      // Let AI respond if it's their turn (for openings with opponent moves)
       if (i % 2 === 1) {
         setTimeout(() => {
-          onAIPlay();
-        }, 500);
+          onAIMove();
+        }, 800);
       }
     }
     
     setIsAutoPlaying(false);
+    setFeedback("");
   };
 
   const stopAutoPlay = () => {
@@ -107,11 +115,11 @@ export function OpeningLearningEnhanced({
   };
 
   const getNextExpectedMove = () => {
-    if (!currentOpening || currentMoveIndex >= currentOpening.moves.length) return null;
-    return currentOpening.moves[currentMoveIndex];
+    if (!currentOpening || learningState.currentMoveIndex >= currentOpening.moves.length) return null;
+    return currentOpening.moves[learningState.currentMoveIndex];
   };
 
-  const nextMove = getNextExpectedMove();
+  const nextMove = learningState.nextMove || getNextExpectedMove();
 
   return (
     <div className="space-y-6">
@@ -136,7 +144,7 @@ export function OpeningLearningEnhanced({
             <div className="flex justify-between items-center">
               <span className="text-sm font-medium">Learning Progress</span>
               <span className="text-sm text-muted-foreground">
-                {currentMoveIndex}/{currentOpening.moves.length} moves
+                {learningState.currentMoveIndex}/{currentOpening.moves.length} moves
               </span>
             </div>
             <Progress value={progress} className="h-3" />
@@ -160,7 +168,7 @@ export function OpeningLearningEnhanced({
                   <span className="font-medium text-sm">Next Move</span>
                 </div>
                 <Badge variant="outline" className="text-primary border-primary/50">
-                  Move {currentMoveIndex + 1}
+                  Move {learningState.currentMoveIndex + 1}
                 </Badge>
               </div>
               <div className="text-lg font-mono bg-white dark:bg-gray-900 px-3 py-2 rounded border">
@@ -196,11 +204,11 @@ export function OpeningLearningEnhanced({
               {currentOpening.moves.map((move, index) => (
                 <Badge
                   key={index}
-                  variant={index < currentMoveIndex ? "default" : "outline"}
+                  variant={index < learningState.currentMoveIndex ? "default" : "outline"}
                   className={`
-                    ${index < currentMoveIndex 
+                    ${index < learningState.currentMoveIndex 
                       ? "bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-300" 
-                      : index === currentMoveIndex 
+                      : index === learningState.currentMoveIndex 
                         ? "bg-primary text-primary-foreground animate-pulse" 
                         : "opacity-50"
                     }
@@ -210,6 +218,14 @@ export function OpeningLearningEnhanced({
                 </Badge>
               ))}
             </div>
+          </div>
+
+          {/* Feedback Display */}
+          {feedback && (
+            <div className="p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-800">
+              <p className="text-sm text-blue-800 dark:text-blue-200">{feedback}</p>
+            </div>
+          )}
           </div>
 
           {/* Control Buttons */}

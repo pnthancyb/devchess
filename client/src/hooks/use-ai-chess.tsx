@@ -103,7 +103,8 @@ export function useAIChess(): UseAIChessReturn {
 
       const data = await response.json();
 
-      if (data.move) {
+      // Ensure we return the move object with proper structure
+      if (data && data.move && data.move.from && data.move.to) {
         return {
           from: data.move.from,
           to: data.move.to,
@@ -111,9 +112,18 @@ export function useAIChess(): UseAIChessReturn {
           evaluation: data.evaluation || "0.0",
           analysis: data.reasoning || "AI move"
         };
+      } else if (data && data.from && data.to) {
+         return {
+          from: data.from,
+          to: data.to,
+          promotion: data.promotion,
+          evaluation: data.evaluation || "0.0",
+          analysis: data.reasoning || "AI move"
+        };
+      } else {
+        console.error('Invalid AI move response structure:', data);
+        return null;
       }
-
-      return null;
     } catch (error) {
       console.error('AI move error:', error);
       setError("Failed to generate AI move");

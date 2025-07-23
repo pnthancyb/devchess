@@ -58,10 +58,10 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
 
   const { makeAIMove, isAIThinking } = useAIChess();
 
-  // Disable WebSocket completely to fix connection issues and black screen
-  const connectionState = "disconnected" as const;
+  // Simplified connection state - no WebSocket needed for local gameplay
+  const connectionState = "connected" as const;
   const sendMessage = useCallback((message: any) => {
-    // WebSocket disabled - all functionality is local
+    // Local gameplay - no WebSocket needed
     return;
   }, []);
 
@@ -221,7 +221,7 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
               aiDifficulty
             );
 
-            if (aiMoveResult) {
+            if (aiMoveResult && aiMoveResult.from && aiMoveResult.to) {
               console.log("AI move successful:", aiMoveResult);
 
               // Apply AI move
@@ -259,6 +259,9 @@ export function useChessGame(gameId?: number): UseChessGameReturn {
                   }
                 }
               }
+            } else {
+              console.log("Invalid AI move response:", aiMoveResult);
+              setGameState(prev => ({ ...prev, isPlayerTurn: true }));
             }
           } catch (error) {
             console.error("AI move error:", error);
