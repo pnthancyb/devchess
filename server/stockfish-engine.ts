@@ -1,3 +1,4 @@
+
 import { Chess } from "chess.js";
 
 interface StockfishEvaluation {
@@ -21,6 +22,7 @@ export class StockfishEngine {
   private isReady = false;
   private pendingPromises = new Map<string, { resolve: (value: any) => void; reject: (error: any) => void }>();
   private commandId = 0;
+  private transpositionTable = new Map<string, any>();
 
   constructor() {
     this.initializeEngine();
@@ -38,21 +40,31 @@ export class StockfishEngine {
     }
   }
 
-  async getBestMove(fen: string, level: number = 3, timeMs: number = 1000): Promise<StockfishMove | null> {
+  async getBestMove(fen: string, level: number = 5, timeMs: number = 2000): Promise<StockfishMove | null> {
     if (!this.isReady) {
       console.warn("Stockfish engine not ready, using fallback");
       return this.getFallbackMove(fen);
     }
 
     try {
-      // Simulate Stockfish analysis with chess.js logic
+      // Check transposition table first
+      const tableKey = `${fen}-${level}`;
+      if (this.transpositionTable.has(tableKey)) {
+        const cached = this.transpositionTable.get(tableKey);
+        if (Date.now() - cached.timestamp < 30000) { // 30 second cache
+          return cached.move;
+        }
+      }
+
       const chess = new Chess(fen);
       const moves = chess.moves({ verbose: true });
       
       if (moves.length === 0) return null;
 
-      // Simulate different difficulty levels
+      // Extended difficulty levels with deeper analysis
       let selectedMove;
+      const depth = Math.min(level + 2, 8); // Increase search depth based on level
+      
       switch (level) {
         case 1:
           // Random move (easiest)
@@ -64,33 +76,61 @@ export class StockfishEngine {
           break;
         case 3:
           // Good moves with some tactical awareness
-          selectedMove = this.getGoodMove(chess, moves);
+          selectedMove = this.getGoodMove(chess, moves, depth);
           break;
         case 4:
           // Strong moves with positional understanding
-          selectedMove = this.getStrongMove(chess, moves);
+          selectedMove = this.getStrongMove(chess, moves, depth);
           break;
         case 5:
-          // Best moves (strongest)
-          selectedMove = this.getBestMoveAnalysis(chess, moves);
+          // Very strong moves with deep calculation
+          selectedMove = this.getVeryStrongMove(chess, moves, depth);
+          break;
+        case 6:
+          // Expert level with advanced tactics
+          selectedMove = this.getExpertMove(chess, moves, depth);
+          break;
+        case 7:
+          // Master level with deep positional understanding
+          selectedMove = this.getMasterMove(chess, moves, depth);
+          break;
+        case 8:
+          // Grandmaster level - near perfect play
+          selectedMove = this.getGrandmasterMove(chess, moves, depth);
+          break;
+        case 9:
+          // Super-GM level with extensive calculation
+          selectedMove = this.getSuperGMMove(chess, moves, Math.min(depth + 2, 10));
+          break;
+        case 10:
+          // Engine level - maximum strength
+          selectedMove = this.getEngineMove(chess, moves, Math.min(depth + 3, 12));
           break;
         default:
-          selectedMove = this.getGoodMove(chess, moves);
+          selectedMove = this.getStrongMove(chess, moves, depth);
       }
 
-      return {
+      const result = {
         from: selectedMove.from,
         to: selectedMove.to,
         promotion: selectedMove.promotion,
         san: selectedMove.san
       };
+
+      // Cache the result
+      this.transpositionTable.set(tableKey, {
+        move: result,
+        timestamp: Date.now()
+      });
+
+      return result;
     } catch (error) {
       console.error("Stockfish analysis error:", error);
       return this.getFallbackMove(fen);
     }
   }
 
-  async evaluatePosition(fen: string, depth: number = 15): Promise<StockfishEvaluation> {
+  async evaluatePosition(fen: string, depth: number = 20): Promise<StockfishEvaluation> {
     try {
       const chess = new Chess(fen);
       const moves = chess.moves({ verbose: true });
@@ -118,9 +158,9 @@ export class StockfishEngine {
         }
       }
 
-      // Simulate position evaluation
-      const evaluation = this.evaluatePositionHeuristic(chess);
-      const bestMove = this.getBestMoveAnalysis(chess, moves);
+      // Enhanced position evaluation with deeper analysis
+      const evaluation = this.evaluatePositionAdvanced(chess, depth);
+      const bestMove = this.getEngineMove(chess, moves, Math.min(depth, 12));
 
       return {
         score: evaluation.score,
@@ -175,8 +215,7 @@ export class StockfishEngine {
       : moves[Math.floor(Math.random() * moves.length)];
   }
 
-  private getGoodMove(chess: Chess, moves: any[]) {
-    // Prioritize captures, checks, and central moves
+  private getGoodMove(chess: Chess, moves: any[], depth: number) {
     const scoredMoves = moves.map(move => ({
       move,
       score: this.evaluateMove(chess, move)
@@ -189,11 +228,10 @@ export class StockfishEngine {
     return topMoves[Math.floor(Math.random() * topMoves.length)].move;
   }
 
-  private getStrongMove(chess: Chess, moves: any[]) {
-    // More sophisticated move evaluation
+  private getStrongMove(chess: Chess, moves: any[], depth: number) {
     const scoredMoves = moves.map(move => ({
       move,
-      score: this.evaluateMoveAdvanced(chess, move)
+      score: this.evaluateMoveAdvanced(chess, move, depth)
     }));
 
     scoredMoves.sort((a, b) => b.score - a.score);
@@ -203,15 +241,91 @@ export class StockfishEngine {
     return topMoves[Math.floor(Math.random() * topMoves.length)].move;
   }
 
-  private getBestMoveAnalysis(chess: Chess, moves: any[]) {
-    // Return the objectively best move based on evaluation
+  private getVeryStrongMove(chess: Chess, moves: any[], depth: number) {
     const scoredMoves = moves.map(move => ({
       move,
-      score: this.evaluateMoveAdvanced(chess, move)
+      score: this.evaluateMoveDeep(chess, move, depth)
     }));
 
     scoredMoves.sort((a, b) => b.score - a.score);
-    return scoredMoves[0].move;
+    
+    // Almost always pick the best move, occasionally the second best
+    return Math.random() < 0.9 ? scoredMoves[0].move : 
+           (scoredMoves[1] ? scoredMoves[1].move : scoredMoves[0].move);
+  }
+
+  private getExpertMove(chess: Chess, moves: any[], depth: number) {
+    return this.minimaxSearch(chess, moves, depth, true);
+  }
+
+  private getMasterMove(chess: Chess, moves: any[], depth: number) {
+    return this.minimaxSearch(chess, moves, Math.min(depth + 1, 10), true);
+  }
+
+  private getGrandmasterMove(chess: Chess, moves: any[], depth: number) {
+    return this.minimaxSearch(chess, moves, Math.min(depth + 2, 11), true);
+  }
+
+  private getSuperGMMove(chess: Chess, moves: any[], depth: number) {
+    return this.minimaxSearch(chess, moves, Math.min(depth + 3, 12), true);
+  }
+
+  private getEngineMove(chess: Chess, moves: any[], depth: number) {
+    return this.minimaxSearch(chess, moves, Math.min(depth + 4, 15), true);
+  }
+
+  private minimaxSearch(chess: Chess, moves: any[], depth: number, maximizing: boolean) {
+    let bestMove = moves[0];
+    let bestScore = maximizing ? -Infinity : Infinity;
+
+    for (const move of moves) {
+      const testChess = new Chess(chess.fen());
+      testChess.move(move);
+      
+      const score = this.minimax(testChess, depth - 1, -Infinity, Infinity, !maximizing);
+      
+      if (maximizing && score > bestScore) {
+        bestScore = score;
+        bestMove = move;
+      } else if (!maximizing && score < bestScore) {
+        bestScore = score;
+        bestMove = move;
+      }
+    }
+
+    return bestMove;
+  }
+
+  private minimax(chess: Chess, depth: number, alpha: number, beta: number, maximizing: boolean): number {
+    if (depth === 0 || chess.isGameOver()) {
+      return this.evaluatePositionAdvanced(chess, depth).score;
+    }
+
+    const moves = chess.moves({ verbose: true });
+    
+    if (maximizing) {
+      let maxEval = -Infinity;
+      for (const move of moves) {
+        const testChess = new Chess(chess.fen());
+        testChess.move(move);
+        const eval = this.minimax(testChess, depth - 1, alpha, beta, false);
+        maxEval = Math.max(maxEval, eval);
+        alpha = Math.max(alpha, eval);
+        if (beta <= alpha) break; // Alpha-beta pruning
+      }
+      return maxEval;
+    } else {
+      let minEval = Infinity;
+      for (const move of moves) {
+        const testChess = new Chess(chess.fen());
+        testChess.move(move);
+        const eval = this.minimax(testChess, depth - 1, alpha, beta, true);
+        minEval = Math.min(minEval, eval);
+        beta = Math.min(beta, eval);
+        if (beta <= alpha) break; // Alpha-beta pruning
+      }
+      return minEval;
+    }
   }
 
   private evaluateMove(chess: Chess, move: any): number {
@@ -219,55 +333,91 @@ export class StockfishEngine {
     
     // Capture bonus
     if (move.captured) {
-      const pieceValues = { 'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9, 'k': 0 };
-      score += pieceValues[move.captured] * 10;
+      const pieceValues = { 'p': 100, 'n': 300, 'b': 320, 'r': 500, 'q': 900, 'k': 0 };
+      score += pieceValues[move.captured] || 0;
     }
 
     // Check bonus
     const testChess = new Chess(chess.fen());
     testChess.move(move);
-    if (testChess.inCheck()) score += 5;
+    if (testChess.inCheck()) score += 50;
 
     // Central square bonus
     const centralSquares = ['d4', 'd5', 'e4', 'e5'];
-    if (centralSquares.includes(move.to)) score += 2;
+    const extendedCenter = ['c3', 'c4', 'c5', 'c6', 'd3', 'd6', 'e3', 'e6', 'f3', 'f4', 'f5', 'f6'];
+    
+    if (centralSquares.includes(move.to)) score += 30;
+    else if (extendedCenter.includes(move.to)) score += 15;
 
     // Development bonus for early game
-    if (chess.moveNumber() < 10) {
-      if (move.piece === 'n' || move.piece === 'b') score += 3;
-      if (move.from.includes('1') || move.from.includes('8')) score += 1;
+    if (chess.moveNumber() < 15) {
+      if (move.piece === 'n' || move.piece === 'b') score += 25;
+      if (move.from.includes('1') || move.from.includes('8')) score += 10;
+    }
+
+    // Castling bonus
+    if (move.flags && move.flags.includes('k') || move.flags.includes('q')) {
+      score += 60;
     }
 
     return score;
   }
 
-  private evaluateMoveAdvanced(chess: Chess, move: any): number {
+  private evaluateMoveAdvanced(chess: Chess, move: any, depth: number): number {
     let score = this.evaluateMove(chess, move);
     
-    // Additional advanced evaluation
     const testChess = new Chess(chess.fen());
     testChess.move(move);
     
-    // Tactical motifs
-    if (this.createsFork(testChess, move)) score += 15;
-    if (this.createsPin(testChess, move)) score += 10;
-    if (this.createsSkewer(testChess, move)) score += 12;
+    // Enhanced tactical motifs
+    if (this.createsFork(testChess, move)) score += 200;
+    if (this.createsPin(testChess, move)) score += 150;
+    if (this.createsSkewer(testChess, move)) score += 180;
+    if (this.createsDiscoveredAttack(testChess, move)) score += 160;
     
     // Positional factors
-    score += this.evaluatePositionalFactors(testChess, move);
+    score += this.evaluatePositionalFactors(testChess, move) * 2;
+    
+    // King safety
+    score += this.evaluateKingSafety(testChess, move);
+    
+    // Pawn structure
+    score += this.evaluatePawnStructure(testChess, move);
     
     return score;
   }
 
-  private evaluatePositionHeuristic(chess: Chess) {
+  private evaluateMoveDeep(chess: Chess, move: any, depth: number): number {
+    let score = this.evaluateMoveAdvanced(chess, move, depth);
+    
+    // Add deeper positional understanding
+    const testChess = new Chess(chess.fen());
+    testChess.move(move);
+    
+    // Piece activity
+    score += this.evaluatePieceActivity(testChess);
+    
+    // Control of key squares
+    score += this.evaluateSquareControl(testChess);
+    
+    // Endgame factors
+    if (this.isEndgame(testChess)) {
+      score += this.evaluateEndgameFactors(testChess, move);
+    }
+    
+    return score;
+  }
+
+  private evaluatePositionAdvanced(chess: Chess, depth: number) {
     let score = 0;
     let description = "";
     
     const board = chess.board();
-    const pieceValues = { 'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9, 'k': 0 };
+    const pieceValues = { 'p': 100, 'n': 320, 'b': 330, 'r': 500, 'q': 900, 'k': 0 };
     
-    // Material evaluation
+    // Enhanced material evaluation
     let whiteValue = 0, blackValue = 0;
+    let whitePieceCount = 0, blackPieceCount = 0;
     
     for (let row = 0; row < 8; row++) {
       for (let col = 0; col < 8; col++) {
@@ -276,8 +426,10 @@ export class StockfishEngine {
           const value = pieceValues[piece.type];
           if (piece.color === 'w') {
             whiteValue += value;
+            whitePieceCount++;
           } else {
             blackValue += value;
+            blackPieceCount++;
           }
         }
       }
@@ -285,13 +437,26 @@ export class StockfishEngine {
     
     score = whiteValue - blackValue;
     
+    // Positional evaluation
+    score += this.evaluatePositionalFactorsAdvanced(chess);
+    
+    // Mobility evaluation
+    const whiteMobility = chess.turn() === 'w' ? chess.moves().length : 0;
+    chess.load(chess.fen().replace(' w ', ' b ').replace(' b ', ' w '));
+    const blackMobility = chess.moves().length;
+    chess.load(chess.fen().replace(' w ', ' b ').replace(' b ', ' w ')); // Restore original turn
+    
+    score += (whiteMobility - blackMobility) * 2;
+    
     // Game phase detection
     const totalMaterial = whiteValue + blackValue;
     let quality: "excellent" | "good" | "inaccuracy" | "mistake" | "blunder" = "good";
     
-    if (Math.abs(score) > 3) {
-      quality = Math.abs(score) > 6 ? "excellent" : "good";
+    if (Math.abs(score) > 300) {
+      quality = Math.abs(score) > 600 ? "excellent" : "good";
       description = score > 0 ? "White has a significant advantage" : "Black has a significant advantage";
+    } else if (Math.abs(score) > 100) {
+      description = score > 0 ? "White has a slight advantage" : "Black has a slight advantage";
     } else {
       description = "Position is roughly equal";
     }
@@ -300,22 +465,226 @@ export class StockfishEngine {
     const finalScore = chess.turn() === 'w' ? score : -score;
     
     return {
-      score: Math.round(finalScore * 100), // Convert to centipawns
+      score: Math.round(finalScore), // Already in centipawns
       description,
       quality
     };
   }
 
+  // Additional evaluation methods for enhanced play
+  private evaluatePositionalFactorsAdvanced(chess: Chess): number {
+    let score = 0;
+    
+    // Center control
+    const centerSquares = ['d4', 'd5', 'e4', 'e5'];
+    const board = chess.board();
+    
+    for (const square of centerSquares) {
+      const file = square.charCodeAt(0) - 'a'.charCodeAt(0);
+      const rank = parseInt(square[1]) - 1;
+      const piece = board[7 - rank][file];
+      
+      if (piece) {
+        score += piece.color === 'w' ? 15 : -15;
+        if (piece.type === 'p') {
+          score += piece.color === 'w' ? 10 : -10;
+        }
+      }
+    }
+    
+    return score;
+  }
+
+  private evaluateKingSafety(chess: Chess, move: any): number {
+    let score = 0;
+    
+    // Penalize early king moves
+    if (move.piece === 'k' && chess.moveNumber() < 15) {
+      score -= 50;
+    }
+    
+    // Bonus for castling
+    if (move.flags && (move.flags.includes('k') || move.flags.includes('q'))) {
+      score += 80;
+    }
+    
+    return score;
+  }
+
+  private evaluatePawnStructure(chess: Chess, move: any): number {
+    let score = 0;
+    
+    if (move.piece === 'p') {
+      // Discourage doubled pawns
+      const file = move.to[0];
+      const board = chess.board();
+      let pawnsOnFile = 0;
+      
+      for (let row = 0; row < 8; row++) {
+        const col = file.charCodeAt(0) - 'a'.charCodeAt(0);
+        const piece = board[row][col];
+        if (piece && piece.type === 'p' && piece.color === chess.turn()) {
+          pawnsOnFile++;
+        }
+      }
+      
+      if (pawnsOnFile > 1) score -= 25;
+      
+      // Bonus for passed pawns
+      if (this.isPassedPawn(chess, move.to)) {
+        score += 40;
+      }
+    }
+    
+    return score;
+  }
+
+  private evaluatePieceActivity(chess: Chess): number {
+    let score = 0;
+    
+    // Count attacked squares for each side
+    const whiteAttacks = this.countAttackedSquares(chess, 'w');
+    const blackAttacks = this.countAttackedSquares(chess, 'b');
+    
+    score += (whiteAttacks - blackAttacks) * 3;
+    
+    return score;
+  }
+
+  private evaluateSquareControl(chess: Chess): number {
+    let score = 0;
+    
+    // Evaluate control of key squares
+    const keySquares = ['d4', 'd5', 'e4', 'e5', 'c4', 'c5', 'f4', 'f5'];
+    
+    for (const square of keySquares) {
+      const whiteControl = this.isSquareControlled(chess, square, 'w');
+      const blackControl = this.isSquareControlled(chess, square, 'b');
+      
+      if (whiteControl && !blackControl) score += 10;
+      if (blackControl && !whiteControl) score -= 10;
+    }
+    
+    return score;
+  }
+
+  private evaluateEndgameFactors(chess: Chess, move: any): number {
+    let score = 0;
+    
+    // King activity in endgame
+    if (move.piece === 'k') {
+      score += 20; // Encourage king activity
+    }
+    
+    // Pawn advancement
+    if (move.piece === 'p') {
+      const rank = parseInt(move.to[1]);
+      const advancement = chess.turn() === 'w' ? rank - 2 : 7 - rank;
+      score += advancement * 5;
+    }
+    
+    return score;
+  }
+
+  // Helper methods
+  private isEndgame(chess: Chess): boolean {
+    const board = chess.board();
+    let pieceCount = 0;
+    
+    for (let row = 0; row < 8; row++) {
+      for (let col = 0; col < 8; col++) {
+        const piece = board[row][col];
+        if (piece && piece.type !== 'k' && piece.type !== 'p') {
+          pieceCount++;
+        }
+      }
+    }
+    
+    return pieceCount <= 6; // Endgame when few pieces remain
+  }
+
+  private countAttackedSquares(chess: Chess, color: string): number {
+    const originalTurn = chess.turn();
+    if (chess.turn() !== color) {
+      // Temporarily switch turns to get attacks for the specified color
+      const fen = chess.fen();
+      const newFen = fen.replace(chess.turn() === 'w' ? ' w ' : ' b ', color === 'w' ? ' w ' : ' b ');
+      chess.load(newFen);
+    }
+    
+    const moves = chess.moves({ verbose: true });
+    const attackedSquares = new Set();
+    
+    for (const move of moves) {
+      attackedSquares.add(move.to);
+    }
+    
+    // Restore original turn
+    if (chess.turn() !== originalTurn) {
+      const fen = chess.fen();
+      const newFen = fen.replace(chess.turn() === 'w' ? ' w ' : ' b ', originalTurn === 'w' ? ' w ' : ' b ');
+      chess.load(newFen);
+    }
+    
+    return attackedSquares.size;
+  }
+
+  private isSquareControlled(chess: Chess, square: string, color: string): boolean {
+    const originalTurn = chess.turn();
+    if (chess.turn() !== color) {
+      const fen = chess.fen();
+      const newFen = fen.replace(chess.turn() === 'w' ? ' w ' : ' b ', color === 'w' ? ' w ' : ' b ');
+      chess.load(newFen);
+    }
+    
+    const moves = chess.moves({ verbose: true });
+    const controlled = moves.some(move => move.to === square);
+    
+    // Restore original turn
+    if (chess.turn() !== originalTurn) {
+      const fen = chess.fen();
+      const newFen = fen.replace(chess.turn() === 'w' ? ' w ' : ' b ', originalTurn === 'w' ? ' w ' : ' b ');
+      chess.load(newFen);
+    }
+    
+    return controlled;
+  }
+
+  private isPassedPawn(chess: Chess, square: string): boolean {
+    // Simplified passed pawn detection
+    const file = square.charCodeAt(0) - 'a'.charCodeAt(0);
+    const rank = parseInt(square[1]);
+    const board = chess.board();
+    const piece = board[8 - rank][file];
+    
+    if (!piece || piece.type !== 'p') return false;
+    
+    // Check if there are opposing pawns blocking this pawn's advance
+    const isWhite = piece.color === 'w';
+    const direction = isWhite ? 1 : -1;
+    const startRank = isWhite ? rank : rank;
+    const endRank = isWhite ? 8 : 1;
+    
+    for (let r = startRank + direction; isWhite ? r <= endRank : r >= endRank; r += direction) {
+      for (let f = Math.max(0, file - 1); f <= Math.min(7, file + 1); f++) {
+        const checkPiece = board[8 - r][f];
+        if (checkPiece && checkPiece.type === 'p' && checkPiece.color !== piece.color) {
+          return false;
+        }
+      }
+    }
+    
+    return true;
+  }
+
   private isObviousBlunder(chess: Chess, move: any): boolean {
-    // Check if the move hangs a piece
     if (move.captured) return false; // Captures are generally safe
     
-    // Simple heuristic: if opponent can capture something valuable after this move
     const opponentMoves = chess.moves({ verbose: true });
     for (const opMove of opponentMoves) {
       if (opMove.captured) {
-        const pieceValues = { 'p': 1, 'n': 3, 'b': 3, 'r': 5, 'q': 9 };
-        if (pieceValues[opMove.captured] >= 3) {
+        const pieceValues = { 'p': 100, 'n': 320, 'b': 330, 'r': 500, 'q': 900 };
+        if ((pieceValues[opMove.captured] || 0) >= 300) {
           return true; // Hanging a minor piece or better
         }
       }
@@ -325,7 +694,6 @@ export class StockfishEngine {
   }
 
   private createsFork(chess: Chess, move: any): boolean {
-    // Simplified fork detection
     if (move.piece !== 'n') return false;
     
     const knightAttacks = this.getKnightAttacks(move.to);
@@ -349,13 +717,16 @@ export class StockfishEngine {
   }
 
   private createsPin(chess: Chess, move: any): boolean {
-    // Simplified pin detection for bishops, rooks, and queens
     return ['b', 'r', 'q'].includes(move.piece);
   }
 
   private createsSkewer(chess: Chess, move: any): boolean {
-    // Simplified skewer detection
     return ['b', 'r', 'q'].includes(move.piece);
+  }
+
+  private createsDiscoveredAttack(chess: Chess, move: any): boolean {
+    // Simplified discovered attack detection
+    return move.from !== move.to && ['b', 'r', 'q'].includes(move.piece);
   }
 
   private evaluatePositionalFactors(chess: Chess, move: any): number {
@@ -364,26 +735,17 @@ export class StockfishEngine {
     // King safety
     if (move.piece === 'k') {
       if (chess.moveNumber() < 20) {
-        score -= 5; // Discourage early king moves
+        score -= 25; // Discourage early king moves
       }
     }
     
-    // Pawn structure
-    if (move.piece === 'p') {
-      // Discourage doubled pawns
-      const file = move.to[0];
-      const board = chess.board();
-      let pawnsOnFile = 0;
-      
-      for (let row = 0; row < 8; row++) {
-        const col = file.charCodeAt(0) - 'a'.charCodeAt(0);
-        const piece = board[row][col];
-        if (piece && piece.type === 'p' && piece.color === chess.turn()) {
-          pawnsOnFile++;
+    // Piece development
+    if (chess.moveNumber() < 15) {
+      if (move.piece === 'n' || move.piece === 'b') {
+        if (move.from.includes('1') || move.from.includes('8')) {
+          score += 15; // Bonus for developing pieces
         }
       }
-      
-      if (pawnsOnFile > 1) score -= 2;
     }
     
     return score;
@@ -415,8 +777,8 @@ export class StockfishEngine {
 
   async shutdown(): Promise<void> {
     this.isReady = false;
+    this.transpositionTable.clear();
     if (this.engine) {
-      // Cleanup engine if needed
       this.engine = null;
     }
   }
